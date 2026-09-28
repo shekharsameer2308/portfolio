@@ -10,7 +10,7 @@ export const AntiGravityBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let particles: { x: number; y: number; vx: number; vy: number; radius: number; mass: number }[] = [];
+    let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
     let animationFrameId: number;
     let mouse = { x: -1000, y: -1000 };
 
@@ -27,10 +27,9 @@ export const AntiGravityBackground = () => {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          radius: Math.random() * 1.5 + 0.5,
-          mass: Math.random() * 2 + 1
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: -Math.random() * 0.4 - 0.1, // Upward anti-gravity bias
+          radius: Math.random() * 1.5 + 0.5
         });
       }
     };
@@ -39,42 +38,45 @@ export const AntiGravityBackground = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach((p, index) => {
-        // Continuous organic float
+        // Apply velocity
         p.x += p.vx;
         p.y += p.vy;
 
-        // Wrap around screen
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
+        // Wrap around screen organically
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        if (p.y < -10) {
+           p.y = canvas.height + 10;
+           p.x = Math.random() * canvas.width;
+        }
 
         // Repel from mouse
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 200) {
-          const force = (200 - distance) / 200;
-          p.x -= (dx / distance) * force * 2;
-          p.y -= (dy / distance) * force * 2;
+        if (distance < 150) {
+          const force = (150 - distance) / 150;
+          p.x -= (dx / distance) * force * 1.5;
+          p.y -= (dy / distance) * force * 1.5;
         }
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(139, 92, 246, 0.4)'; // Violet tint
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.4)'; 
         ctx.fill();
 
+        // Neural web connections (100px threshold)
         for (let j = index + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx2 = p.x - p2.x;
           const dy2 = p.y - p2.y;
           const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
-          if (dist2 < 150) {
+          if (dist2 < 100) {
             ctx.beginPath();
-            const opacity = (1 - dist2 / 150) * 0.15;
-            ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`; // Cyan tint
+            const opacity = (1 - dist2 / 100) * 0.2;
+            ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);

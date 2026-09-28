@@ -1,6 +1,5 @@
-"use client";
 import React from 'react';
-import { personalInfo } from '@/data/personal';
+import { portfolioData } from '@/data/portfolio';
 import { ArrowUpRight } from 'lucide-react';
 
 export const Footer = () => {
@@ -14,14 +13,14 @@ export const Footer = () => {
             <span className="text-xs font-mono text-zinc-400 tracking-widest uppercase">Available for select opportunities</span>
           </div>
           <h2 className="text-3xl font-medium text-white tracking-tight">Let's build the future.</h2>
-          <a href={`mailto:${personalInfo.email}`} className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
-            {personalInfo.email} <ArrowUpRight size={16} />
+          <a href={`mailto:${portfolioData.socials.email}`} className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+            {portfolioData.socials.email} <ArrowUpRight size={16} />
           </a>
         </div>
 
         <div className="flex gap-8 text-sm font-mono tracking-widest text-zinc-500">
-          <a href={personalInfo.github} target="_blank" className="hover:text-white transition-colors uppercase">GitHub</a>
-          <a href={personalInfo.linkedin} target="_blank" className="hover:text-white transition-colors uppercase">LinkedIn</a>
+          <a href={portfolioData.socials.github} target="_blank" rel="noreferrer" className="hover:text-white transition-colors uppercase">GitHub</a>
+          <a href={portfolioData.socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-white transition-colors uppercase">LinkedIn</a>
         </div>
 
       </div>

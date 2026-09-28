@@ -2,6 +2,7 @@ import React from "react";
 import { AntiGravityBackground } from "@/components/AntiGravityBackground";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { AboutSection } from "@/components/AboutSection";
 import { BentoGrid } from "@/components/BentoGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { Footer } from "@/components/Footer";
@@ -12,8 +13,9 @@ export default function Home() {
       <AntiGravityBackground />
       <Navbar />
       
-      <div className="relative z-10">
+      <div className="relative z-10 pt-8">
         <Hero />
+        <AboutSection />
         <BentoGrid />
         <ExperienceTimeline />
       </div>
