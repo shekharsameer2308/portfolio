@@ -1,51 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { ArrowUpRight, Mail, Terminal, Sparkles, Layers, Activity } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, Code, Mail, Terminal, Target, Cpu, Activity, Globe } from "lucide-react";
 import { personalInfo } from "@/data/personal";
 import { projects } from "@/data/projects";
-
-// Dynamic Glowing Bento Box
-const GlowingBentoBox = ({ children, className = "", delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      onMouseMove={handleMouseMove}
-      className={`relative group rounded-3xl border border-white/10 bg-zinc-950/50 p-6 overflow-hidden backdrop-blur-xl ${className}`}
-    >
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              600px circle at ${mouseX}px ${mouseY}px,
-              rgba(255,107,0,0.15),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-      <div className="relative z-10">{children}</div>
-    </motion.div>
-  );
-};
+import { MesmerizingBackground } from "@/components/MesmerizingBackground";
 
 export default function Home() {
-  const featuredProjects = projects.filter(p => p.featured).slice(0, 4);
-  const [time, setTime] = useState("");
+  const { scrollYProgress } = useScroll();
+  const yHero = useTransform(scrollYProgress, [0, 1], [0, 400]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
+  const [time, setTime] = useState("");
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'Asia/Kolkata' }));
@@ -54,136 +21,146 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#050507] text-zinc-300 font-sans p-4 md:p-8 selection:bg-[#ff6b00] selection:text-white relative overflow-hidden">
+    <main className="min-h-screen bg-[#030305] text-zinc-300 font-sans selection:bg-[#ff6b00] selection:text-white relative">
       
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#ff6b00]/20 blur-[150px] rounded-full mix-blend-screen animate-pulse" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-[#ffa800]/10 blur-[150px] rounded-full mix-blend-screen" />
+      {/* Mesmerizing Neural / Chemical Net Background */}
+      <MesmerizingBackground />
+      
+      {/* Global Grain & Glow */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#ff6b00]/10 blur-[150px] rounded-full mix-blend-screen animate-pulse" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
       </div>
 
-      <div className="max-w-6xl mx-auto space-y-6 relative z-10">
-        
-        {/* Header */}
-        <header className="flex justify-between items-center py-4 mb-4">
-          <motion.div 
-             initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-             className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md"
-          >
+      {/* Navbar / Status */}
+      <nav className="fixed top-0 left-0 right-0 p-6 flex justify-between items-center z-50 mix-blend-difference">
+         <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-[#ff6b00] animate-ping" />
-            <div className="w-2 h-2 rounded-full bg-[#ff6b00] absolute" />
-            <span className="text-xs font-mono text-zinc-300 tracking-wider uppercase">SYSTEMS {personalInfo.systemStatus.pipelines}</span>
-          </motion.div>
-          <motion.div 
-             initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-             className="text-xs font-mono text-zinc-400 bg-white/5 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md"
-          >
-            {time} IST
-          </motion.div>
-        </header>
+            <span className="text-xs font-mono text-white tracking-widest uppercase">SYS.{personalInfo.systemStatus.pipelines}</span>
+         </div>
+         <div className="text-xs font-mono text-white/50">{time} IST</div>
+      </nav>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6 auto-rows-[220px]">
-          
-          {/* Main Hero Bento */}
-          <GlowingBentoBox className="md:col-span-4 lg:col-span-8 row-span-2 flex flex-col justify-between" delay={0.1}>
-            <div className="flex justify-between items-start">
-               <div className="p-3 bg-[#ff6b00]/10 text-[#ff6b00] rounded-2xl border border-[#ff6b00]/20">
-                  <Terminal size={24} />
-               </div>
-               <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-mono text-white backdrop-blur-md">
-                  AVAILABLE FOR WORK
-               </div>
-            </div>
-            
-            <div>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-4 bg-clip-text text-transparent bg-gradient-to-br from-white to-zinc-500">
-                {personalInfo.name}.
-              </h1>
-              <p className="text-xl md:text-2xl text-zinc-400 max-w-xl leading-relaxed mb-8">
-                {personalInfo.tagline}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <a href={personalInfo.github} target="_blank" className="px-6 py-3 text-sm font-bold tracking-wider text-black bg-white rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                  GITHUB
-                </a>
-                <a href={personalInfo.linkedin} target="_blank" className="px-6 py-3 text-sm font-bold tracking-wider text-white bg-white/10 rounded-full hover:bg-white/20 transition-all border border-white/10">
-                  LINKEDIN
-                </a>
-              </div>
-            </div>
-          </GlowingBentoBox>
-
-          {/* Education / Focus Bento */}
-          <GlowingBentoBox className="md:col-span-2 lg:col-span-4 row-span-1" delay={0.2}>
-            <div className="h-full flex flex-col justify-between">
-               <div className="flex items-center gap-3 mb-4 text-[#ffa800]">
-                  <Sparkles size={20} />
-                  <h3 className="text-sm font-bold tracking-widest uppercase">Expertise</h3>
-               </div>
-               <div>
-                  <h4 className="text-2xl font-medium text-white mb-2">{personalInfo.title}</h4>
-                  <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3">
-                     {personalInfo.bio}
-                  </p>
-               </div>
-            </div>
-          </GlowingBentoBox>
-
-          {/* Location Bento */}
-          <GlowingBentoBox className="md:col-span-2 lg:col-span-4 row-span-1" delay={0.3}>
-             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
-             <div className="h-full flex flex-col justify-between relative z-10">
-               <h3 className="text-sm font-mono text-zinc-500 uppercase">Base</h3>
-               <div>
-                  <div className="text-4xl font-light text-white mb-1">{personalInfo.location.split(',')[0]}</div>
-                  <div className="text-zinc-400 font-mono">{personalInfo.location.split(',').slice(1).join(', ')}</div>
-               </div>
-               <div className="text-xs font-mono px-3 py-1.5 bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/20 rounded-full inline-block w-max">
-                  {personalInfo.education.institution}
-               </div>
-             </div>
-          </GlowingBentoBox>
-
-          {/* Projects CTA Bento */}
-          <GlowingBentoBox className="md:col-span-4 lg:col-span-4 row-span-1 bg-gradient-to-br from-[#ff6b00] to-[#ffa800] text-black group cursor-pointer border-none" delay={0.4}>
-             <div className="h-full flex flex-col justify-between">
-                <div>
-                   <h3 className="text-sm font-bold tracking-widest mb-2 uppercase text-black/60">Selected Work</h3>
-                   <h2 className="text-4xl font-bold tracking-tight">Deployments</h2>
-                </div>
-                <div className="self-end bg-black text-white p-4 rounded-full group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300 shadow-xl">
-                   <ArrowUpRight size={32} />
-                </div>
-             </div>
-          </GlowingBentoBox>
-
-          {/* Project Cards */}
-          {featuredProjects.map((project, i) => (
-            <GlowingBentoBox key={project.id} className="md:col-span-2 lg:col-span-4 row-span-1 flex flex-col justify-between group cursor-pointer" delay={0.5 + (i * 0.1)}>
-               <a href={`/projects/${project.id}`} className="absolute inset-0 z-20"></a>
-               <div className="relative z-10">
-                  <div className="flex justify-between items-center mb-4">
-                     <span className="text-3xl font-light text-white/20 group-hover:text-[#ff6b00]/50 transition-colors">{project.num}</span>
-                     <Layers size={20} className="text-zinc-500 group-hover:text-[#ff6b00] transition-colors" />
-                  </div>
-                  <h3 className="text-2xl text-white font-medium mb-2">{project.title}</h3>
-                  <div className="flex gap-2 flex-wrap">
-                     {project.technologies.slice(0,3).map(tech => (
-                        <span key={tech} className="text-[10px] font-mono px-2 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-300">{tech}</span>
-                     ))}
-                  </div>
-               </div>
-               <div className="absolute -bottom-10 -right-10 opacity-0 group-hover:opacity-20 group-hover:bottom-0 group-hover:right-0 transition-all duration-500 rotate-12 z-0">
-                  <Activity size={120} strokeWidth={0.5} className="text-[#ff6b00]" />
-               </div>
-            </GlowingBentoBox>
-          ))}
-          
-        </div>
+      {/* Huge Immersive Hero Section */}
+      <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 z-10 overflow-hidden">
+        <motion.div style={{ y: yHero, opacity: opacityHero }} className="space-y-6 max-w-5xl">
+           <motion.div 
+             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, ease: "easeOut" }}
+             className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[#ff6b00] font-mono text-sm backdrop-blur-md mb-8"
+           >
+             <Terminal size={14} /> {personalInfo.title}
+           </motion.div>
+           
+           <motion.h1 
+             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+             className="text-6xl md:text-9xl font-black tracking-tighter text-white drop-shadow-2xl"
+           >
+             {personalInfo.name.toUpperCase()}
+           </motion.h1>
+           
+           <motion.p 
+             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+             className="text-xl md:text-3xl text-zinc-400 font-light max-w-3xl mx-auto leading-relaxed"
+           >
+             {personalInfo.tagline}
+           </motion.p>
+           
+           <motion.div 
+             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}
+             className="pt-12 flex justify-center gap-6"
+           >
+             <a href={personalInfo.github} target="_blank" className="flex items-center gap-2 text-white/50 hover:text-[#ff6b00] transition-colors font-mono text-sm uppercase tracking-widest">
+               <Code size={16} /> GitHub
+             </a>
+             <a href={personalInfo.linkedin} target="_blank" className="flex items-center gap-2 text-white/50 hover:text-[#ff6b00] transition-colors font-mono text-sm uppercase tracking-widest">
+               <Globe size={16} /> LinkedIn
+             </a>
+           </motion.div>
+        </motion.div>
         
-      </div>
+        {/* Scroll Indicator */}
+        <motion.div 
+           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
+           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+           <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">Descend</span>
+           <div className="w-[1px] h-16 bg-gradient-to-b from-white/30 to-transparent" />
+        </motion.div>
+      </section>
+
+      {/* Core Systems / Projects Section */}
+      <section className="relative z-20 bg-[#050507] py-32 px-4 md:px-12 rounded-t-[4rem] border-t border-white/5 shadow-[0_-20px_50px_rgba(255,107,0,0.05)]">
+         <div className="max-w-7xl mx-auto">
+            
+            <div className="mb-20">
+               <h2 className="text-sm font-mono text-[#ff6b00] mb-4 uppercase tracking-widest">01 / Deployed Systems</h2>
+               <h3 className="text-4xl md:text-6xl font-medium text-white tracking-tight">Industrial Intelligence.</h3>
+            </div>
+
+            <div className="space-y-32">
+               {projects.map((project, i) => (
+                 <motion.div 
+                   key={project.id}
+                   initial={{ opacity: 0, y: 100 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true, margin: "-100px" }}
+                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                   className="group flex flex-col md:flex-row gap-12 items-center"
+                 >
+                   {/* Massive Number */}
+                   <div className="hidden md:block w-32 text-8xl font-black text-white/5 group-hover:text-[#ff6b00]/20 transition-colors duration-500 font-mono">
+                     {project.num}
+                   </div>
+                   
+                   {/* Content */}
+                   <div className="flex-1 space-y-6 relative">
+                     <div className="absolute -left-8 top-0 w-1 h-full bg-gradient-to-b from-[#ff6b00]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                     
+                     <div className="flex items-center gap-4">
+                        <h4 className="text-3xl md:text-5xl font-medium text-white">{project.title}</h4>
+                        <span className="text-xs font-mono px-3 py-1 bg-white/5 rounded-full border border-white/10 text-zinc-400 uppercase">
+                          {project.status}
+                        </span>
+                     </div>
+                     
+                     <p className="text-xl text-zinc-400 font-light leading-relaxed max-w-2xl">
+                       {project.description}
+                     </p>
+                     
+                     <div className="flex flex-wrap gap-2 pt-2">
+                       {project.technologies.map(tech => (
+                          <span key={tech} className="text-xs font-mono px-3 py-1.5 bg-black border border-white/10 rounded-full text-zinc-500 group-hover:border-[#ff6b00]/30 transition-colors">
+                            {tech}
+                          </span>
+                       ))}
+                     </div>
+                     
+                     <div className="pt-6">
+                        <a href={`/projects/${project.id}`} className="inline-flex items-center gap-3 text-white hover:text-[#ff6b00] transition-colors text-lg font-medium">
+                          Explore System Architecture <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </a>
+                     </div>
+                   </div>
+                 </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
+      
+      {/* Abstract Footer */}
+      <footer className="relative z-20 bg-black py-24 border-t border-white/5 overflow-hidden">
+         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+         <div className="max-w-7xl mx-auto px-4 text-center relative z-10 space-y-8">
+            <Activity size={48} className="text-[#ff6b00] mx-auto opacity-50" />
+            <h2 className="text-4xl md:text-6xl font-medium text-white tracking-tight">Initiate Sequence.</h2>
+            <a href={`mailto:${personalInfo.email}`} className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold tracking-wider rounded-full hover:bg-[#ff6b00] hover:text-white transition-all duration-300">
+               <Mail size={20} /> INITIATE CONTACT
+            </a>
+            <p className="pt-12 text-zinc-600 font-mono text-xs uppercase tracking-widest">
+               © {new Date().getFullYear()} {personalInfo.name}. All systems operational.
+            </p>
+         </div>
+      </footer>
     </main>
   );
 }
