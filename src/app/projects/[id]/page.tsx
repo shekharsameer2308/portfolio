@@ -2,7 +2,7 @@ import React from "react";
 import { projects } from "@/data/projects";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Github, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Code } from "lucide-react";
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -79,7 +79,7 @@ export default function ProjectCaseStudyPage({ params }: { params: { id: string 
           <div className="flex gap-4">
             {project.githubUrl && (
               <a href={project.githubUrl} target="_blank" className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors">
-                <Github size={16} /> Repository
+                <Code size={16} /> Repository
               </a>
             )}
             {project.liveUrl && (

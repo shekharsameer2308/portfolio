@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail, Terminal, Database, Cpu, Activity } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Mail, Terminal } from "lucide-react";
 import { personalInfo } from "@/data/personal";
 import { projects } from "@/data/projects";
 
@@ -32,7 +32,6 @@ export default function Home() {
     <main className="min-h-screen bg-black text-zinc-300 font-sans p-4 md:p-8 selection:bg-white selection:text-black">
       <div className="max-w-6xl mx-auto space-y-4">
         
-        {/* Top Header / Status Row */}
         <header className="flex justify-between items-center py-4 mb-4 border-b border-zinc-800/50">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -41,10 +40,8 @@ export default function Home() {
           <div className="text-xs font-mono text-zinc-500">{time} IST</div>
         </header>
 
-        {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 auto-rows-[200px]">
           
-          {/* Hero Bento */}
           <BentoBox className="md:col-span-4 lg:col-span-8 row-span-2 flex flex-col justify-end p-8" delay={0.1}>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
             <div className="absolute top-0 right-0 p-8 opacity-20">
@@ -58,11 +55,11 @@ export default function Home() {
                 {personalInfo.tagline}
               </p>
               <div className="flex gap-4">
-                <a href={personalInfo.github} target="_blank" className="p-3 bg-zinc-800/50 rounded-full hover:bg-white hover:text-black transition-all">
-                  <Github size={20} />
+                <a href={personalInfo.github} target="_blank" className="px-4 py-2 text-sm font-mono bg-zinc-800/50 rounded-full hover:bg-white hover:text-black transition-all">
+                  GITHUB
                 </a>
-                <a href={personalInfo.linkedin} target="_blank" className="p-3 bg-zinc-800/50 rounded-full hover:bg-white hover:text-black transition-all">
-                  <Linkedin size={20} />
+                <a href={personalInfo.linkedin} target="_blank" className="px-4 py-2 text-sm font-mono bg-zinc-800/50 rounded-full hover:bg-white hover:text-black transition-all">
+                  LINKEDIN
                 </a>
                 <a href={`mailto:${personalInfo.email}`} className="p-3 bg-zinc-800/50 rounded-full hover:bg-white hover:text-black transition-all">
                   <Mail size={20} />
@@ -71,7 +68,6 @@ export default function Home() {
             </div>
           </BentoBox>
 
-          {/* Location/Bio Bento */}
           <BentoBox className="md:col-span-4 lg:col-span-4 row-span-1 p-6" delay={0.2}>
             <h3 className="text-sm font-mono text-zinc-500 mb-2 uppercase">Location</h3>
             <p className="text-white text-lg">{personalInfo.location}</p>
@@ -81,7 +77,6 @@ export default function Home() {
             </div>
           </BentoBox>
 
-          {/* Education Bento */}
           <BentoBox className="md:col-span-2 lg:col-span-4 row-span-1" delay={0.3}>
             <div className="flex h-full flex-col justify-between">
               <div>
@@ -96,7 +91,6 @@ export default function Home() {
             </div>
           </BentoBox>
 
-          {/* Projects Heading Bento */}
           <BentoBox className="md:col-span-4 lg:col-span-4 row-span-1 bg-white text-black group flex flex-col justify-between cursor-pointer" delay={0.4}>
              <div>
                 <h3 className="text-sm font-mono text-black/50 mb-2 uppercase">Selected Work</h3>
@@ -107,9 +101,9 @@ export default function Home() {
              </div>
           </BentoBox>
 
-          {/* Project Cards in Grid */}
           {featuredProjects.map((project, i) => (
             <BentoBox key={project.id} className="md:col-span-2 lg:col-span-4 row-span-1 flex flex-col justify-between group cursor-pointer hover:bg-zinc-800/80" delay={0.5 + (i * 0.1)}>
+               <a href={`/projects/${project.id}`} className="absolute inset-0 z-10"></a>
                <div>
                   <div className="flex justify-between items-start mb-2">
                      <span className="text-xs font-mono text-zinc-500">{project.num}</span>
@@ -119,10 +113,10 @@ export default function Home() {
                         ))}
                      </div>
                   </div>
-                  <h3 className="text-xl text-white font-medium mb-1">{project.title}</h3>
-                  <p className="text-sm text-zinc-400 line-clamp-2">{project.subtitle}</p>
+                  <h3 className="text-xl text-white font-medium mb-1 relative z-20">{project.title}</h3>
+                  <p className="text-sm text-zinc-400 line-clamp-2 relative z-20">{project.subtitle}</p>
                </div>
-               <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+               <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity relative z-20">
                   <ArrowUpRight size={20} className="text-zinc-400" />
                </div>
             </BentoBox>
@@ -130,7 +124,6 @@ export default function Home() {
           
         </div>
         
-        {/* Footer */}
         <footer className="py-12 text-center text-zinc-600 text-sm">
            <p>© {new Date().getFullYear()} {personalInfo.name}. Built with minimal precision.</p>
         </footer>
