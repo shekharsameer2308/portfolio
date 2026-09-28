@@ -16,31 +16,103 @@ export const portfolioData = {
   },
   projects: [
     {
+      id: "prototype-fno-1d",
+      title: "Prototype-FNO-1D",
+      description: "Browser-native scientific computing platform comparing Fourier Neural Operator (FNO) surrogates vs classical PDE solvers for Fisher-KPP and phase-field dynamics.",
+      techStack: ["React", "FastAPI", "PyTorch", "JavaScript"],
+      metrics: ["100,000× speedup", "Canvas Heatmaps"],
+      githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
+      liveUrl: "https://fnoproject.vercel.app"
+    },
+    {
       id: "analyzer",
       title: "Analyzer",
       description: "Industrial ML engine for coal quality assessment, non-linear GCV prediction, and blending optimization for thermal power plants.",
-      techStack: ["Next.js", "FastAPI", "XGBoost", "DuckDB", "SciPy"],
-      metrics: ["Reduced penalty fees", "Optimized blending"],
+      techStack: ["Next.js", "FastAPI", "XGBoost", "SciPy"],
+      metrics: ["Isolation Forest anomaly detection", "Cost minimization LP"],
       githubUrl: "https://github.com/shekharsameer2308/analyzer",
       liveUrl: "https://analyzer-self.vercel.app"
     },
     {
-      id: "scout",
-      title: "Scout (RAG System)",
-      description: "Advanced semantic search and retrieval-augmented generation pipeline using vector databases and chunking strategies.",
-      techStack: ["Python", "LangChain", "Vector DB", "LLMs", "React"],
-      metrics: ["Sub-second retrieval", "Semantic accuracy"],
-      githubUrl: "https://github.com/shekharsameer2308",
-      liveUrl: "https://shekharsameer2308.github.io"
+      id: "real-time-nexus",
+      title: "NEXUS Analytics",
+      description: "Enterprise-scale, near real-time data engineering platform simulating high-volume e-commerce marketplaces with 11 containerized microservices.",
+      techStack: ["Kafka", "PostgreSQL", "FastAPI", "Grafana", "Docker"],
+      metrics: ["10-50 events/sec", "Sub-second WebSocket latency"],
+      githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
+      liveUrl: "https://real-time-data-analysis.vercel.app/"
     },
     {
-      id: "nexus",
-      title: "Nexus Data Pipeline",
-      description: "High-throughput event streaming architecture using Kafka and PostgreSQL for real-time sensor analytics.",
-      techStack: ["Kafka", "PostgreSQL", "Docker", "Node.js", "Grafana"],
-      metrics: ["High throughput", "Real-time sync"],
-      githubUrl: "https://github.com/shekharsameer2308",
-      liveUrl: "https://shekharsameer2308.github.io"
+      id: "exi1",
+      title: "exi1 (SciML)",
+      description: "Scientific computing framework for e-methanol synthesis optimization utilizing DeepONet surrogate neural operators and Bayesian optimization.",
+      techStack: ["Python", "PyTorch", "BoTorch", "SciML", "CFD"],
+      metrics: ["+20.66% CO₂ conversion gain", "2D CFD solving"],
+      githubUrl: "https://github.com/shekharsameer2308/exi1",
+      liveUrl: ""
+    },
+    {
+      id: "scout",
+      title: "Scout Market Intel",
+      description: "AI-powered market intelligence platform utilizing NLP, RAG, and Qdrant vector databases for industry trend monitoring.",
+      techStack: ["Streamlit", "Qdrant", "Google Gemini", "PyTorch"],
+      metrics: ["Automated SWOT analysis", "BERTopic clustering"],
+      githubUrl: "https://github.com/shekharsameer2308/Scout",
+      liveUrl: ""
+    },
+    {
+      id: "flow-simulation",
+      title: "Flow-simulation (CFD)",
+      description: "GPU-accelerated CFD framework for incompressible Navier-Stokes simulation with CNN surrogate integration for pressure-field prediction.",
+      techStack: ["Taichi Lang", "CUDA", "PyTorch", "NumPy"],
+      metrics: ["Large Eddy Simulation", "GPU-parallel"],
+      githubUrl: "https://github.com/shekharsameer2308/Flow-simulation-",
+      liveUrl: ""
+    },
+    {
+      id: "trackfin",
+      title: "TrackFin SaaS",
+      description: "Modern, AI-ready personal finance & behavioral analytics platform with heuristic tagging and cashflow forecasting.",
+      techStack: ["Flask", "Vanilla JS", "Chart.js", "SQLite"],
+      metrics: ["Subscription detection", "Context-aware AI Advisor"],
+      githubUrl: "https://github.com/shekharsameer2308/TrackFin",
+      liveUrl: "https://track-fin-bay.vercel.app/"
+    },
+    {
+      id: "dbms-supply-chain",
+      title: "AI Supply Chain DB",
+      description: "Full-stack supply chain management system for fertilizer manufacturing featuring a Star schema, AI demand forecasting, and carbon tracking.",
+      techStack: ["MySQL", "Node.js", "React", "Recharts"],
+      metrics: ["Carbon emission tracking", "SQL Triggers"],
+      githubUrl: "https://github.com/shekharsameer2308/Database-Management-System-",
+      liveUrl: "https://dashboard-six-sable-18.vercel.app/"
+    },
+    {
+      id: "parkway",
+      title: "ParkWay Multi-Agent",
+      description: "Production-ready multi-agent validation workflow for healthcare providers integrating OCR, multi-source validation, and fuzzy entity matching.",
+      techStack: ["Python", "Agentic AI", "OCR", "APIs"],
+      metrics: ["70-90% automation", "200 profiles in <30m"],
+      githubUrl: "https://github.com/shekharsameer2308/ParkWay",
+      liveUrl: ""
+    },
+    {
+      id: "eyprototype",
+      title: "eyprototype (Healthcare AI)",
+      description: "End-to-end agentic AI system for validating healthcare provider directories utilizing a specialized 4-agent architecture.",
+      techStack: ["Python", "LLMs", "NLP", "Web Scraping"],
+      metrics: ["Firstsource Challenge VI", "Multi-Agent"],
+      githubUrl: "https://github.com/shekharsameer2308/eyprototype",
+      liveUrl: ""
+    },
+    {
+      id: "ml-models",
+      title: "ML Algorithms Library",
+      description: "Comprehensive modular library of fundamental supervised and unsupervised machine learning algorithms and preprocessing utilities.",
+      techStack: ["Scikit-Learn", "TensorFlow", "XGBoost"],
+      metrics: ["Educational Resource", "10+ Algorithms"],
+      githubUrl: "https://github.com/shekharsameer2308/ML-models-",
+      liveUrl: ""
     }
   ],
   experience: [
@@ -65,11 +137,12 @@ export const portfolioData = {
       ]
     }
   ],
+  certifications: [],
   skills: {
     languages: ["Python", "TypeScript", "SQL", "C++"],
-    frameworks: ["React", "Next.js", "FastAPI", "Node.js"],
-    dataAndAI: ["XGBoost", "Scikit-Learn", "LangChain", "Vector DBs", "Kafka", "PostgreSQL"],
-    engineering: ["Thermodynamics", "Polymer Science", "Process Optimization", "ASTM Standards"]
+    frameworks: ["React", "Next.js", "FastAPI", "Node.js", "Flask"],
+    dataAndAI: ["XGBoost", "PyTorch", "LangChain", "Kafka", "PostgreSQL", "SciML", "Qdrant"],
+    engineering: ["Thermodynamics", "CFD", "Polymer Science", "Process Optimization"]
   },
   socials: {
     email: "shekharsameer2308@gmail.com",

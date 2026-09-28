@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
 import { BentoGrid } from "@/components/BentoGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
+import { CertificationsSection } from "@/components/CertificationsSection";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <AboutSection />
         <BentoGrid />
         <ExperienceTimeline />
+        <CertificationsSection />
       </div>
       
       <Footer />
