@@ -1,26 +1,14 @@
-import type { Metadata, Viewport } from "next";
-import { personalInfo } from "@/data/personal";
+import type { Metadata } from "next";
+import { Inter, Caveat } from "next/font/google";
 import "./globals.css";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import "../styles/themes.css";
 
-const sans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const caveat = Caveat({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: `${personalInfo.name} - ${personalInfo.title}`,
-  description: personalInfo.bio,
-};
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  title: "Sameer Shekhar | Notebook",
+  description: "Chemical Engineering × Data × AI",
 };
 
 export default function RootLayout({
@@ -29,10 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className={`${sans.variable} ${mono.variable} antialiased bg-black text-white`}>
-        {children}
-      </body>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.variable} ${caveat.variable} font-sans`}>{children}</body>
     </html>
   );
 }

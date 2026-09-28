@@ -1,0 +1,21 @@
+:root {
+  --notebook-bg: #fdfbf7;
+  --ink-black: #1e293b;
+  --pastel-pink: #f5cde9;
+  --pastel-purple: #c0bff7;
+  --pastel-green: #87c3ba;
+  
+  --font-handwriting: var(--font-caveat), cursive;
+}
+
+.bg-notebook { background-color: var(--notebook-bg); }
+.text-ink { color: var(--ink-black); }
+.border-ink { border-color: var(--ink-black); }
+.font-handwriting { font-family: var(--font-handwriting); }
+
+.bg-pastel-pink { background-color: var(--pastel-pink); }
+.bg-pastel-purple { background-color: var(--pastel-purple); }
+.bg-pastel-green { background-color: var(--pastel-green); }
+
+.shadow-ink { box-shadow: 4px 4px 0px var(--ink-black); }
+.shadow-ink-hover { box-shadow: 8px 8px 0px var(--ink-black); }
