@@ -1,5 +1,5 @@
 import React from "react";
-import { AntiGravityBackground } from "@/components/AntiGravityBackground";
+import { NotebookBackground } from "@/components/NotebookBackground";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
@@ -10,8 +10,8 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#050507] text-zinc-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-50 relative overflow-hidden">
-      <AntiGravityBackground />
+    <main className="min-h-screen text-slate-900 font-sans selection:bg-yellow-300 selection:text-slate-900 relative overflow-x-hidden">
+      <NotebookBackground />
       <Navbar />
       
       <div className="relative z-10 pt-8">

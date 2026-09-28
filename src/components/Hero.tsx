@@ -6,37 +6,45 @@ import { portfolioData } from '@/data/portfolio';
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 z-10 pt-20">
+    <section className="relative min-h-[85vh] flex flex-col justify-center px-12 md:px-32 z-10 pt-20">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="space-y-8 max-w-5xl w-full flex flex-col items-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="max-w-4xl"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] bg-white/[0.02] backdrop-blur-md">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
-          <span className="text-xs font-mono text-zinc-300 tracking-wider uppercase">{portfolioData.hero.role}</span>
-        </div>
+        <motion.div 
+          whileHover={{ rotate: 2 }}
+          className="inline-block px-4 py-2 mb-8 bg-blue-200 border-2 border-slate-900 rounded-md font-mono text-slate-900 font-bold shadow-[4px_4px_0px_#0f172a] transform -rotate-2"
+        >
+          {portfolioData.hero.role}
+        </motion.div>
 
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-semibold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-zinc-600 pb-4">
-          {portfolioData.hero.name.split(' ')[0]} <br className="md:hidden" />
-          {portfolioData.hero.name.split(' ')[1]}
+        <h1 className="text-6xl md:text-8xl font-black text-slate-900 leading-tight mb-8">
+          Hi, I'm <br className="md:hidden" />
+          <span className="relative inline-block mt-2">
+            <span className="relative z-10">{portfolioData.hero.name}</span>
+            <span className="absolute bottom-2 left-0 w-full h-6 md:h-10 bg-yellow-300 -z-10 transform -rotate-1"></span>
+          </span>
         </h1>
 
-        <p className="text-lg md:text-2xl text-zinc-400 font-light max-w-2xl leading-relaxed">
-          {portfolioData.hero.tagline}
-        </p>
+        <div className="relative inline-block">
+          <p className="text-xl md:text-2xl text-slate-800 font-medium max-w-2xl leading-relaxed">
+            {portfolioData.hero.tagline}
+          </p>
+          {/* Decorative scribble/underline */}
+          <svg className="absolute -bottom-4 left-0 w-full h-4 text-red-400" viewBox="0 0 100 10" preserveAspectRatio="none">
+             <path d="M0 5 Q 25 10, 50 5 T 100 5" stroke="currentColor" strokeWidth="2" fill="transparent" />
+          </svg>
+        </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center gap-6">
-          <a href="#projects" className="group relative px-8 py-4 bg-white text-[#050507] rounded-full font-medium tracking-wide overflow-hidden transition-transform hover:scale-105 active:scale-95">
-            <span className="relative z-10 flex items-center gap-2">
-              Explore Systems <ArrowDownRight size={18} className="group-hover:rotate-[-45deg] transition-transform duration-300" />
-            </span>
-            <div className="absolute inset-0 bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+        <div className="pt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <a href="#projects" className="px-8 py-4 bg-red-400 border-2 border-slate-900 text-white font-black text-lg rounded-xl shadow-[4px_4px_0px_#0f172a] hover:translate-y-1 hover:translate-x-1 hover:shadow-[0px_0px_0px_#0f172a] transition-all transform rotate-1 flex items-center gap-2">
+            Open Notebook <ArrowDownRight size={20} />
           </a>
-          <div className="flex gap-6 text-sm font-mono tracking-widest text-zinc-500">
-            <a href={portfolioData.socials.github} target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors uppercase">GitHub</a>
-            <a href={portfolioData.socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-violet-400 transition-colors uppercase">LinkedIn</a>
+          <div className="flex gap-4 text-base font-bold text-slate-900">
+            <a href={portfolioData.socials.github} target="_blank" rel="noreferrer" className="hover:text-blue-600 transition-colors underline decoration-wavy decoration-blue-400 underline-offset-4">GitHub</a>
+            <a href={portfolioData.socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-blue-600 transition-colors underline decoration-wavy decoration-pink-400 underline-offset-4">LinkedIn</a>
           </div>
         </div>
       </motion.div>
