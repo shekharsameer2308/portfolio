@@ -138,11 +138,11 @@ export const portfolioData = {
     }
   ],
   certifications: [
-    { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "LinkedIn", date: "2026" },
-    { title: "Product Management for AI and Data Science", issuer: "LinkedIn", date: "2025" },
-    { title: "Certified Supply Chain Professional (CSCP)", issuer: "APICS", date: "2025" },
-    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024" },
-    { title: "Summer Analytics 2025", issuer: "Consulting & Analytics Club", date: "2025" }
+    { title: "Summer Analytics 2025 (Top 25 Percentile)", issuer: "Consulting & Analytics Club, IIT Guwahati", date: "2025" },
+    { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "Udemy / Sitmi Academy", date: "June 2026" },
+    { title: "The Product Management for AI & Data Science Course", issuer: "Udemy / 365 Careers", date: "June 2026" },
+    { title: "Certified Supply Chain Professional (CSCP)", issuer: "Udemy / YouAccel Training", date: "Aug 2026" },
+    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024" }
   ],
   skills: {
     languages: ["Python", "TypeScript", "SQL", "C++"],
