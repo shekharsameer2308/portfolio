@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   SMOKED TITANIUM & SOLAR FLARE
+   Design System Tokens
+   ═══════════════════════════════════════════════ */
+
+:root {
+  /* ── Core Palette ── */
+  --void: #050507;
+  --spine: rgba(255, 255, 255, 0.04);
+  --surface-active: rgba(18, 20, 26, 0.85);
+  --surface-distant: rgba(12, 13, 17, 0.4);
+
+  /* ── Light / Paper Palette ── */
+  --paper: #F3F2EE;
+  --paper-surface: #EBEAE5;
+  --text-inverse: #111827;
+  --text-inverse-secondary: #4B5563;
+  --text-inverse-muted: #9CA3AF;
+  --border-inverse: rgba(0, 0, 0, 0.08);
+
+  /* ── Typography ── */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+
+  /* ── Solar Flare ── */
+  --flare-start: #ff6b00;
+  --flare-end: #ffa800;
+  --flare-glow: rgba(255, 107, 0, 0.15);
+
+  /* ── Borders ── */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.08);
+
+  /* ── Status ── */
+  --status-online: #22c55e;
+}
+
+/* ═══════════════════════════════════════════════
+   Base Styles
+   ═══════════════════════════════════════════════ */
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--void);
+  color: var(--text-primary);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   Scrollbar — Thin, Technical
+   ═══════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--flare-start);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) var(--void);
+}
+
+/* ═══════════════════════════════════════════════
+   Selection — Subtle Orange Tint
+   ═══════════════════════════════════════════════ */
+
+::selection {
+  background: rgba(255, 107, 0, 0.2);
+  color: #ffa800;
+}
+
+/* ═══════════════════════════════════════════════
+   Focus States — Orange Outline
+   ═══════════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--flare-start);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   Reduced Motion
+   ═══════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   3D Scene Utilities
+   ═══════════════════════════════════════════════ */
+
+.perspective-scene {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* ═══════════════════════════════════════════════
+   Technical Label System
+   ═══════════════════════════════════════════════ */
+
+@layer components {
+  .tech-label {
+    @apply font-mono text-tech-sm uppercase tracking-widest text-text-muted;
+  }
+
+  .tech-label-active {
+    @apply font-mono text-tech-sm uppercase tracking-widest text-flare-start;
+  }
+
+  .tech-separator {
+    @apply mx-2 text-text-muted select-none;
+    content: "/";
+  }
+
+  /* ── Subtle Separator Lines ── */
+  .separator-line {
+    @apply w-full border-t border-border-subtle;
+  }
+
+  /* ── Active Node Glow ── */
+  .flare-glow {
+    box-shadow: 0 0 24px var(--flare-glow), 0 0 48px rgba(255, 107, 0, 0.06);
+  }
+
+  .flare-glow-sm {
+    box-shadow: 0 0 12px var(--flare-glow);
+  }
+
+  /* ── Surface with Backdrop ── */
+  .surface-active {
+    background: var(--surface-active);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .surface-distant {
+    background: var(--surface-distant);
+  }
+
+  /* ── Grid Background ── */
+  .grid-background {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px
+      );
+    background-size: 4rem 4rem;
+  }
+
+  /* ── Coordinate Grid (Hero) ── */
+  .coordinate-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px
+      );
+    background-size: 3rem 3rem;
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      black 30%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      black 30%,
+      transparent 100%
+    );
+  }
+}
