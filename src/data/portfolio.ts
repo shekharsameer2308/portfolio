@@ -137,7 +137,13 @@ export const portfolioData = {
       ]
     }
   ],
-  certifications: [],
+  certifications: [
+    { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "LinkedIn", date: "2026" },
+    { title: "Product Management for AI and Data Science", issuer: "LinkedIn", date: "2025" },
+    { title: "Certified Supply Chain Professional (CSCP)", issuer: "APICS", date: "2025" },
+    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024" },
+    { title: "Summer Analytics 2025", issuer: "Consulting & Analytics Club", date: "2025" }
+  ],
   skills: {
     languages: ["Python", "TypeScript", "SQL", "C++"],
     frameworks: ["React", "Next.js", "FastAPI", "Node.js", "Flask"],
