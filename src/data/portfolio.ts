@@ -44,7 +44,7 @@ export const portfolioData = {
     },
     {
       id: "exi1",
-      title: "exi1 (SciML)",
+      title: "Reactor Model",
       description: "Scientific computing framework for e-methanol synthesis optimization utilizing DeepONet surrogate neural operators and Bayesian optimization.",
       techStack: ["Python", "PyTorch", "BoTorch", "SciML", "CFD"],
       metrics: ["+20.66% CO₂ conversion gain", "2D CFD solving"],
@@ -138,11 +138,11 @@ export const portfolioData = {
     }
   ],
   certifications: [
-    { title: "Summer Analytics 2025 (Top 25 Percentile)", issuer: "Consulting & Analytics Club, IIT Guwahati", date: "2025" },
-    { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "Udemy / Sitmi Academy", date: "June 2026" },
-    { title: "The Product Management for AI & Data Science Course", issuer: "Udemy / 365 Careers", date: "June 2026" },
-    { title: "Certified Supply Chain Professional (CSCP)", issuer: "Udemy / YouAccel Training", date: "Aug 2026" },
-    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024" }
+    { title: "Summer Analytics 2025 (Top 25 Percentile)", issuer: "Consulting & Analytics Club, IIT Guwahati", date: "2025", image: "/certs/iitg.jpg" },
+    { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "Udemy / Sitmi Academy", date: "June 2026", image: "/certs/demand.jpg" },
+    { title: "The Product Management for AI & Data Science Course", issuer: "Udemy / 365 Careers", date: "June 2026", image: "/certs/product.jpg" },
+    { title: "Certified Supply Chain Professional (CSCP)", issuer: "Udemy / YouAccel Training", date: "Aug 2026", image: "/certs/cscp.jpg" },
+    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024", image: "" }
   ],
   skills: {
     languages: ["Python", "TypeScript", "SQL", "C++"],
