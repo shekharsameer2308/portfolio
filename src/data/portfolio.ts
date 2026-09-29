@@ -18,7 +18,7 @@ export const portfolioData = {
     {
       id: "prototype-fno-1d",
       title: "Prototype-FNO-1D",
-      description: "Browser-native scientific computing platform comparing Fourier Neural Operator (FNO) surrogates vs classical PDE solvers for Fisher-KPP and phase-field dynamics.",
+      description: "Developed a high-performance browser-native scientific computing platform evaluating Fourier Neural Operator (FNO) surrogates against classical PDE solvers (Fisher-KPP, phase-field). Achieved a 100,000x computational speedup rendering real-time canvas heatmaps and 3D surface convergence analytics.",
       techStack: ["React", "FastAPI", "PyTorch", "JavaScript"],
       metrics: ["100,000× speedup", "Canvas Heatmaps"],
       githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
@@ -27,7 +27,7 @@ export const portfolioData = {
     {
       id: "analyzer",
       title: "Analyzer",
-      description: "Industrial ML engine for coal quality assessment, non-linear GCV prediction, and blending optimization for thermal power plants.",
+      description: "Architected an industrial-grade ML platform for coal quality assessment. Deployed XGBoost models for non-linear GCV prediction from proximate analysis, achieving high accuracy. Engineered a linear programming optimizer for cost-efficient coal blending, reducing penalty fees significantly.",
       techStack: ["Next.js", "FastAPI", "XGBoost", "SciPy"],
       metrics: ["Isolation Forest anomaly detection", "Cost minimization LP"],
       githubUrl: "https://github.com/shekharsameer2308/analyzer",
@@ -36,7 +36,7 @@ export const portfolioData = {
     {
       id: "real-time-nexus",
       title: "NEXUS Analytics",
-      description: "Enterprise-scale, near real-time data engineering platform simulating high-volume e-commerce marketplaces with 11 containerized microservices.",
+      description: "Engineered an enterprise-grade, near real-time data streaming platform simulating high-throughput marketplaces. Orchestrated 11 containerized microservices utilizing Apache Kafka for event ingestion and PostgreSQL for star-schema analytics, maintaining sub-second WebSocket broadcasting latency.",
       techStack: ["Kafka", "PostgreSQL", "FastAPI", "Grafana", "Docker"],
       metrics: ["10-50 events/sec", "Sub-second WebSocket latency"],
       githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
@@ -141,8 +141,7 @@ export const portfolioData = {
     { title: "Summer Analytics 2025 (Top 25 Percentile)", issuer: "Consulting & Analytics Club, IIT Guwahati", date: "2025", image: "/certs/iitg.jpg" },
     { title: "Supply Chain - Demand Planning, Forecasting & S&OP w/ Excel", issuer: "Udemy / Sitmi Academy", date: "June 2026", image: "/certs/demand.jpg" },
     { title: "The Product Management for AI & Data Science Course", issuer: "Udemy / 365 Careers", date: "June 2026", image: "/certs/product.jpg" },
-    { title: "Certified Supply Chain Professional (CSCP)", issuer: "Udemy / YouAccel Training", date: "Aug 2026", image: "/certs/cscp.jpg" },
-    { title: "Scientific Computing with Python", issuer: "freeCodeCamp", date: "2024", image: "" }
+    { title: "Certified Supply Chain Professional (CSCP)", issuer: "Udemy / YouAccel Training", date: "Aug 2026", image: "/certs/cscp.jpg" }
   ],
   skills: {
     languages: ["Python", "TypeScript", "SQL", "C++"],
