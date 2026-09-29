@@ -53,10 +53,6 @@ export const Footer = () => {
             <a href={portfolioData.socials.github} target="_blank" rel="noreferrer" className="hover:text-pastel-purple transition-colors underline decoration-2 underline-offset-4 decoration-slate-300 hover:decoration-pastel-purple">GitHub</a>
             <a href={portfolioData.socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-pastel-pink transition-colors underline decoration-2 underline-offset-4 decoration-slate-300 hover:decoration-pastel-pink">LinkedIn</a>
           </div>
-          <div className="text-xs font-mono font-bold text-slate-400 flex items-center gap-2 mt-4 px-3 py-1 bg-slate-100 rounded border border-slate-200">
-             <span className="w-2 h-2 rounded-full bg-pastel-green animate-pulse shadow-[0_0_8px_rgba(135,195,186,0.8)]" />
-             SYSTEMS ONLINE
-          </div>
         </motion.div>
 
       </motion.div>
