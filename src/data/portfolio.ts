@@ -16,6 +16,15 @@ export const portfolioData = {
   },
   projects: [
     {
+      id: "ecom-attribute-extraction",
+      title: "E-Commerce Attribute Extraction",
+      description: "End-to-end computer vision pipeline extracting structured product attributes from packaging images. Utilizes Google Gemini API and a custom trained Averaged Perceptron NER model, integrating deterministic Pydantic validation to completely eliminate LLM arithmetic hallucinations.",
+      techStack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
+      metrics: ["93.3% extraction accuracy", "Zero math hallucinations"],
+      githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction",
+      liveUrl: ""
+    },
+    {
       id: "prototype-fno-1d",
       title: "Prototype-FNO-1D",
       description: "Developed a high-performance browser-native scientific computing platform evaluating Fourier Neural Operator (FNO) surrogates against classical PDE solvers (Fisher-KPP, phase-field). Achieved a 100,000x computational speedup rendering real-time canvas heatmaps and 3D surface convergence analytics.",
