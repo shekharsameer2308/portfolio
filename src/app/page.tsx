@@ -32,7 +32,6 @@ export default function NotebookPortfolio() {
           {/* SECTION 1: FUNCTION / BIO */}
           <section className="md:col-span-1 bg-pastelPink/40 border border-pastelPinkBorder rounded-2xl p-6 shadow-sm flex flex-col justify-between">
             <div>
-              {/* Pill-Shaped Header */}
               <div className="inline-block px-4 py-1.5 rounded-full bg-pink-400 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
                 01. Core Function
               </div>
@@ -57,45 +56,97 @@ export default function NotebookPortfolio() {
                 <a key={project.id} href={project.liveUrl || project.githubUrl} target="_blank" rel="noreferrer" className="block bg-white/90 p-4 rounded-xl border border-indigo-100 shadow-xs hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-center mb-1">
                     <h3 className="font-bold text-slate-800 text-sm">{project.title}</h3>
-                    <span className="text-xs text-indigo-600 font-medium">{project.techStack.slice(0, 2).join(' • ')}</span>
+                    <span className="text-xs text-indigo-600 font-medium">{project.techStack.slice(0, 3).join(' • ')}</span>
                   </div>
                   <p className="text-xs text-slate-600 mb-2 line-clamp-2">
                     {project.description}
                   </p>
-                  <div className="flex gap-2">
-                    {project.metrics.map(metric => (
-                      <span key={metric} className="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 rounded-full border border-slate-100">
-                        {metric}
-                      </span>
-                    ))}
-                  </div>
                 </a>
               ))}
             </div>
           </section>
 
           {/* SECTION 3: TECHNICAL SKILLS / STACK */}
-          <section className="md:col-span-2 bg-pastelMint/40 border border-pastelMintBorder rounded-2xl p-6 shadow-sm">
+          <section className="md:col-span-3 bg-pastelMint/40 border border-pastelMintBorder rounded-2xl p-6 shadow-sm">
             <div className="inline-block px-4 py-1.5 rounded-full bg-teal-500 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-              03. Tech Stack & Tools
+              03. Technical Arsenal
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs mb-4">
-              {portfolioData.skills.dataAndAI.slice(0, 8).map(skill => (
-                <div key={skill} className="bg-white/80 p-2.5 rounded-lg border border-teal-100 text-center font-medium text-slate-700">{skill}</div>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-              {portfolioData.skills.frameworks.slice(0, 4).map(skill => (
-                 <div key={skill} className="bg-white/80 p-2.5 rounded-lg border border-teal-100 text-center font-medium text-slate-700">{skill}</div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
+              
+              <div>
+                <h4 className="font-bold text-teal-800 mb-2 border-b border-teal-200 pb-1">Languages</h4>
+                <div className="flex flex-wrap gap-2">
+                  {portfolioData.skills.languages.map(skill => (
+                    <span key={skill} className="bg-white/80 px-2 py-1 rounded border border-teal-100 text-slate-700">{skill}</span>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-bold text-teal-800 mb-2 border-b border-teal-200 pb-1">Frameworks</h4>
+                <div className="flex flex-wrap gap-2">
+                  {portfolioData.skills.frameworks.map(skill => (
+                    <span key={skill} className="bg-white/80 px-2 py-1 rounded border border-teal-100 text-slate-700">{skill}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-teal-800 mb-2 border-b border-teal-200 pb-1">Data & AI</h4>
+                <div className="flex flex-wrap gap-2">
+                  {portfolioData.skills.dataAndAI.map(skill => (
+                    <span key={skill} className="bg-white/80 px-2 py-1 rounded border border-teal-100 text-slate-700">{skill}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-teal-800 mb-2 border-b border-teal-200 pb-1">Domain Engineering</h4>
+                <div className="flex flex-wrap gap-2">
+                  {portfolioData.skills.engineering.map(skill => (
+                    <span key={skill} className="bg-white/80 px-2 py-1 rounded border border-teal-100 text-slate-700">{skill}</span>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </section>
 
-          {/* SECTION 4: CONTACT & LINKS */}
-          <section className="md:col-span-1 bg-amber-50/60 border border-amber-200/80 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+          {/* SECTION 4: EXPERIENCE & CERTS */}
+          <section className="md:col-span-2 bg-amber-50/60 border border-amber-200/80 rounded-2xl p-6 shadow-sm">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+              04. Experience & Credentials
+            </div>
+            
+            <div className="space-y-6">
+              {portfolioData.experience.map((exp, i) => (
+                <div key={i} className="relative pl-4 border-l-2 border-amber-200">
+                  <div className="absolute w-2 h-2 rounded-full bg-amber-400 -left-[5px] top-1.5"></div>
+                  <h4 className="font-bold text-slate-800 text-sm">{exp.role}</h4>
+                  <div className="text-xs text-amber-700 font-medium mb-1">{exp.company} • {exp.dates}</div>
+                  <p className="text-xs text-slate-600 leading-relaxed">{exp.bulletPoints[0]}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-amber-200/60">
+              <h4 className="font-bold text-slate-800 text-xs mb-3 uppercase tracking-wider">Key Certifications</h4>
+              <div className="flex flex-col gap-2">
+                {portfolioData.certifications.slice(0, 3).map((cert: any, i: number) => (
+                  <div key={i} className="flex justify-between items-center text-xs">
+                    <span className="font-medium text-slate-700">{cert.title}</span>
+                    <span className="text-amber-700">{cert.issuer}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 5: CONTACT & LINKS */}
+          <section className="md:col-span-1 bg-pastelPink/20 border border-pink-200/50 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="inline-block px-4 py-1.5 rounded-full bg-amber-500 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-                04. Connect
+              <div className="inline-block px-4 py-1.5 rounded-full bg-pink-500 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+                05. Connect
               </div>
               <p className="text-xs text-slate-700 mb-4">
                 Let's collaborate on building rigorous computational architecture and industrial ML systems.

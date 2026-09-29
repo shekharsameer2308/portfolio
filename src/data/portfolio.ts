@@ -26,7 +26,7 @@ export const portfolioData = {
     },
     {
       id: "prototype-fno-1d",
-      title: "Prototype-FNO-1D",
+      title: "Neural PDE Solver (FNO)",
       description: "Developed a high-performance browser-native scientific computing platform evaluating Fourier Neural Operator (FNO) surrogates against classical PDE solvers (Fisher-KPP, phase-field). Achieved a 100,000x computational speedup rendering real-time canvas heatmaps and 3D surface convergence analytics.",
       techStack: ["React", "FastAPI", "PyTorch", "JavaScript"],
       metrics: ["100,000× speedup", "Canvas Heatmaps"],
