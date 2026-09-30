@@ -6,11 +6,26 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "media", // Uses system preference seamlessly
+  darkMode: "class", // Uses next-themes class strategy
   theme: {
     extend: {
+      colors: {
+        paper: "var(--paper)",
+        dot: "var(--dot)",
+        ink: "var(--ink)",
+        soft: "var(--soft)",
+        bar: "var(--bar)",
+        card: "var(--card)",
+        line: "var(--line)",
+        bezel: "var(--bezel)",
+        desk: "var(--desk)",
+        pink: "var(--pink)",
+        lav: "var(--lav)",
+        mint: "var(--mint)",
+        yel: "var(--yel)",
+      },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-patrick)", "var(--font-inter)", "system-ui", "sans-serif"],
         hand: ["var(--font-hand)", "cursive"],
       },
       boxShadow: {

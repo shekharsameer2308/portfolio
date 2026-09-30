@@ -3,43 +3,57 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-stone-200 text-stone-900 antialiased;
+  :root {
+    --paper: #fbfaf8;
+    --dot: #cdc7bd;
+    --ink: #2a2a2a;
+    --soft: #6b6862;
+    --bar: #dedcd8;
+    --card: #f1efeb;
+    --line: #bdb8ae;
+    --bezel: #141414;
+    --desk: #e7e4df;
+    --pink: #f6dcd9;
+    --lav: #e9e1f5;
+    --mint: #dcf1e8;
+    --yel: #fbf0c4;
   }
-  
-  @media (prefers-color-scheme: dark) {
-    body {
-      @apply bg-zinc-950 text-zinc-100;
-    }
+
+  .dark {
+    --paper: #1a1b1e;
+    --dot: #33353a;
+    --ink: #ebe8e2;
+    --soft: #a19d95;
+    --bar: #2b2d32;
+    --card: #232529;
+    --line: #4a4d54;
+    --bezel: #050505;
+    --desk: #0d0d0e;
+    --pink: #4a3336;
+    --lav: #3a3350;
+    --mint: #274139;
+    --yel: #4b4426;
+  }
+
+  body {
+    @apply bg-desk text-ink antialiased transition-colors duration-300;
   }
 }
 
 /* Custom Scrollbar for the polished look */
-::-webkit-scrollbar {
+::-webkit-scrollbar, .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track, .custom-scrollbar::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-stone-300 rounded-full;
-}
-
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-700;
-  }
+::-webkit-scrollbar-thumb, .custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-bar rounded-full;
 }
 
 ::selection {
-  @apply bg-yellow-200/80 text-stone-900;
-}
-
-@media (prefers-color-scheme: dark) {
-  ::selection {
-    @apply bg-yellow-500/30 text-zinc-100;
-  }
+  @apply bg-yel text-ink;
 }
