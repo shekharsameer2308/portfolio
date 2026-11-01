@@ -11,7 +11,7 @@ export const site = {
   github: "https://github.com/shekharsameer2308",
   linkedin: "https://www.linkedin.com/in/sameershekhar",
   resume: "/resume.pdf",
-  url: "https://portfolio-sameershekhar.vercel.app",
+  url: "https://portfolio-dusky-two-rp4yp844ff.vercel.app",
 };
 
 export const categories: Record<Category, string> = {
