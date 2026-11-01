@@ -25,8 +25,8 @@ const config: Config = {
         yel: "var(--yel)",
       },
       fontFamily: {
-        sans: ["var(--font-patrick)", "var(--font-inter)", "system-ui", "sans-serif"],
-        hand: ["var(--font-hand)", "cursive"],
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        hand: ["var(--font-hand)", "var(--font-patrick)", "cursive"],
       },
       boxShadow: {
         paper: "0 4px 20px -2px rgba(0, 0, 0, 0.1), 0 0 3px rgba(0,0,0,0.05)",

@@ -2,31 +2,34 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { LampDesk, Lamp } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
-export default function LampToggle() {
+export default function LampToggle({ className = "" }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="fixed bottom-6 right-6 w-12 h-12" />; // Placeholder
+    return (
+      <div className={`w-9 h-9 rounded-full border border-line/60 bg-card/60 animate-pulse ${className}`} />
+    );
   }
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="px-3 py-1.5 rounded-[999px] border-[1.5px] border-line bg-card text-ink font-bold text-sm shadow-sm hover:bg-bar transition-colors flex items-center gap-2"
-      aria-label="Toggle Theme"
-      title="Toggle Theme"
+      className={`relative inline-flex items-center justify-center w-9 h-9 rounded-full border border-line/80 bg-card/80 text-ink shadow-sm hover:bg-bar hover:border-soft/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${className}`}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <div className="relative">
-        <LampDesk className={`w-4 h-4 ${isDark ? "text-soft" : "text-ink"}`} />
-      </div>
-      <span>{isDark ? "Dark Mode" : "Light Mode"}</span>
+      {isDark ? (
+        <Sun className="w-4 h-4 text-amber-300 transition-transform hover:rotate-45" />
+      ) : (
+        <Moon className="w-4 h-4 text-slate-700 transition-transform hover:-rotate-12" />
+      )}
     </button>
   );
 }

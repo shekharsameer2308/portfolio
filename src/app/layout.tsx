@@ -3,7 +3,6 @@ import { Inter, Caveat, Patrick_Hand } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/content";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import LampToggle from "@/components/LampToggle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-hand", display: "swap" });
