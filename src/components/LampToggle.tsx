@@ -11,7 +11,7 @@ export default function LampToggle({ className = "" }: { className?: string }) {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className={`w-12 h-12 rounded-xl bg-card shadow-inbio ${className}`} />;
+    return <div className={`w-9 h-9 border border-border/80 ${className}`} />;
   }
 
   const isDark = resolvedTheme === "dark";
@@ -19,14 +19,14 @@ export default function LampToggle({ className = "" }: { className?: string }) {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={`w-12 h-12 rounded-xl bg-card shadow-inbio-btn flex items-center justify-center text-fg hover:text-primary transition-all duration-300 hover:-translate-y-0.5 active:shadow-inbio-active ${className}`}
+      className={`w-9 h-9 border border-border hover:border-primary text-fg-muted hover:text-primary flex items-center justify-center transition-colors ${className}`}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       title={isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
       {isDark ? (
-        <Sun className="w-5 h-5 text-amber-400" />
+        <Sun className="w-4 h-4 text-amber-400" />
       ) : (
-        <Moon className="w-5 h-5 text-zinc-700" />
+        <Moon className="w-4 h-4 text-neutral-700" />
       )}
     </button>
   );
