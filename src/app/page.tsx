@@ -1,34 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  ArrowUpRight,
-  ArrowRight,
-  Mail,
-  Copy,
-  Check,
-  X,
-  ExternalLink,
-  Menu,
-  Cpu,
-  Layers,
-  Database,
-  FlaskConical,
-  GraduationCap,
-  Award,
-  Briefcase,
-  Terminal,
-  Code2,
-  LineChart,
-  ShieldCheck,
-  ChevronRight,
-  Zap,
-  CheckCircle2
-} from "lucide-react";
+import React, { useState } from "react";
+import { ArrowUpRight, Copy, Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import LampToggle from "@/components/LampToggle";
 import { certs } from "@/data/certs";
 
-function GithubIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
+function GithubIcon({ size = 16, className = "" }: { size?: number; className?: string }) {
   return (
     <svg
       width={size}
@@ -47,7 +24,7 @@ function GithubIcon({ size = 18, className = "" }: { size?: number; className?: 
   );
 }
 
-function LinkedinIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
+function LinkedinIcon({ size = 16, className = "" }: { size?: number; className?: string }) {
   return (
     <svg
       width={size}
@@ -67,498 +44,325 @@ function LinkedinIcon({ size = 18, className = "" }: { size?: number; className?
   );
 }
 
-const rotatingRoles = [
-  "Chemical Engineer.",
-  "SciML Researcher.",
-  "Systems Developer.",
-  "Process Innovator."
-];
+interface ProjectData {
+  id: string;
+  title: string;
+  tagline: string;
+  category: string;
+  problem: string;
+  solution: string;
+  metric: string;
+  stack: string[];
+  githubUrl: string;
+  liveUrl?: string;
+  details?: string;
+}
 
-const featuresList = [
+const featuredProjects: ProjectData[] = [
   {
-    icon: FlaskConical,
-    title: "Scientific Machine Learning",
-    description: "Neural operators (FNO, DeepONet) for solving PDE systems and reaction-transport dynamics orders of magnitude faster than numerical solvers."
-  },
-  {
-    icon: Cpu,
-    title: "Process Modeling & CFD",
-    description: "Fixed-bed catalytic reactors, GPU-accelerated Navier-Stokes fluid simulations, and continuous thermodynamic boundary modeling."
-  },
-  {
-    icon: LineChart,
-    title: "Industrial Quality Analytics",
-    description: "XGBoost regression, multivariate isolation-forest anomaly detection, and empirical ASTM proximate laboratory benchmarking."
-  },
-  {
-    icon: Layers,
-    title: "Constrained Optimization",
-    description: "Simplex linear programming algorithms formulated to minimize raw material costs while strictly obeying non-linear quality limits."
-  },
-  {
-    icon: Database,
-    title: "Distributed Data Streaming",
-    description: "Near real-time Apache Kafka event ingestion, PostgreSQL star schema architecture, Docker microservices, and Grafana telemetry."
-  },
-  {
-    icon: Code2,
-    title: "Multimodal AI & NER",
-    description: "Computer vision and NLP attribute extraction combining Google Gemini with custom Perceptron NER and deterministic Pydantic validation."
-  }
-];
-
-const portfolioProjects = [
-  {
-    id: "01",
+    id: "fno-pde",
     title: "Neural PDE Solver",
-    category: "SCIENTIFIC ML",
-    subtitle: "In-Browser Fourier Neural Operator Surrogates",
+    category: "Scientific ML",
+    tagline: "In-browser Fourier Neural Operator surrogates for continuous reaction-diffusion dynamics",
+    problem:
+      "Classical numerical solvers (finite difference, finite volume) for non-linear PDEs like Fisher-KPP and phase-field dynamics require fine spatiotemporal meshing, leading to prohibitive computation times for real-time visualization and parameter exploration.",
+    solution:
+      "Trained a Fourier Neural Operator (FNO) surrogate that maps continuous initial condition functions to solution trajectories across arbitrary grid resolutions. Deployed in-browser with real-time HTML5 canvas heatmaps and surface convergence metrics.",
     metric: "100,000× faster inference",
-    description: "Evaluates Fourier Neural Operator (FNO) surrogates against traditional numerical solvers on Fisher-KPP reaction dynamics with real-time canvas heatmaps.",
-    stack: ["PyTorch", "React", "FastAPI", "Canvas API"],
+    stack: ["PyTorch", "React", "FastAPI", "Canvas API", "SciML"],
     githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
-    liveUrl: "https://fnoproject.vercel.app"
+    liveUrl: "https://fnoproject.vercel.app",
+    details:
+      "Unlike standard CNN-based surrogates that are tied to fixed grid discretizations, the Fourier Neural Operator learns operators in continuous frequency space, enabling zero-shot super-resolution without retraining."
   },
   {
-    id: "02",
-    title: "Reactor Model (DeepONet)",
-    category: "PROCESS SIMULATION",
-    subtitle: "Catalytic E-Methanol Synthesis Surrogate",
+    id: "deeponet-reactor",
+    title: "Reactor Model & Bayesian Optimization",
+    category: "Process Simulation",
+    tagline: "DeepONet surrogate modeling for catalytic fixed-bed e-methanol synthesis",
+    problem:
+      "Simulating multi-component gas-phase catalytic reaction kinetics with coupled 2D heat and mass transfer differential equations requires minutes per evaluation in classical CFD, making global optimization sweeps intractable.",
+    solution:
+      "Developed a DeepONet neural operator surrogate modeling temperature and concentration profiles across varying feed space velocities and inlet compositions. Coupled the surrogate with BoTorch for multi-objective Bayesian optimization to identify optimal operating windows.",
     metric: "+20.66% CO₂ conversion gain",
-    description: "Surrogate neural operators of a catalytic fixed-bed methanol synthesis reactor paired with BoTorch for multi-objective Bayesian optimization.",
-    stack: ["Python", "PyTorch", "BoTorch", "SciML"],
-    githubUrl: "https://github.com/shekharsameer2308/exi1"
+    stack: ["Python", "PyTorch", "BoTorch", "SciML", "CFD"],
+    githubUrl: "https://github.com/shekharsameer2308/exi1",
+    details:
+      "The branch net encodes variable operating parameters while the trunk net encodes the reactor spatial domain, cutting simulation query times to under 15ms per run."
   },
   {
-    id: "03",
-    title: "Industrial Analyzer",
-    category: "ANALYTICS & OPTIMIZATION",
-    subtitle: "Coal Quality Regression & Blend Optimizer",
+    id: "analyzer-coal",
+    title: "Analyzer",
+    category: "Industrial Analytics",
+    tagline: "Coal quality assessment, GCV regression, and linear programming blend optimizer",
+    problem:
+      "Thermal power utilities and steel plants receive heterogeneous coal consignments with wide fluctuations in proximate parameters (moisture, ash, volatile matter, fixed carbon). Manual blending calculations often miss contractual quality thresholds, incurring steep penalty fees.",
+    solution:
+      "Engineered an end-to-end analytical platform combining XGBoost regression for Gross Calorific Value (GCV) prediction, multivariate Isolation Forest to detect anomalous laboratory assay logs, and a Simplex linear programming optimizer to formulate lowest-cost blends meeting strict ash (<34%) and thermal criteria.",
     metric: "Simplex LP optimizer",
-    description: "Predicts Gross Calorific Value via XGBoost, isolates faulty lab assays with Isolation Forest, and optimizes coal blending ratios with linear programming.",
-    stack: ["Next.js", "FastAPI", "XGBoost", "SciPy Optimize"],
+    stack: ["Next.js", "FastAPI", "XGBoost", "SciPy Optimize", "DuckDB"],
     githubUrl: "https://github.com/shekharsameer2308/analyzer",
-    liveUrl: "https://analyzer-self.vercel.app"
+    liveUrl: "https://analyzer-self.vercel.app",
+    details:
+      "Directly developed following on-site proximate analysis work at Central Coalfields Limited, translating industrial lab assay protocols into an automated algorithmic decision engine."
   },
   {
-    id: "04",
+    id: "nexus-streaming",
     title: "NEXUS Analytics",
-    category: "DISTRIBUTED SYSTEMS",
-    subtitle: "Real-Time Marketplace Streaming Engine",
+    category: "Distributed Systems",
+    tagline: "High-throughput marketplace event streaming engine on Kafka & Docker",
+    problem:
+      "Simulating and processing high-velocity transaction event streams requires a resilient distributed pipeline that decouples ingestion from analytical aggregation without dropping messages.",
+    solution:
+      "Orchestrated 11 containerized Docker microservices utilizing Apache Kafka brokers for event ingestion, PostgreSQL for star-schema analytical storage, WebSockets for sub-second client broadcasts, and Grafana for system health telemetry.",
     metric: "10–50 events/sec throughput",
-    description: "Simulates high-throughput marketplace telemetry across 11 containerized Docker microservices, Kafka event streams, and Grafana dashboards.",
-    stack: ["Kafka", "PostgreSQL", "Docker", "FastAPI", "Grafana"],
+    stack: ["Apache Kafka", "PostgreSQL", "Docker", "FastAPI", "Grafana", "WebSockets"],
     githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
     liveUrl: "https://real-time-data-analysis.vercel.app/"
   },
   {
-    id: "05",
-    title: "Attribute Extraction",
-    category: "MULTIMODAL AI",
-    subtitle: "Packaging Vision & NER Pipeline",
+    id: "attribute-extraction",
+    title: "E-Commerce Attribute Extraction",
+    category: "Multimodal AI",
+    tagline: "Packaging vision & NER pipeline with deterministic validation",
+    problem:
+      "Extracting structured numerical attributes (net weight, volume, nutritional counts) from packaging photos using raw LLM prompts frequently generates arithmetic hallucinations and invalid data formats.",
+    solution:
+      "Built a hybrid pipeline combining Google Gemini multimodal vision, EasyOCR text extraction, and a custom-trained Averaged Perceptron NER model, backed by deterministic Pydantic schema validation to ensure mathematical consistency (93.3% test accuracy).",
     metric: "93.3% extraction accuracy",
-    description: "Extracts structured attributes from product photos using Google Gemini, EasyOCR, and Averaged Perceptron NER with deterministic Pydantic validation.",
     stack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
     githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction"
-  },
-  {
-    id: "06",
-    title: "Flow-simulation (CFD)",
-    category: "FLUID DYNAMICS",
-    subtitle: "GPU-Accelerated Navier-Stokes Solver",
-    metric: "Taichi GPU-parallel",
-    description: "GPU-accelerated incompressible fluid dynamics simulation with CNN surrogate integration for instantaneous pressure-field prediction.",
-    stack: ["Taichi Lang", "CUDA", "PyTorch", "NumPy"],
-    githubUrl: "https://github.com/shekharsameer2308/Flow-simulation-"
   }
 ];
 
-const educationItems = [
+const experienceList = [
   {
-    degree: "B.Tech in Chemical Engineering",
-    institution: "Birla Institute of Technology, Mesra",
-    period: "2023 - 2027",
-    score: "Class of 2027",
-    details: "Core training in transport phenomena, process dynamics, reaction engineering, and mathematical modeling of industrial chemical systems."
-  },
-  {
-    degree: "Joint President",
-    institution: "IIChE (Indian Institute of Chemical Engineers), BIT Mesra",
-    period: "2023 - Present",
-    score: "Student Leadership",
-    details: "Leading the student chapter, coordinating research talks, chemical engineering hackathons, and technical workshops on scientific modeling."
-  }
-];
-
-const experienceItems = [
-  {
+    period: "May 2026 – Jun 2026",
     role: "Summer Intern, Quality Management",
-    company: "Central Coalfields Limited (CCL)",
-    period: "May - Jun 2026",
-    score: "Ranchi, India",
-    details: "Conducted ASTM proximate analysis (moisture, ash, volatile matter, gross calorific value) across heterogeneous coal seams. Audited dispatches against billing penalty specs."
+    org: "Central Coalfields Limited (CCL)",
+    location: "Ranchi, India",
+    description:
+      "Ran proximate analysis protocols (moisture, ash, volatile matter, gross calorific value) on coal samples across heterogeneous mine seams. Cleaned and audited lab assay logs into structured datasets to benchmark consignments against billing specifications and contractual penalty limits."
   },
   {
+    period: "Jun 2025 – Jul 2025",
     role: "Research Intern, Materials Characterization",
-    company: "Tata Steel Limited",
-    period: "Jun - Jul 2025",
-    score: "Jamshedpur, India",
-    details: "Conducted polymer modification experiments utilizing Scanning Electron Microscopy (SEM), FTIR, DSC, and TGA. Correlated morphology with thermal degradation curves."
+    org: "Tata Steel Limited",
+    location: "Jamshedpur, India",
+    description:
+      "Collaborated with senior research scientists on polymer modification experimental protocols. Operated analytical characterization instruments including SEM, FTIR, DSC, and TGA to correlate microstructure changes with thermal degradation curves."
+  },
+  {
+    period: "2023 – Present",
+    role: "Joint President",
+    org: "Indian Institute of Chemical Engineers (IIChE), BIT Mesra",
+    location: "Ranchi, India",
+    description:
+      "Leading the chemical engineering student chapter: coordinating technical symposiums, research seminars, and student workshops on process simulation and computational engineering tools."
   }
 ];
 
-const technicalSkills = [
-  { name: "Scientific ML & Neural Operators (FNO, DeepONet)", percentage: 95 },
-  { name: "Python, PyTorch & BoTorch Bayesian Opt", percentage: 92 },
-  { name: "Industrial Process Thermodynamics & CFD", percentage: 90 },
-  { name: "Apache Kafka, PostgreSQL & Docker", percentage: 88 },
-  { name: "Linear Programming & Blend Optimization", percentage: 86 },
-  { name: "Laboratory Characterization (ASTM, SEM, FTIR, DSC, TGA)", percentage: 88 }
+const competenceList = [
+  {
+    area: "Scientific ML & Modeling",
+    skills: "Neural Operators (FNO, DeepONet), BoTorch, Navier-Stokes, SciPy Optimize, CFD"
+  },
+  {
+    area: "Machine Learning & AI",
+    skills: "XGBoost, Scikit-Learn, PyTorch, Gemini Multimodal API, NER, Anomaly Detection"
+  },
+  {
+    area: "Data & Systems",
+    skills: "Apache Kafka, PostgreSQL, Docker, FastAPI, Grafana, Next.js, TypeScript, Python"
+  },
+  {
+    area: "Laboratory & Characterization",
+    skills: "ASTM Proximate Analysis (D3172), SEM, FTIR, DSC, TGA, Polymer Characterization"
+  }
 ];
 
-export default function InBioPortfolio() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeResumeTab, setActiveResumeTab] = useState<"experience" | "skills" | "certifications">("experience");
+export default function FluidPortfolio() {
+  const [copied, setCopied] = useState(false);
   const [activeCert, setActiveCert] = useState<{ title: string; issuer: string; image: string } | null>(null);
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const [activeSimulationTab, setActiveSimulationTab] = useState<"fno" | "deeponet" | "analyzer">("deeponet");
+  const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
 
   const email = "shekharsameer2308@gmail.com";
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % rotatingRoles.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedProjectId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <div className="min-h-screen bg-bg text-fg font-sans selection:bg-primary selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-bg text-fg selection:bg-fg selection:text-bg">
       
-      {/* 1. STICKY HEADER */}
-      <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-md border-b border-border transition-colors">
-        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-          
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-full bg-card shadow-inbio-btn flex items-center justify-center font-bold text-lg text-fg group-hover:text-primary transition-colors">
-              SS
-            </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-lg tracking-tight text-fg group-hover:text-primary transition-colors uppercase">
-                SAMEER<span className="text-primary">.</span>
-              </span>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-fg-subtle">
-                BIT Mesra '27
-              </span>
-            </div>
+      {/* Top Floating Header */}
+      <header className="sticky top-0 z-40 bg-bg/80 backdrop-blur-md border-b border-border transition-colors">
+        <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="#" className="flex items-center gap-2 group">
+            <span className="font-semibold text-sm tracking-tight text-fg group-hover:text-fg-muted transition-colors">
+              Sameer Shekhar
+            </span>
+            <span className="text-xs text-fg-subtle hidden sm:inline">&middot; Chemical Eng &amp; ML</span>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-xs uppercase tracking-wider font-semibold text-fg-muted">
-            <a href="#home" className="hover:text-primary transition-colors">Home</a>
-            <a href="#features" className="hover:text-primary transition-colors">Features</a>
-            <a href="#portfolio" className="hover:text-primary transition-colors">Portfolio</a>
-            <a href="#resume" className="hover:text-primary transition-colors">Resume</a>
-            <a href="#skills" className="hover:text-primary transition-colors">Skills</a>
-            <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
-          </nav>
-
-          {/* Right Action Buttons */}
-          <div className="flex items-center gap-4">
+          <nav className="flex items-center gap-5 text-xs font-medium text-fg-muted">
+            <a href="#work" className="hover:text-fg transition-colors">Work</a>
+            <a href="#experience" className="hover:text-fg transition-colors">Experience</a>
+            <a href="#competencies" className="hover:text-fg transition-colors">Skills</a>
+            <a href="#contact" className="hover:text-fg transition-colors">Contact</a>
             <LampToggle />
-
-            <a
-              href="#contact"
-              className="hidden sm:inline-flex items-center justify-center px-6 py-3 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio text-xs uppercase font-bold tracking-wider text-primary hover:-translate-y-0.5 active:shadow-inbio-active transition-all"
-            >
-              Get in Touch
-            </a>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden w-11 h-11 rounded-xl bg-card shadow-inbio-btn flex items-center justify-center text-fg hover:text-primary transition-all"
-              aria-label="Toggle Menu"
-            >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+          </nav>
         </div>
-
-        {/* Mobile Nav Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-bg/95 backdrop-blur-md px-6 py-6 space-y-4">
-            <div className="flex flex-col gap-3 text-sm font-semibold uppercase tracking-wider text-fg-muted">
-              {["home", "features", "portfolio", "resume", "skills", "contact"].map((sec) => (
-                <a
-                  key={sec}
-                  href={`#${sec}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 hover:text-primary transition-colors"
-                >
-                  {sec}
-                </a>
-              ))}
-            </div>
-            <div className="pt-4 border-t border-border flex justify-between items-center">
-              <span className="text-xs text-fg-subtle">{email}</span>
-              <button
-                onClick={handleCopyEmail}
-                className="px-4 py-2 rounded-lg bg-card shadow-inbio-btn text-xs text-primary font-bold"
-              >
-                {copiedEmail ? "Copied" : "Copy Email"}
-              </button>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* MAIN CONTAINER */}
-      <main className="max-w-7xl mx-auto px-6 py-12 md:py-20 space-y-32">
+      {/* Main Content */}
+      <main className="max-w-3xl mx-auto px-6 py-16 sm:py-24 space-y-20">
 
-        {/* 2. HERO SECTION (Face replaced with High-Tech Simulation Terminal!) */}
-        <section id="home" className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center pt-4">
-          
-          {/* Left Hero Content */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-primary font-bold">
-              WELCOME TO MY WORLD
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-fg leading-[1.15]">
-              Hi, I'm <span className="text-primary">Sameer Shekhar</span>
-              <br />
-              <span className="text-2xl sm:text-4xl font-bold text-fg-muted">
-                a <span className="text-fg border-b-2 border-primary pb-1">{rotatingRoles[roleIndex]}</span>
-              </span>
+        {/* 1. HERO SECTION */}
+        <section className="space-y-6">
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg leading-[1.25]">
+              Building neural operators, process surrogates, and streaming data architectures.
             </h1>
-
-            <p className="text-base sm:text-lg text-fg-muted leading-relaxed font-normal pt-2 max-w-2xl">
-              I am a final-year Chemical Engineering student at <strong>BIT Mesra</strong> and Joint President of IIChE. Rather than treating machine learning as abstract syntax, I build models constrained by domain physics: <strong>neural operators</strong> for continuous PDE dynamics, <strong>Bayesian optimization</strong> for chemical reactors, and <strong>industrial ML pipelines</strong> for raw materials testing.
+            <p className="text-base sm:text-lg text-fg-muted leading-relaxed font-normal pt-1">
+              I am a final-year Chemical Engineering student at <strong className="text-fg font-medium">BIT Mesra</strong> and Joint President of IIChE. My work sits at the intersection of transport phenomena, reaction engineering, and machine learning—replacing slow numerical PDE solvers with Fourier Neural Operators, applying Bayesian optimization to chemical reactors, and engineering distributed data pipelines for industrial quality optimization.
             </p>
-
-            {/* Two Bottom Sub-sections: FIND WITH ME + BEST SKILL ON */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-border/80">
-              
-              {/* Find with Me */}
-              <div className="space-y-3">
-                <span className="text-xs uppercase font-mono tracking-widest font-semibold text-fg-subtle block">
-                  FIND WITH ME
-                </span>
-                <div className="flex items-center gap-4">
-                  <a
-                    href="https://github.com/shekharsameer2308"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all duration-300"
-                    title="GitHub"
-                  >
-                    <GithubIcon size={20} />
-                  </a>
-
-                  <a
-                    href="https://linkedin.com/in/sameershekhar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all duration-300"
-                    title="LinkedIn"
-                  >
-                    <LinkedinIcon size={20} />
-                  </a>
-
-                  <button
-                    onClick={handleCopyEmail}
-                    className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all duration-300"
-                    title="Copy Email"
-                  >
-                    {copiedEmail ? <Check size={20} className="text-emerald-500" /> : <Mail size={20} />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Best Skill On */}
-              <div className="space-y-3">
-                <span className="text-xs uppercase font-mono tracking-widest font-semibold text-fg-subtle block">
-                  BEST SKILL ON
-                </span>
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn flex flex-col items-center justify-center text-[11px] font-mono font-bold text-fg hover:text-primary transition-colors">
-                    <FlaskConical size={18} className="text-primary mb-0.5" />
-                    SciML
-                  </div>
-
-                  <div className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn flex flex-col items-center justify-center text-[11px] font-mono font-bold text-fg hover:text-primary transition-colors">
-                    <Cpu size={18} className="text-primary mb-0.5" />
-                    PyTorch
-                  </div>
-
-                  <div className="w-14 h-14 rounded-xl bg-card shadow-inbio-btn flex flex-col items-center justify-center text-[11px] font-mono font-bold text-fg hover:text-primary transition-colors">
-                    <Database size={18} className="text-primary mb-0.5" />
-                    Kafka
-                  </div>
-                </div>
-              </div>
-
-            </div>
           </div>
 
-          {/* Right Hero Content: REPLACING THE FACE WITH SCIENTIFIC SIMULATION SHOWCASE! */}
-          <div className="lg:col-span-5">
-            <div className="relative rounded-3xl bg-card shadow-inbio p-6 sm:p-8 space-y-6">
-              
-              {/* Terminal Window Header */}
-              <div className="flex items-center justify-between border-b border-border pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
-                  <span className="text-xs font-mono text-fg-subtle ml-2">sciml_engine.py</span>
-                </div>
-                <span className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                  ● ACTIVE SURROGATE
-                </span>
-              </div>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2 text-xs font-medium">
+            <a
+              href="https://github.com/shekharsameer2308"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-fg hover:underline underline-offset-4 decoration-border"
+            >
+              <GithubIcon size={14} />
+              GitHub
+              <ArrowUpRight size={11} className="text-fg-subtle" />
+            </a>
 
-              {/* Simulation Selector Tabs */}
-              <div className="grid grid-cols-3 gap-2 p-1.5 rounded-xl bg-bg-subtle text-[11px] font-mono">
-                <button
-                  onClick={() => setActiveSimulationTab("deeponet")}
-                  className={`py-1.5 px-2 rounded-lg font-bold transition-all text-center ${
-                    activeSimulationTab === "deeponet"
-                      ? "bg-card shadow-inbio-btn text-primary"
-                      : "text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  DeepONet
-                </button>
-                <button
-                  onClick={() => setActiveSimulationTab("fno")}
-                  className={`py-1.5 px-2 rounded-lg font-bold transition-all text-center ${
-                    activeSimulationTab === "fno"
-                      ? "bg-card shadow-inbio-btn text-primary"
-                      : "text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  Neural PDE
-                </button>
-                <button
-                  onClick={() => setActiveSimulationTab("analyzer")}
-                  className={`py-1.5 px-2 rounded-lg font-bold transition-all text-center ${
-                    activeSimulationTab === "analyzer"
-                      ? "bg-card shadow-inbio-btn text-primary"
-                      : "text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  Coal LP
-                </button>
-              </div>
+            <a
+              href="https://linkedin.com/in/sameershekhar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-fg hover:underline underline-offset-4 decoration-border"
+            >
+              <LinkedinIcon size={14} />
+              LinkedIn
+              <ArrowUpRight size={11} className="text-fg-subtle" />
+            </a>
 
-              {/* Simulation Details Box */}
-              <div className="p-4 rounded-2xl bg-bg-subtle/80 border border-border space-y-3 font-mono text-xs">
-                {activeSimulationTab === "deeponet" && (
-                  <>
-                    <div className="text-primary font-bold"># Catalytic E-Methanol Reactor Model</div>
-                    <div className="text-fg-muted text-[11px] leading-relaxed">
-                      &gt; Surrogate neural operator resolving 2D heat/mass transfer &amp; reaction kinetics in &lt;12ms.
-                    </div>
-                    <div className="pt-2 flex justify-between items-center text-[11px] border-t border-border">
-                      <span className="text-fg-subtle">BoTorch Gain:</span>
-                      <span className="text-emerald-500 font-bold">+20.66% CO₂ Conversion</span>
-                    </div>
-                  </>
-                )}
+            <a
+              href={`mailto:${email}`}
+              className="inline-flex items-center gap-1.5 text-fg hover:underline underline-offset-4 decoration-border"
+            >
+              Email
+              <ArrowUpRight size={11} className="text-fg-subtle" />
+            </a>
 
-                {activeSimulationTab === "fno" && (
-                  <>
-                    <div className="text-primary font-bold"># Fourier Neural Operator Surrogates</div>
-                    <div className="text-fg-muted text-[11px] leading-relaxed">
-                      &gt; Fisher-KPP reaction-diffusion continuous operator evaluated in-browser canvas.
-                    </div>
-                    <div className="pt-2 flex justify-between items-center text-[11px] border-t border-border">
-                      <span className="text-fg-subtle">Speedup vs Classical:</span>
-                      <span className="text-emerald-500 font-bold">100,000× Acceleration</span>
-                    </div>
-                  </>
-                )}
-
-                {activeSimulationTab === "analyzer" && (
-                  <>
-                    <div className="text-primary font-bold"># Proximate Analysis &amp; Blend Optimizer</div>
-                    <div className="text-fg-muted text-[11px] leading-relaxed">
-                      &gt; XGBoost non-linear GCV prediction with constrained Simplex linear programming solver.
-                    </div>
-                    <div className="pt-2 flex justify-between items-center text-[11px] border-t border-border">
-                      <span className="text-fg-subtle">Cost Curve:</span>
-                      <span className="text-emerald-500 font-bold">Minimal Penalty Formulations</span>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* Verified Metrics Strip */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="p-3.5 rounded-xl bg-card shadow-inbio-btn flex flex-col">
-                  <span className="text-xl font-black text-fg">100,000×</span>
-                  <span className="text-[10px] font-mono text-fg-subtle uppercase">Inference Speedup</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-card shadow-inbio-btn flex flex-col">
-                  <span className="text-xl font-black text-primary">+20.66%</span>
-                  <span className="text-[10px] font-mono text-fg-subtle uppercase">Reactor CO₂ Gain</span>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-primary/5 border border-primary/20 flex items-center justify-between text-xs font-semibold">
-                <span className="text-fg">Birla Institute of Technology, Mesra</span>
-                <span className="text-primary font-mono text-[11px]">Chemical Eng</span>
-              </div>
-
-            </div>
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg transition-colors font-mono"
+            >
+              {copied ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+              <span>{copied ? "Copied" : "Copy email"}</span>
+            </button>
           </div>
-
         </section>
 
-        {/* 3. FEATURES / WHAT I DO */}
-        <section id="features" className="space-y-12 border-t border-border pt-20">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-[0.2em] font-bold text-primary">
-              FEATURES
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg">
-              What I Do
+        {/* 2. SELECTED WORK */}
+        <section id="work" className="space-y-8">
+          <div className="flex items-baseline justify-between border-b border-border pb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-fg">
+              Selected Work
             </h2>
+            <span className="text-xs text-fg-subtle font-mono">01 &ndash; 05</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuresList.map((feat, i) => {
-              const IconComp = feat.icon;
+          <div className="space-y-6">
+            {featuredProjects.map((project) => {
+              const isExpanded = expandedProjectId === project.id;
               return (
                 <div
-                  key={feat.title}
-                  className="p-8 rounded-3xl bg-card shadow-inbio hover:shadow-inbio-hover hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between space-y-6"
+                  key={project.id}
+                  className="p-6 rounded-2xl bg-card border border-border hover:border-fg-subtle/50 transition-all space-y-4"
                 >
-                  <div className="space-y-5">
-                    <div className="w-14 h-14 rounded-2xl bg-card shadow-inbio-btn flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                      <IconComp size={24} />
+                  {/* Title Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <h3 className="text-lg font-semibold tracking-tight text-fg">
+                        {project.title}
+                      </h3>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-bg-subtle text-fg-subtle font-mono">
+                        {project.category}
+                      </span>
                     </div>
-                    <h3 className="text-xl font-bold tracking-tight text-fg group-hover:text-primary transition-colors">
-                      {feat.title}
-                    </h3>
-                    <p className="text-sm text-fg-muted leading-relaxed font-normal">
-                      {feat.description}
-                    </p>
+
+                    <span className="text-xs font-mono font-medium text-emerald-600 dark:text-emerald-400 self-start sm:self-auto">
+                      {project.metric}
+                    </span>
                   </div>
 
-                  <div className="pt-4 flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span>Explore More</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  {/* Tagline */}
+                  <p className="text-sm text-fg font-medium">
+                    {project.tagline}
+                  </p>
+
+                  {/* Problem & Solution Flow */}
+                  <div className="space-y-2 text-xs sm:text-sm text-fg-muted leading-relaxed font-normal">
+                    <p>{project.solution}</p>
+                    {isExpanded && project.details && (
+                      <p className="pt-2 text-xs text-fg-subtle border-t border-border/60">
+                        {project.details}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Footer Bar: Tech Stack & Action Links */}
+                  <div className="pt-3 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex flex-wrap gap-1.5 font-mono text-fg-subtle">
+                      {project.stack.map((tech, i) => (
+                        <span key={tech}>
+                          {tech}{i < project.stack.length - 1 ? " ·" : ""}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-4 font-medium">
+                      <button
+                        onClick={() => toggleExpand(project.id)}
+                        className="inline-flex items-center gap-1 text-fg-muted hover:text-fg transition-colors"
+                      >
+                        <span>{isExpanded ? "Less" : "Notes"}</span>
+                        {isExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                      </button>
+
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-fg hover:underline underline-offset-4"
+                      >
+                        GitHub <ArrowUpRight size={11} className="text-fg-subtle" />
+                      </a>
+
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-fg hover:underline underline-offset-4"
+                        >
+                          Live <ArrowUpRight size={11} className="text-fg-subtle" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
@@ -566,445 +370,174 @@ export default function InBioPortfolio() {
           </div>
         </section>
 
-        {/* 4. PORTFOLIO / MY PORTFOLIO */}
-        <section id="portfolio" className="space-y-12 border-t border-border pt-20">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-[0.2em] font-bold text-primary">
-              VISIT MY WORK AND KEEP YOUR FEEDBACK
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg">
-              My Portfolio
+        {/* 3. EXPERIENCE & RESEARCH */}
+        <section id="experience" className="space-y-8">
+          <div className="flex items-baseline justify-between border-b border-border pb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-fg">
+              Industrial Experience &amp; Research
             </h2>
+            <span className="text-xs text-fg-subtle font-mono">2023 &ndash; Present</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioProjects.map((proj) => (
-              <div
-                key={proj.title}
-                className="p-7 rounded-3xl bg-card shadow-inbio hover:shadow-inbio-hover hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between space-y-6"
-              >
-                {/* Visual Header / Banner Box */}
-                <div className="h-44 rounded-2xl bg-bg-subtle p-5 border border-border flex flex-col justify-between relative overflow-hidden group-hover:border-primary/40 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-primary px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">
-                      {proj.category}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-fg-subtle">
-                      {proj.id}
-                    </span>
-                  </div>
-
+          <div className="space-y-8">
+            {experienceList.map((exp) => (
+              <div key={exp.role} className="space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <div>
-                    <span className="text-xs font-mono font-bold text-emerald-500 block">
-                      {proj.metric}
-                    </span>
-                    <h4 className="text-lg font-bold text-fg group-hover:text-primary transition-colors mt-1">
-                      {proj.title}
-                    </h4>
+                    <h3 className="text-base font-semibold text-fg">{exp.role}</h3>
+                    <p className="text-xs text-fg-muted">
+                      {exp.org} &middot; <span className="text-fg-subtle">{exp.location}</span>
+                    </p>
                   </div>
-                </div>
-
-                {/* Description & Subtitle */}
-                <div className="space-y-2">
-                  <span className="text-xs font-mono font-semibold text-fg-subtle">
-                    {proj.subtitle}
+                  <span className="text-xs font-mono text-fg-subtle whitespace-nowrap">
+                    {exp.period}
                   </span>
-                  <p className="text-sm text-fg-muted leading-relaxed line-clamp-3">
-                    {proj.description}
-                  </p>
                 </div>
-
-                {/* Tech Stack Pills & Action Links */}
-                <div className="pt-4 border-t border-border space-y-4">
-                  <div className="flex flex-wrap gap-1.5 text-[11px] font-mono text-fg-subtle">
-                    {proj.stack.map((t) => (
-                      <span key={t} className="px-2 py-0.5 rounded bg-bg-subtle border border-border">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between pt-1">
-                    <a
-                      href={proj.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-fg hover:text-primary transition-colors"
-                    >
-                      <GithubIcon size={14} />
-                      Source Code
-                    </a>
-
-                    {proj.liveUrl && (
-                      <a
-                        href={proj.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline underline-offset-4"
-                      >
-                        Live Demo
-                        <ArrowUpRight size={13} />
-                      </a>
-                    )}
-                  </div>
-                </div>
+                <p className="text-xs sm:text-sm leading-relaxed text-fg-muted">
+                  {exp.description}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 5. RESUME SECTION */}
-        <section id="resume" className="space-y-12 border-t border-border pt-20">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-[0.2em] font-bold text-primary">
-              4+ YEARS OF EDUCATION &amp; RESEARCH
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg">
-              My Resume
+        {/* 4. TECHNICAL COMPETENCIES */}
+        <section id="competencies" className="space-y-6">
+          <div className="border-b border-border pb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-fg">
+              Domain Competencies
             </h2>
           </div>
 
-          {/* Resume Tab Switcher */}
-          <div className="flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => setActiveResumeTab("experience")}
-              className={`px-8 py-4 rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                activeResumeTab === "experience"
-                  ? "bg-card shadow-inbio text-primary -translate-y-1"
-                  : "bg-card shadow-inbio-btn text-fg-muted hover:text-fg"
-              }`}
-            >
-              Education &amp; Experience
-            </button>
-
-            <button
-              onClick={() => setActiveResumeTab("skills")}
-              className={`px-8 py-4 rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                activeResumeTab === "skills"
-                  ? "bg-card shadow-inbio text-primary -translate-y-1"
-                  : "bg-card shadow-inbio-btn text-fg-muted hover:text-fg"
-              }`}
-            >
-              Professional Skills
-            </button>
-
-            <button
-              onClick={() => setActiveResumeTab("certifications")}
-              className={`px-8 py-4 rounded-2xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                activeResumeTab === "certifications"
-                  ? "bg-card shadow-inbio text-primary -translate-y-1"
-                  : "bg-card shadow-inbio-btn text-fg-muted hover:text-fg"
-              }`}
-            >
-              Verified Certifications
-            </button>
-          </div>
-
-          {/* TAB 1: Education & Experience Dual Timeline */}
-          {activeResumeTab === "experience" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-6">
-              
-              {/* Left Column: Education */}
-              <div className="space-y-8">
-                <div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-primary font-bold">2023 - 2027</span>
-                  <h3 className="text-2xl font-bold tracking-tight text-fg mt-1">Education Quality</h3>
-                </div>
-
-                <div className="space-y-6">
-                  {educationItems.map((edu) => (
-                    <div
-                      key={edu.degree}
-                      className="p-7 rounded-3xl bg-card shadow-inbio hover:shadow-inbio-hover hover:-translate-y-1 transition-all duration-300 space-y-3"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div>
-                          <h4 className="text-lg font-bold text-fg">{edu.degree}</h4>
-                          <span className="text-xs text-fg-muted font-medium">{edu.institution}</span>
-                        </div>
-                        <span className="self-start sm:self-auto px-3 py-1 rounded-lg bg-card shadow-inbio-btn text-xs font-mono font-bold text-primary">
-                          {edu.score}
-                        </span>
-                      </div>
-                      <p className="text-sm text-fg-muted leading-relaxed pt-2 border-t border-border/80">
-                        {edu.details}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Column: Experience */}
-              <div className="space-y-8">
-                <div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-primary font-bold">2025 - 2026</span>
-                  <h3 className="text-2xl font-bold tracking-tight text-fg mt-1">Job &amp; Research Experience</h3>
-                </div>
-
-                <div className="space-y-6">
-                  {experienceItems.map((exp) => (
-                    <div
-                      key={exp.role}
-                      className="p-7 rounded-3xl bg-card shadow-inbio hover:shadow-inbio-hover hover:-translate-y-1 transition-all duration-300 space-y-3"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div>
-                          <h4 className="text-lg font-bold text-fg">{exp.role}</h4>
-                          <span className="text-xs text-fg-muted font-medium">{exp.company}</span>
-                        </div>
-                        <span className="self-start sm:self-auto px-3 py-1 rounded-lg bg-card shadow-inbio-btn text-xs font-mono font-bold text-primary">
-                          {exp.period}
-                        </span>
-                      </div>
-                      <p className="text-sm text-fg-muted leading-relaxed pt-2 border-t border-border/80">
-                        {exp.details}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 2: Professional Skills */}
-          {activeResumeTab === "skills" && (
-            <div id="skills" className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
-              {technicalSkills.map((sk) => (
-                <div key={sk.name} className="p-6 rounded-3xl bg-card shadow-inbio space-y-3">
-                  <div className="flex justify-between items-center text-sm font-bold text-fg">
-                    <span>{sk.name}</span>
-                    <span className="font-mono text-primary">{sk.percentage}%</span>
-                  </div>
-                  <div className="w-full h-3 rounded-full bg-bg-subtle overflow-hidden p-0.5 border border-border">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-rose-400"
-                      style={{ width: `${sk.percentage}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* TAB 3: Verified Certifications */}
-          {activeResumeTab === "certifications" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6">
-              {certs.map((c) => (
-                <div
-                  key={c.title}
-                  onClick={() => setActiveCert(c)}
-                  className="p-5 rounded-3xl bg-card shadow-inbio hover:shadow-inbio-hover hover:-translate-y-2 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
-                >
-                  <div className="h-40 rounded-2xl bg-bg-subtle overflow-hidden border border-border relative">
-                    <img
-                      src={c.image}
-                      alt={c.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
-                    />
-                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="px-3 py-1.5 rounded-xl bg-card text-xs font-bold text-primary shadow-inbio">
-                        Preview Certificate
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-bold text-fg group-hover:text-primary transition-colors">
-                      {c.title}
-                    </h4>
-                    <p className="text-xs text-fg-subtle mt-1">{c.issuer}</p>
-                  </div>
-
-                  <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-primary font-bold">
-                    <span>View Full Size</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-        </section>
-
-        {/* 6. CONTACT SECTION */}
-        <section id="contact" className="space-y-12 border-t border-border pt-20">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs uppercase font-mono tracking-[0.2em] font-bold text-primary">
-              CONTACT
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg">
-              Contact With Me
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            
-            {/* Left Contact Card */}
-            <div className="lg:col-span-5 p-8 rounded-3xl bg-card shadow-inbio space-y-6">
-              <div className="w-16 h-16 rounded-2xl bg-card shadow-inbio-btn flex items-center justify-center font-black text-xl text-primary">
-                SS
-              </div>
-
-              <div className="space-y-1">
-                <h3 className="text-2xl font-bold tracking-tight text-fg">Sameer Shekhar</h3>
-                <p className="text-xs font-mono uppercase tracking-wider text-primary font-bold">
-                  Chemical Engineer &times; SciML Developer
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {competenceList.map((c) => (
+              <div key={c.area} className="p-4 rounded-xl bg-card border border-border space-y-1.5">
+                <div className="text-xs font-semibold text-fg">{c.area}</div>
+                <p className="text-xs text-fg-muted font-mono leading-relaxed">
+                  {c.skills}
                 </p>
               </div>
+            ))}
+          </div>
+        </section>
 
-              <p className="text-sm text-fg-muted leading-relaxed">
-                I am available for select research, industrial process engineering, and scientific machine learning roles. Feel free to connect directly.
-              </p>
+        {/* 5. EDUCATION & VERIFIED CREDENTIALS */}
+        <section className="space-y-6">
+          <div className="border-b border-border pb-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-fg">
+              Education &amp; Credentials
+            </h2>
+          </div>
 
-              <div className="space-y-2 text-xs font-mono text-fg-muted pt-2 border-t border-border">
-                <div>
-                  <span className="text-fg-subtle">Location:</span> Ranchi / Jamshedpur, Jharkhand, India
-                </div>
-                <div>
-                  <span className="text-fg-subtle">Institution:</span> Birla Institute of Technology, Mesra
-                </div>
-                <div>
-                  <span className="text-fg-subtle">Email:</span> {email}
-                </div>
+          <div className="space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <div>
+                <h3 className="text-sm font-semibold text-fg">
+                  Birla Institute of Technology, Mesra
+                </h3>
+                <p className="text-xs text-fg-muted">
+                  Bachelor of Technology in Chemical Engineering &middot; Ranchi, Jharkhand, India
+                </p>
               </div>
+              <span className="text-xs font-mono text-fg-subtle">Class of 2023 &ndash; 2027</span>
+            </div>
 
-              <div className="pt-4 space-y-3">
-                <span className="text-xs uppercase font-mono tracking-widest text-fg-subtle font-semibold block">
-                  FIND WITH ME
-                </span>
-                <div className="flex items-center gap-4">
-                  <a
-                    href="https://github.com/shekharsameer2308"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all"
-                    title="GitHub"
-                  >
-                    <GithubIcon size={18} />
-                  </a>
-
-                  <a
-                    href="https://linkedin.com/in/sameershekhar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all"
-                    title="LinkedIn"
-                  >
-                    <LinkedinIcon size={18} />
-                  </a>
-
+            <div className="pt-2 space-y-2">
+              <span className="text-xs font-medium text-fg-muted block">Verified Certifications:</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {certs.map((c) => (
                   <button
-                    onClick={handleCopyEmail}
-                    className="w-12 h-12 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center text-fg hover:text-primary hover:-translate-y-1 transition-all"
-                    title="Copy Email"
+                    key={c.title}
+                    onClick={() => setActiveCert(c)}
+                    className="p-3 rounded-lg border border-border bg-card hover:border-fg-subtle text-left flex items-center justify-between group transition-colors"
                   >
-                    {copiedEmail ? <Check size={18} className="text-emerald-500" /> : <Copy size={18} />}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Contact Card / Message Action */}
-            <div className="lg:col-span-7 p-8 rounded-3xl bg-card shadow-inbio space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold tracking-tight text-fg">Direct Inquiries</h3>
-                <p className="text-sm text-fg-muted leading-relaxed">
-                  Have a challenging process modeling, scientific machine learning, or distributed streaming project? Send me an email or copy my address to your clipboard.
-                </p>
-
-                <div className="p-6 rounded-2xl bg-bg-subtle border border-border space-y-3">
-                  <span className="text-xs font-mono uppercase tracking-widest text-fg-subtle block">
-                    Direct Email Address
-                  </span>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <span className="text-sm sm:text-base font-mono font-bold text-fg select-all">
-                      {email}
+                    <div>
+                      <div className="font-medium text-fg group-hover:underline underline-offset-2">
+                        {c.title}
+                      </div>
+                      <div className="text-[11px] text-fg-subtle">{c.issuer}</div>
+                    </div>
+                    <span className="text-[10px] font-mono text-fg-subtle group-hover:text-fg pl-2">
+                      Preview &rarr;
                     </span>
-                    <button
-                      onClick={handleCopyEmail}
-                      className="px-5 py-2.5 rounded-xl bg-card shadow-inbio-btn hover:shadow-inbio text-xs font-bold text-primary hover:-translate-y-0.5 active:shadow-inbio-active transition-all flex items-center gap-1.5 self-start sm:self-auto"
-                    >
-                      {copiedEmail ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                      <span>{copiedEmail ? "Address Copied!" : "Copy Email"}</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2 pt-2 text-xs text-fg-muted leading-relaxed">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                    <span>Scientific Machine Learning (Neural Operators, BoTorch)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                    <span>Industrial Coal Quality Assessment &amp; Blending LP</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                    <span>High-throughput Kafka &amp; Docker Event Streaming</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-border">
-                <a
-                  href={`mailto:${email}?subject=Project%20Inquiry%20via%20Portfolio`}
-                  className="w-full py-4 rounded-2xl bg-card shadow-inbio-btn hover:shadow-inbio flex items-center justify-center gap-2 text-sm uppercase font-bold tracking-wider text-primary hover:-translate-y-1 active:shadow-inbio-active transition-all"
-                >
-                  <Mail size={18} />
-                  <span>Send Direct Email Now</span>
-                </a>
+                  </button>
+                ))}
               </div>
             </div>
-
           </div>
         </section>
+
+        {/* 6. CONTACT */}
+        <section id="contact" className="space-y-6 pt-4 border-t border-border">
+          <div className="space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-fg">
+              Let's connect.
+            </h2>
+            <p className="text-sm text-fg-muted leading-relaxed max-w-xl">
+              Always open to discussing neural operators, chemical process optimization, industrial analytics, or distributed event streaming.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 text-xs">
+            <a
+              href={`mailto:${email}`}
+              className="px-4 py-2 rounded-lg bg-fg text-bg font-medium hover:opacity-90 transition-opacity"
+            >
+              Send an email
+            </a>
+
+            <button
+              onClick={handleCopyEmail}
+              className="px-4 py-2 rounded-lg border border-border bg-card hover:bg-bg-subtle text-fg font-medium transition-colors flex items-center gap-1.5"
+            >
+              {copied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+              <span>{copied ? "Email Copied!" : email}</span>
+            </button>
+          </div>
+        </section>
+
+        {/* 7. FOOTER */}
+        <footer className="pt-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-fg-subtle">
+          <div>
+            &copy; {new Date().getFullYear()} Sameer Shekhar &middot; Ranchi, Jharkhand, India
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/shekharsameer2308" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">GitHub</a>
+            <a href="https://linkedin.com/in/sameershekhar" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">LinkedIn</a>
+            <a href="#" className="hover:text-fg transition-colors">Top &uarr;</a>
+          </div>
+        </footer>
 
       </main>
 
-      {/* 7. FOOTER */}
-      <footer className="border-t border-border py-12 px-6 text-center space-y-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-fg-subtle">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-fg">SAMEER SHEKHAR</span> &middot; &copy; {new Date().getFullYear()} All rights reserved.
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/shekharsameer2308" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
-            <a href="https://linkedin.com/in/sameershekhar" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
-            <a href="#home" className="hover:text-primary transition-colors">Back to Top &uarr;</a>
-          </div>
-        </div>
-      </footer>
-
-      {/* CERTIFICATION PREVIEW MODAL */}
+      {/* Lightbox Modal for Certifications */}
       {activeCert && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           onClick={() => setActiveCert(null)}
         >
           <div
-            className="bg-card border border-border rounded-3xl p-6 max-w-2xl w-full shadow-inbio relative space-y-4"
+            className="bg-card border border-border rounded-2xl p-6 max-w-xl w-full shadow-2xl relative space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
               <div>
-                <h4 className="text-base font-bold text-fg">{activeCert.title}</h4>
-                <p className="text-xs font-mono text-fg-muted mt-0.5">{activeCert.issuer}</p>
+                <h3 className="text-base font-semibold text-fg">{activeCert.title}</h3>
+                <p className="text-xs text-fg-muted mt-0.5">{activeCert.issuer}</p>
               </div>
               <button
                 onClick={() => setActiveCert(null)}
-                className="w-9 h-9 rounded-xl bg-card shadow-inbio-btn flex items-center justify-center text-fg hover:text-primary transition-colors"
+                className="p-1 rounded text-fg-subtle hover:text-fg hover:bg-bg-subtle transition-colors"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
 
-            <div className="rounded-2xl overflow-hidden bg-bg-subtle border border-border max-h-[65vh] flex items-center justify-center">
+            <div className="rounded-xl overflow-hidden border border-border bg-bg-subtle max-h-[65vh] flex items-center justify-center">
               <img
                 src={activeCert.image}
                 alt={activeCert.title}
-                className="w-full h-auto max-h-[62vh] object-contain"
+                className="w-full h-auto max-h-[60vh] object-contain"
               />
             </div>
           </div>
