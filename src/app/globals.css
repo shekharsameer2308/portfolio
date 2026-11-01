@@ -4,68 +4,64 @@
 
 @layer base {
   :root {
-    --paper: #ffffff;
-    --dot: #e4dfd6;
-    --ink: #111317;
-    --soft: #5e6270;
-    --bar: #f0ede6;
+    --bg: #ffffff;
+    --bg-subtle: #fafafa;
+    --fg: #09090b;
+    --fg-muted: #71717a;
+    --fg-subtle: #a1a1aa;
+    --border: #e4e4e7;
+    --border-subtle: #f4f4f5;
     --card: #ffffff;
-    --line: #e3ded5;
-    --bezel: #141414;
-    --desk: #f9f8f5;
-    --pink: #fde8e5;
-    --lav: #f0eafb;
-    --mint: #e2f5ec;
-    --yel: #fcf4cf;
+    --card-hover: #f4f4f5;
+    --accent: #0284c7;
+    --accent-subtle: #f0f9ff;
   }
 
   .dark {
-    --paper: #12141b;
-    --dot: #222634;
-    --ink: #f0f2f7;
-    --soft: #9aa0b2;
-    --bar: #181b24;
-    --card: #13151d;
-    --line: #242838;
-    --bezel: #050505;
-    --desk: #0b0c10;
-    --pink: #3d2528;
-    --lav: #2d2442;
-    --mint: #1a332b;
-    --yel: #3b3319;
+    --bg: #09090b;
+    --bg-subtle: #0f0f12;
+    --fg: #fafafa;
+    --fg-muted: #a1a1aa;
+    --fg-subtle: #52525b;
+    --border: #27272a;
+    --border-subtle: #18181b;
+    --card: #0f0f12;
+    --card-hover: #18181b;
+    --accent: #38bdf8;
+    --accent-subtle: #082f49;
   }
 
   html {
     scroll-behavior: smooth;
+    color-scheme: light dark;
   }
 
   body {
-    @apply bg-desk text-ink antialiased transition-colors duration-300 selection:bg-cyan-500/20 selection:text-ink;
+    background-color: var(--bg);
+    color: var(--fg);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Subtle dot grid background helper */
-.bg-grid-dots {
-  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px);
-  background-size: 24px 24px;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-/* Custom Scrollbar */
-::-webkit-scrollbar, .custom-scrollbar::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-::-webkit-scrollbar-track, .custom-scrollbar::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
-
-::-webkit-scrollbar-thumb, .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--line);
+::-webkit-scrollbar-thumb {
+  background: var(--border);
   border-radius: 9999px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-subtle);
+}
 
-::-webkit-scrollbar-thumb:hover, .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--soft);
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
 }
