@@ -66,22 +66,36 @@ function LinkedinIcon({ size = 18, className = "" }: { size?: number; className?
   );
 }
 
-const portfolioProjects = [
+export interface ProjectItem {
+  id: string;
+  title: string;
+  category: string;
+  group: "all" | "sciml" | "systems" | "ai" | "fintech";
+  metric: string;
+  description: string;
+  stack: string[];
+  githubUrl: string;
+  liveUrl?: string;
+}
+
+const portfolioProjects: ProjectItem[] = [
   {
     id: "01",
     title: "Neural PDE Solver",
-    category: "Scientific Machine Learning",
+    category: "Scientific ML",
+    group: "sciml",
     metric: "100,000× faster inference",
     description:
       "Fourier Neural Operator (FNO) surrogates trained on Fisher-KPP reaction-diffusion equations, providing orders-of-magnitude faster solution generation than traditional numerical solvers.",
     stack: ["PyTorch", "React", "FastAPI", "Canvas API"],
     githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
-    liveUrl: "https://fnoproject.vercel.app"
+    liveUrl: "https://prototype-fno-1-d-rxn-dynamics.vercel.app"
   },
   {
     id: "02",
     title: "Catalytic Reactor Model",
-    category: "Process Simulation & SciML",
+    category: "Process Simulation",
+    group: "sciml",
     metric: "+20.66% CO₂ conversion gain",
     description:
       "DeepONet neural operator surrogate modeling temperature and concentration profiles in a fixed-bed e-methanol reactor, coupled with BoTorch for multi-objective Bayesian optimization.",
@@ -90,19 +104,55 @@ const portfolioProjects = [
   },
   {
     id: "03",
-    title: "Industrial Quality & Blend Analyzer",
+    title: "Industrial Coal Quality Analyzer",
     category: "Optimization & Analytics",
+    group: "systems",
     metric: "Simplex LP blend optimizer",
     description:
       "Predicts Gross Calorific Value via XGBoost, isolates faulty lab assays with Isolation Forest, and optimizes commercial coal blending formulations using simplex linear programming.",
-    stack: ["Next.js", "FastAPI", "XGBoost", "SciPy Optimize"],
-    githubUrl: "https://github.com/shekharsameer2308/analyzer",
-    liveUrl: "https://analyzer-self.vercel.app"
+    stack: ["TypeScript", "Next.js", "FastAPI", "XGBoost", "SciPy"],
+    githubUrl: "https://github.com/shekharsameer2308/Analyzer",
+    liveUrl: "https://analyzer-ochre.vercel.app"
   },
   {
     id: "04",
+    title: "TrackFin Intelligence Platform",
+    category: "FinTech & Full-Stack",
+    group: "fintech",
+    metric: "Fast personal budgeting",
+    description:
+      "Clean, modern personal finance platform for logging transactions, automated category breakdown, spending analytics, and cashflow charts.",
+    stack: ["JavaScript", "React", "Next.js", "Chart.js"],
+    githubUrl: "https://github.com/shekharsameer2308/TrackFin",
+    liveUrl: "https://track-fin-bay.vercel.app"
+  },
+  {
+    id: "05",
+    title: "Project Prism (Attribution Engine)",
+    category: "Enterprise Data Systems",
+    group: "systems",
+    metric: "$40M spend allocation model",
+    description:
+      "Omnichannel marketing ROI and attribution engine prototype designed for enterprise retail, featuring Markov chain attribution and multi-touch data pipelines.",
+    stack: ["Python", "Pandas", "Statsmodels", "SciPy", "SQL"],
+    githubUrl: "https://github.com/shekharsameer2308/ProjectPrism"
+  },
+  {
+    id: "06",
+    title: "Multimodal Attribute Extraction",
+    category: "Multimodal AI & NLP",
+    group: "ai",
+    metric: "93.3% extraction accuracy",
+    description:
+      "Automated extraction pipeline for packaging images combining Google Gemini vision models with custom Perceptron Named Entity Recognition (NER) and deterministic Pydantic validation.",
+    stack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
+    githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction"
+  },
+  {
+    id: "07",
     title: "NEXUS Streaming Analytics",
     category: "Distributed Systems",
+    group: "systems",
     metric: "10–50 events/sec throughput",
     description:
       "High-throughput real-time streaming engine simulating marketplace events across 11 containerized Docker services, Apache Kafka event brokers, PostgreSQL, and Grafana telemetry.",
@@ -111,24 +161,81 @@ const portfolioProjects = [
     liveUrl: "https://real-time-data-analysis.vercel.app/"
   },
   {
-    id: "05",
-    title: "Attribute Extraction Engine",
-    category: "Multimodal AI & NLP",
-    metric: "93.3% extraction accuracy",
+    id: "08",
+    title: "Scout Market Intelligence",
+    category: "AI & Competitive Intel",
+    group: "ai",
+    metric: "Automated research digests",
     description:
-      "Automated extraction pipeline for packaging images combining Google Gemini vision models with custom Perceptron Named Entity Recognition (NER) and deterministic Pydantic validation.",
-    stack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
-    githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction"
+      "AI-powered market intelligence and competitor research platform designed to monitor industry trends, track competitor developments, and synthesize structured research summaries.",
+    stack: ["Python", "FastAPI", "LLM Orchestration", "BeautifulSoup"],
+    githubUrl: "https://github.com/shekharsameer2308/Scout"
   },
   {
-    id: "06",
+    id: "09",
     title: "GPU Fluid Dynamics (CFD)",
-    category: "Fluid Simulation",
+    category: "Fluid Simulation & SciML",
+    group: "sciml",
     metric: "Taichi GPU-parallel",
     description:
       "Incompressible Navier-Stokes solver accelerated on GPU using Taichi Lang, integrated with convolutional neural networks for instantaneous pressure-field surrogate inference.",
     stack: ["Taichi Lang", "CUDA", "PyTorch", "NumPy"],
     githubUrl: "https://github.com/shekharsameer2308/Flow-simulation-"
+  },
+  {
+    id: "10",
+    title: "ParkWay (Pathway & Analytics)",
+    category: "Data Analytics & Agents",
+    group: "ai",
+    metric: "Summer Analytics '25 Capstone",
+    description:
+      "Agentic AI system architecture and stream processing pipeline for provider data validation and directory management, built for the Consulting & Analytics Club capstone.",
+    stack: ["Python", "Pathway", "Jupyter Notebook", "Scikit-Learn"],
+    githubUrl: "https://github.com/shekharsameer2308/ParkWay"
+  },
+  {
+    id: "11",
+    title: "Provider Directory Validation Agent",
+    category: "Healthcare AI & Automation",
+    group: "ai",
+    metric: "Agentic validation workflow",
+    description:
+      "Agentic AI system designed for healthcare payer directory management and provider credential validation, integrating automated verification and entity resolution.",
+    stack: ["Python", "Jupyter Notebook", "LLMs", "Pandas"],
+    githubUrl: "https://github.com/shekharsameer2308/eyprototype"
+  },
+  {
+    id: "12",
+    title: "Machine Learning Algorithms Suite",
+    category: "Applied Machine Learning",
+    group: "ai",
+    metric: "Comprehensive ML benchmarks",
+    description:
+      "Implementations of core supervised and unsupervised learning algorithms from scratch and with Scikit-Learn, with cross-validation pipelines and evaluation metrics.",
+    stack: ["Python", "Scikit-Learn", "Matplotlib", "NumPy"],
+    githubUrl: "https://github.com/shekharsameer2308/ML-models-"
+  },
+  {
+    id: "13",
+    title: "Relational DBMS & Storage Engine",
+    category: "Database Systems",
+    group: "systems",
+    metric: "ACID schema architecture",
+    description:
+      "Implementation of relational database schemas, query optimization, indexing structures, and transactional data integrity mechanisms.",
+    stack: ["SQL", "HTML", "Database Architecture"],
+    githubUrl: "https://github.com/shekharsameer2308/Database-Management-System-"
+  },
+  {
+    id: "14",
+    title: "Python Algorithmic Utilities",
+    category: "Algorithms & Automation",
+    group: "systems",
+    metric: "Core DSA routines",
+    description:
+      "Curated repository of algorithmic scripts, mathematical utilities, numerical methods, and automated utility routines written in pure Python.",
+    stack: ["Python", "Algorithms", "Data Structures"],
+    githubUrl: "https://github.com/shekharsameer2308/python-scripts"
   }
 ];
 
@@ -206,7 +313,7 @@ const staggerContainer: Variants = {
 };
 
 export default function ProfessionalPortfolio() {
-  const [activeTab, setActiveTab] = useState<"featured" | "github">("featured");
+  const [selectedGroup, setSelectedGroup] = useState<"all" | "sciml" | "systems" | "ai" | "fintech">("all");
   const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [isLoadingGithub, setIsLoadingGithub] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -411,199 +518,154 @@ export default function ProfessionalPortfolio() {
 
         </section>
 
-        {/* 3. PROJECTS SECTION */}
+        {/* 3. PROJECTS SECTION (All 14 Projects from GitHub) */}
         <section id="projects" className="space-y-8">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/80 pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/80 pb-4">
             <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-mono font-bold text-primary uppercase tracking-wider">
+                  Portfolio Catalog
+                </span>
+                <span className="text-xs font-mono text-fg-subtle">•</span>
+                <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  GitHub: @shekharsameer2308
+                </span>
+              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
-                Featured Work
+                All Projects &amp; Software
               </h2>
-              <p className="text-xs sm:text-sm text-fg-muted mt-1">
-                Scientific surrogates, chemical process models, and streaming architectures.
+              <p className="text-xs sm:text-sm text-fg-muted mt-0.5">
+                Scientific neural operator surrogates, industrial optimization engines, agentic pipelines, and full-stack software.
               </p>
             </div>
 
-            {/* Tabs */}
-            <div className="flex items-center gap-2 p-1 rounded-full border border-border/80 bg-bg-subtle text-xs font-medium">
+            {/* Live Refresh Status */}
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setActiveTab("featured")}
-                className={`px-4 py-1.5 rounded-full transition-all ${
-                  activeTab === "featured"
-                    ? "bg-card text-primary font-semibold shadow-sm"
-                    : "text-fg-muted hover:text-fg"
-                }`}
+                onClick={fetchGithub}
+                disabled={isLoadingGithub}
+                className="px-3 py-1.5 rounded-full border border-border bg-card hover:border-border-hover text-xs font-mono text-fg-muted hover:text-fg transition-colors inline-flex items-center gap-1.5"
+                title="Refresh from GitHub API"
               >
-                Featured (6)
-              </button>
-              <button
-                onClick={() => setActiveTab("github")}
-                className={`px-4 py-1.5 rounded-full transition-all inline-flex items-center gap-1.5 ${
-                  activeTab === "github"
-                    ? "bg-card text-primary font-semibold shadow-sm"
-                    : "text-fg-muted hover:text-fg"
-                }`}
-              >
-                <span>GitHub Repos ({githubRepos.length || 13})</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-primary" : ""} />
+                <span>{isLoadingGithub ? "Syncing..." : "Sync GitHub"}</span>
               </button>
             </div>
           </div>
 
-          {/* VIEW A: FEATURED PROJECTS */}
-          {activeTab === "featured" && (
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              {portfolioProjects.map((proj) => (
-                <motion.div
-                  key={proj.title}
-                  variants={fadeInUp}
-                  className="rounded-2xl border border-border/80 bg-card p-6 flex flex-col justify-between space-y-6 hover:border-border-hover hover:shadow-sm transition-all group"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-mono font-semibold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-                        {proj.category}
-                      </span>
-                      <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                        {proj.metric}
-                      </span>
-                    </div>
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
+            {[
+              { id: "all", label: `All Projects (${portfolioProjects.length})` },
+              { id: "sciml", label: `Scientific ML & CFD (${portfolioProjects.filter(p => p.group === "sciml").length})` },
+              { id: "systems", label: `Optimization & Systems (${portfolioProjects.filter(p => p.group === "systems").length})` },
+              { id: "ai", label: `AI & Intelligence (${portfolioProjects.filter(p => p.group === "ai").length})` },
+              { id: "fintech", label: `FinTech & Full-Stack (${portfolioProjects.filter(p => p.group === "fintech").length})` }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedGroup(tab.id as any)}
+                className={`px-3.5 py-1.5 rounded-full border transition-all ${
+                  selectedGroup === tab.id
+                    ? "border-primary bg-primary text-white font-semibold shadow-sm"
+                    : "border-border/80 bg-card hover:border-border-hover text-fg-muted hover:text-fg"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-fg group-hover:text-primary transition-colors">
-                        {proj.title}
-                      </h3>
-                      <p className="text-sm text-fg-muted leading-relaxed">
-                        {proj.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 pt-4 border-t border-border/60">
-                    <div className="flex flex-wrap gap-1.5">
-                      {proj.stack.map((t) => (
-                        <span key={t} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-bg-subtle text-fg-subtle border border-border/40">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between pt-1 text-xs font-medium">
-                      <a
-                        href={proj.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-fg hover:text-primary inline-flex items-center gap-1.5 transition-colors"
-                      >
-                        <GithubIcon size={14} />
-                        <span>Source Code</span>
-                      </a>
-
-                      {proj.liveUrl && (
-                        <a
-                          href={proj.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline inline-flex items-center gap-1 font-semibold"
-                        >
-                          <span>Live Application</span>
-                          <ArrowUpRight size={13} />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-
-          {/* VIEW B: DIRECT GITHUB REPOSITORIES */}
-          {activeTab === "github" && (
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="space-y-4"
-            >
-              <div className="flex items-center justify-between text-xs font-mono text-fg-subtle px-1">
-                <span>Direct Feed from @shekharsameer2308</span>
-                <button
-                  onClick={fetchGithub}
-                  disabled={isLoadingGithub}
-                  className="hover:text-primary inline-flex items-center gap-1"
-                >
-                  <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-primary" : ""} />
-                  <span>Refresh</span>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {(githubRepos.length > 0 ? githubRepos : portfolioProjects.map(p => ({
-                  name: p.title,
-                  description: p.description,
-                  html_url: p.githubUrl,
-                  homepage: p.liveUrl,
-                  stars: 0,
-                  language: p.stack[0]
-                }))).map((repo: any) => (
+          {/* ALL PROJECTS GRID */}
+          <motion.div
+            layout
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {portfolioProjects
+              .filter((proj) => selectedGroup === "all" || proj.group === selectedGroup)
+              .map((proj) => {
+                const liveRepo = githubRepos.find(
+                  (r) => r.html_url.toLowerCase() === proj.githubUrl.toLowerCase() ||
+                         proj.githubUrl.toLowerCase().includes(r.name.toLowerCase())
+                );
+                return (
                   <motion.div
-                    key={repo.name}
+                    layout
+                    key={proj.title}
                     variants={fadeInUp}
-                    className="rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between space-y-4 hover:border-border-hover transition-colors"
+                    className="rounded-2xl border border-border/80 bg-card p-6 flex flex-col justify-between space-y-5 hover:border-border-hover hover:shadow-sm transition-all group"
                   >
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="text-primary font-medium">{repo.language || "Code"}</span>
-                        {repo.stars > 0 && (
-                          <span className="inline-flex items-center gap-1 text-amber-500 font-bold">
-                            <Star size={11} className="fill-amber-500" />
-                            {repo.stars}
+                    <div className="space-y-3.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-mono font-semibold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                          {proj.category}
+                        </span>
+
+                        <div className="flex items-center gap-2">
+                          {liveRepo && liveRepo.stars > 0 && (
+                            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-500 font-bold">
+                              <Star size={11} className="fill-amber-500" />
+                              {liveRepo.stars}
+                            </span>
+                          )}
+                          <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                            {proj.metric}
                           </span>
-                        )}
+                        </div>
                       </div>
 
-                      <h3 className="text-base font-bold text-fg break-words">
-                        {repo.name}
-                      </h3>
-
-                      <p className="text-xs text-fg-muted leading-relaxed line-clamp-3">
-                        {repo.description || "Public repository developed by Sameer Shekhar."}
-                      </p>
+                      <div className="space-y-1.5">
+                        <h3 className="text-lg font-bold text-fg group-hover:text-primary transition-colors">
+                          {proj.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-fg-muted leading-relaxed line-clamp-3">
+                          {proj.description}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="pt-3 border-t border-border/60 flex items-center justify-between text-xs">
-                      <a
-                        href={repo.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-fg hover:text-primary inline-flex items-center gap-1 transition-colors font-medium"
-                      >
-                        <GithubIcon size={13} />
-                        <span>GitHub</span>
-                      </a>
+                    <div className="space-y-3.5 pt-3.5 border-t border-border/60">
+                      <div className="flex flex-wrap gap-1.5">
+                        {proj.stack.map((t) => (
+                          <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-bg-subtle text-fg-subtle border border-border/40">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
 
-                      {repo.homepage && (
+                      <div className="flex items-center justify-between pt-1 text-xs font-medium">
                         <a
-                          href={repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`}
+                          href={proj.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
+                          className="text-fg hover:text-primary inline-flex items-center gap-1.5 transition-colors"
                         >
-                          <span>Live Site</span>
-                          <ArrowUpRight size={12} />
+                          <GithubIcon size={14} />
+                          <span>Code Repository</span>
                         </a>
-                      )}
+
+                        {proj.liveUrl && (
+                          <a
+                            href={proj.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline inline-flex items-center gap-1 font-semibold"
+                          >
+                            <span>Live App</span>
+                            <ArrowUpRight size={13} />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
+                );
+              })}
+          </motion.div>
 
         </section>
 
