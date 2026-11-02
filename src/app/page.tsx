@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -8,23 +9,22 @@ import {
   Copy,
   Check,
   X,
-  Menu,
-  FlaskConical,
-  GraduationCap,
-  Award,
-  Briefcase,
-  Sliders,
-  Zap,
-  LineChart,
-  Layers,
-  Database,
   ExternalLink,
   ChevronRight,
   Star,
   GitFork,
-  RefreshCw
+  RefreshCw,
+  Code2,
+  Cpu,
+  Layers,
+  FlaskConical,
+  LineChart,
+  Briefcase,
+  GraduationCap,
+  Sparkles
 } from "lucide-react";
 import LampToggle from "@/components/LampToggle";
+import KineticWave from "@/components/KineticWave";
 import { certs } from "@/data/certs";
 
 function GithubIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
@@ -70,125 +70,147 @@ const portfolioProjects = [
   {
     id: "01",
     title: "Neural PDE Solver",
-    category: "SCIENTIFIC ML",
-    subtitle: "In-Browser Fourier Neural Operator Surrogates",
+    category: "Scientific Machine Learning",
     metric: "100,000× faster inference",
     description:
-      "Evaluates Fourier Neural Operator (FNO) surrogates against numerical solvers on Fisher-KPP reaction-diffusion dynamics with in-browser parameter sweeps.",
+      "Fourier Neural Operator (FNO) surrogates trained on Fisher-KPP reaction-diffusion equations, providing orders-of-magnitude faster solution generation than traditional numerical solvers.",
     stack: ["PyTorch", "React", "FastAPI", "Canvas API"],
     githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
     liveUrl: "https://fnoproject.vercel.app"
   },
   {
     id: "02",
-    title: "Reactor Model (DeepONet)",
-    category: "PROCESS SIMULATION",
-    subtitle: "Catalytic E-Methanol Synthesis Surrogate",
+    title: "Catalytic Reactor Model",
+    category: "Process Simulation & SciML",
     metric: "+20.66% CO₂ conversion gain",
     description:
-      "Surrogate neural operators of a catalytic fixed-bed methanol synthesis reactor paired with BoTorch for multi-objective Bayesian optimization under thermal constraints.",
+      "DeepONet neural operator surrogate modeling temperature and concentration profiles in a fixed-bed e-methanol reactor, coupled with BoTorch for multi-objective Bayesian optimization.",
     stack: ["Python", "PyTorch", "BoTorch", "SciML"],
     githubUrl: "https://github.com/shekharsameer2308/exi1"
   },
   {
     id: "03",
     title: "Industrial Quality & Blend Analyzer",
-    category: "OPTIMIZATION & ANALYTICS",
-    subtitle: "Coal Quality Regression & Blend Optimizer",
-    metric: "Simplex LP optimizer",
+    category: "Optimization & Analytics",
+    metric: "Simplex LP blend optimizer",
     description:
-      "Predicts Gross Calorific Value via XGBoost, isolates faulty lab assays with Isolation Forest, and optimizes coal blending ratios with linear programming.",
+      "Predicts Gross Calorific Value via XGBoost, isolates faulty lab assays with Isolation Forest, and optimizes commercial coal blending formulations using simplex linear programming.",
     stack: ["Next.js", "FastAPI", "XGBoost", "SciPy Optimize"],
     githubUrl: "https://github.com/shekharsameer2308/analyzer",
     liveUrl: "https://analyzer-self.vercel.app"
   },
   {
     id: "04",
-    title: "NEXUS Distributed Analytics",
-    category: "DISTRIBUTED SYSTEMS",
-    subtitle: "Real-Time Marketplace Streaming Engine",
+    title: "NEXUS Streaming Analytics",
+    category: "Distributed Systems",
     metric: "10–50 events/sec throughput",
     description:
-      "High-throughput telemetry simulation across 11 containerized Docker microservices, Kafka event streams, PostgreSQL star schemas, and Grafana telemetry.",
+      "High-throughput real-time streaming engine simulating marketplace events across 11 containerized Docker services, Apache Kafka event brokers, PostgreSQL, and Grafana telemetry.",
     stack: ["Kafka", "PostgreSQL", "Docker", "FastAPI", "Grafana"],
     githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
     liveUrl: "https://real-time-data-analysis.vercel.app/"
   },
   {
     id: "05",
-    title: "Attribute Extraction Pipeline",
-    category: "MULTIMODAL AI",
-    subtitle: "Packaging Vision & NER Extraction",
+    title: "Attribute Extraction Engine",
+    category: "Multimodal AI & NLP",
     metric: "93.3% extraction accuracy",
     description:
-      "Extracts structured attributes from product photos using Google Gemini, EasyOCR, and Averaged Perceptron NER with deterministic Pydantic schema validation.",
+      "Automated extraction pipeline for packaging images combining Google Gemini vision models with custom Perceptron Named Entity Recognition (NER) and deterministic Pydantic validation.",
     stack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
     githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction"
   },
   {
     id: "06",
-    title: "GPU Fluid Simulation (CFD)",
-    category: "FLUID DYNAMICS",
-    subtitle: "Navier-Stokes Solver & CNN Surrogate",
+    title: "GPU Fluid Dynamics (CFD)",
+    category: "Fluid Simulation",
     metric: "Taichi GPU-parallel",
     description:
-      "GPU-accelerated incompressible Navier-Stokes fluid simulation with CNN surrogate integration for instantaneous velocity and pressure-field inference.",
+      "Incompressible Navier-Stokes solver accelerated on GPU using Taichi Lang, integrated with convolutional neural networks for instantaneous pressure-field surrogate inference.",
     stack: ["Taichi Lang", "CUDA", "PyTorch", "NumPy"],
     githubUrl: "https://github.com/shekharsameer2308/Flow-simulation-"
   }
 ];
 
-const educationItems = [
-  {
-    degree: "B.Tech in Chemical Engineering",
-    institution: "Birla Institute of Technology, Mesra",
-    period: "2023 - 2027",
-    score: "Class of 2027",
-    details:
-      "Core training in transport phenomena, process dynamics, reaction engineering, and mathematical modeling of industrial chemical systems."
-  },
-  {
-    degree: "Joint President",
-    institution: "IIChE (Indian Institute of Chemical Engineers), BIT Mesra",
-    period: "2023 - Present",
-    score: "Student Leadership",
-    details:
-      "Directing student chapter initiatives, coordinating technical hackathons, research talks, and workshops on scientific computing in process engineering."
-  }
-];
-
-const experienceItems = [
+const experienceData = [
   {
     role: "Summer Intern, Quality Management",
-    company: "Central Coalfields Limited (CCL)",
-    period: "May - Jun 2026",
-    score: "Ranchi, India",
-    details:
-      "Conducted ASTM proximate analysis (moisture, ash, volatile matter, gross calorific value) across heterogeneous coal seams. Audited commercial dispatches against contract penalty specifications."
+    organization: "Central Coalfields Limited (CCL)",
+    period: "May 2026 - Jun 2026",
+    location: "Ranchi, India",
+    points: [
+      "Conducted proximate analysis (moisture, ash, volatile matter, gross calorific value) under ASTM standards across coal seams.",
+      "Audited commercial billing against dispatch specifications and quality penalty frameworks."
+    ]
   },
   {
     role: "Research Intern, Materials Characterization",
-    company: "Tata Steel Limited",
-    period: "Jun - Jul 2025",
-    score: "Jamshedpur, India",
-    details:
-      "Conducted polymer modification experiments utilizing Scanning Electron Microscopy (SEM), FTIR spectroscopy, DSC, and TGA to correlate structural morphology with thermal degradation curves."
+    organization: "Tata Steel Limited",
+    period: "Jun 2025 - Jul 2025",
+    location: "Jamshedpur, India",
+    points: [
+      "Formulated polymer modification batches and characterized structural morphologies via SEM and FTIR spectroscopy.",
+      "Analyzed thermal degradation behaviors using DSC and TGA curves for industrial steel coatings."
+    ]
+  },
+  {
+    role: "Joint President",
+    organization: "IIChE Student Chapter, BIT Mesra",
+    period: "2023 - Present",
+    location: "Mesra, India",
+    points: [
+      "Leading department technical initiatives, student workshops, and research lectures in computational chemical engineering.",
+      "Organized technical symposiums bridging process simulation with applied machine learning."
+    ]
+  },
+  {
+    role: "B.Tech in Chemical Engineering",
+    organization: "Birla Institute of Technology, Mesra",
+    period: "2023 - 2027",
+    location: "Mesra, India",
+    points: [
+      "Focus areas: Transport Phenomena, Chemical Reaction Engineering, Process Dynamics, and Scientific Computing.",
+      "Presidential leadership and active research in surrogate neural operator modeling."
+    ]
   }
 ];
 
-export default function WixEditorialPortfolio() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeCert, setActiveCert] = useState<{ title: string; issuer: string; image: string } | null>(null);
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  
-  // Showcase Interactive Simulator State
-  const [activeSimTab, setActiveSimTab] = useState<"fno" | "analyzer" | "deeponet">("fno");
-  const [diffusionParam, setDiffusionParam] = useState(45);
+const skillCategories = [
+  {
+    category: "Scientific ML & Modeling",
+    skills: ["Fourier Neural Operators (FNO)", "DeepONet", "Physics-Informed NNs (PINNs)", "PyTorch", "BoTorch Bayesian Opt"]
+  },
+  {
+    category: "Process & Industrial Chemistry",
+    skills: ["Transport Phenomena", "Reaction Kinetics", "ASTM Proximate Analysis", "Simplex LP Optimization", "Navier-Stokes CFD"]
+  },
+  {
+    category: "Systems & Full-Stack",
+    skills: ["Apache Kafka", "Docker", "PostgreSQL", "FastAPI", "Next.js", "TypeScript", "Python"]
+  }
+];
 
-  // GitHub Live API State
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08
+    }
+  }
+};
+
+export default function ProfessionalPortfolio() {
+  const [activeTab, setActiveTab] = useState<"featured" | "github">("featured");
   const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [isLoadingGithub, setIsLoadingGithub] = useState(false);
-  const [repoFilter, setRepoFilter] = useState<"featured" | "all">("featured");
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [activeCert, setActiveCert] = useState<{ title: string; issuer: string; image: string } | null>(null);
 
   const email = "shekharsameer2308@gmail.com";
 
@@ -203,7 +225,6 @@ export default function WixEditorialPortfolio() {
           return;
         }
       }
-      // Direct client fallback
       const direct = await fetch("https://api.github.com/users/shekharsameer2308/repos?per_page=100&sort=pushed");
       if (direct.ok) {
         const d = await direct.json();
@@ -243,447 +264,310 @@ export default function WixEditorialPortfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] font-sans selection:bg-[var(--primary)] selection:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-bg text-fg font-sans selection:bg-primary selection:text-white transition-colors duration-200">
       
-      {/* 1. TOP HEADER BAND (Matching the grey header band in Wix screenshot) */}
-      <header className="w-full bg-[var(--bg-band)] border-b border-border/70 transition-colors">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          
-          {/* Identity / Title */}
-          <div>
-            <a href="#" className="group inline-block">
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-fg group-hover:text-[var(--primary)] transition-colors">
-                Sameer Shekhar
-              </h1>
-            </a>
-            <p className="text-xs sm:text-sm text-fg-muted font-medium mt-1 tracking-wide">
-              Chemical Engineer &amp; SciML Researcher, BIT Mesra
-            </p>
-          </div>
-
-          {/* Nav Links & Controls */}
-          <div className="flex items-center justify-between md:justify-end gap-6 sm:gap-8 border-t md:border-t-0 border-border/60 pt-4 md:pt-0">
-            <nav className="flex items-center gap-6 text-sm font-medium text-fg-muted">
-              <a href="#home" className="hover:text-[var(--primary)] transition-colors">Home</a>
-              <a href="#projects" className="hover:text-[var(--primary)] transition-colors">Projects</a>
-              <a href="#experience" className="hover:text-[var(--primary)] transition-colors">Resume</a>
-              <a href="#research" className="hover:text-[var(--primary)] transition-colors">Research</a>
-              <a href="#contact" className="hover:text-[var(--primary)] transition-colors">Contact</a>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <LampToggle />
+      {/* 1. FLOATING PILL NAVBAR */}
+      <header className="sticky top-5 z-50 px-4">
+        <motion.div
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-3xl mx-auto rounded-full border border-border/80 bg-card/85 backdrop-blur-md px-5 py-2.5 shadow-sm flex items-center justify-between"
+        >
+          <a href="#" className="flex items-center gap-2 group">
+            <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-xs text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+              SS
             </div>
-          </div>
+            <span className="font-semibold text-sm tracking-tight text-fg hidden sm:inline">
+              Sameer Shekhar
+            </span>
+          </a>
 
-        </div>
+          <nav className="flex items-center gap-1 sm:gap-2 text-xs font-medium text-fg-muted">
+            <a href="#about" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">About</a>
+            <a href="#projects" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Projects</a>
+            <a href="#experience" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Experience</a>
+            <a href="#skills" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Skills</a>
+            <a href="#contact" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Contact</a>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <LampToggle />
+          </div>
+        </motion.div>
       </header>
 
-      {/* 2. HERO SECTION (Clean White Center Canvas matching Wix Layout) */}
-      <main className="max-w-6xl mx-auto px-6 sm:px-12 py-16 sm:py-24 space-y-28">
+      {/* 2. MAIN CONTAINER */}
+      <main className="max-w-5xl mx-auto px-6 sm:px-8 py-16 sm:py-24 space-y-28">
 
-        {/* Hero Grid: Square visual box on left + Editorial text with red overlines on right */}
-        <section id="home" className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* HERO SECTION */}
+        <section id="about" className="space-y-10">
           
-          {/* LEFT COLUMN: Square Showcase Box (Replacing the person's face photo!) */}
-          <div className="lg:col-span-5">
-            <div className="aspect-square w-full rounded-sm border border-border bg-[var(--card)] p-6 flex flex-col justify-between shadow-sm relative overflow-hidden group">
-              
-              {/* Box Top Header */}
-              <div className="flex items-center justify-between border-b border-border/80 pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]" />
-                  <span className="text-xs font-mono font-bold tracking-wider text-fg uppercase">
-                    SciML Laboratory
-                  </span>
-                </div>
-                <span className="text-[11px] font-mono text-[var(--primary)] font-bold">
-                  LIVE MODEL
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="space-y-6"
+          >
+            {/* Status Indicator */}
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-bg-subtle text-xs font-mono text-fg-muted">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span>BIT Mesra Class of 2027 • Chemical Engineering &amp; SciML</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.div variants={fadeInUp} className="space-y-2">
+              <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-fg leading-[1.1]">
+                Engineering software &amp; <br />
+                <span className="bg-gradient-to-r from-primary via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                  scientific machine learning.
                 </span>
-              </div>
+              </h1>
+            </motion.div>
 
-              {/* Box Tab Buttons */}
-              <div className="grid grid-cols-3 gap-1.5 py-2 text-[11px] font-mono font-semibold">
-                <button
-                  onClick={() => setActiveSimTab("fno")}
-                  className={`py-1.5 px-2 text-center transition-colors border ${
-                    activeSimTab === "fno"
-                      ? "border-[var(--primary)] text-[var(--primary)] bg-[var(--primary-muted)]"
-                      : "border-border text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  Neural PDE
-                </button>
-                <button
-                  onClick={() => setActiveSimTab("analyzer")}
-                  className={`py-1.5 px-2 text-center transition-colors border ${
-                    activeSimTab === "analyzer"
-                      ? "border-[var(--primary)] text-[var(--primary)] bg-[var(--primary-muted)]"
-                      : "border-border text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  Coal LP
-                </button>
-                <button
-                  onClick={() => setActiveSimTab("deeponet")}
-                  className={`py-1.5 px-2 text-center transition-colors border ${
-                    activeSimTab === "deeponet"
-                      ? "border-[var(--primary)] text-[var(--primary)] bg-[var(--primary-muted)]"
-                      : "border-border text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  DeepONet
-                </button>
-              </div>
+            {/* Bio Paragraph */}
+            <motion.p variants={fadeInUp} className="text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl font-normal">
+              Undergraduate at <strong>Birla Institute of Technology, Mesra</strong> and Joint President of the Indian Institute of Chemical Engineers (IIChE). I research neural operators (Fourier Neural Operators, DeepONet) for solving transport-reaction differential equations, and build industrial optimization tools for process plants.
+            </motion.p>
 
-              {/* Dynamic Center Simulation Content */}
-              {activeSimTab === "fno" && (
-                <div className="space-y-3 py-2">
-                  <div className="h-28 rounded-sm bg-gradient-to-br from-[var(--bg-subtle)] to-[var(--card)] p-3 border border-border flex flex-col justify-between relative overflow-hidden">
-                    <div className="flex justify-between items-center text-[10px] font-mono text-fg-subtle">
-                      <span>Fisher-KPP Reaction Wavefront</span>
-                      <span className="text-[var(--primary)] font-bold">100,000× Speedup</span>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <div className="h-6 w-full rounded-sm bg-gradient-to-r from-[var(--primary)] via-amber-400 to-emerald-400 opacity-80 flex items-center justify-around px-2 text-[9px] font-mono font-bold text-white shadow-inner">
-                        <span>t=0.2s</span>
-                        <span>Phase Field</span>
-                        <span>Error &lt; 1e-4</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-[var(--bg-band)] rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-[var(--primary)] transition-all duration-300"
-                          style={{ width: `${diffusionParam}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center text-[9px] font-mono text-fg-subtle">
-                      <span>1024 spatial mesh</span>
-                      <span>0.8ms evaluation</span>
-                    </div>
-                  </div>
-
-                  {/* Interactive Slider */}
-                  <div className="border border-border/80 p-2.5 bg-[var(--bg-subtle)] flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-fg-muted flex items-center gap-1.5">
-                      <Sliders size={12} className="text-[var(--primary)]" />
-                      Diffusion (D):
-                    </span>
-                    <input
-                      type="range"
-                      min="10"
-                      max="90"
-                      value={diffusionParam}
-                      onChange={(e) => setDiffusionParam(Number(e.target.value))}
-                      className="accent-[var(--primary)] cursor-pointer w-24 sm:w-32"
-                    />
-                    <span className="text-[var(--primary)] font-bold">{(diffusionParam / 100).toFixed(2)}</span>
-                  </div>
-                </div>
-              )}
-
-              {activeSimTab === "analyzer" && (
-                <div className="space-y-3 py-2 font-mono text-xs">
-                  <div className="h-28 rounded-sm bg-[var(--bg-subtle)] p-3 border border-border flex flex-col justify-between">
-                    <div className="flex justify-between text-[10px] text-fg-subtle">
-                      <span>Simplex LP Blend Formulation</span>
-                      <span className="text-emerald-600 font-bold">Optimal</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-[11px]">
-                      <div className="border border-border/80 p-1.5 bg-[var(--card)]">
-                        <span className="text-fg-subtle block text-[9px]">Ash Constraint:</span>
-                        <span className="font-bold text-fg">&lt; 34% (Met)</span>
-                      </div>
-                      <div className="border border-border/80 p-1.5 bg-[var(--card)]">
-                        <span className="text-fg-subtle block text-[9px]">GCV Min:</span>
-                        <span className="font-bold text-fg">&gt; 4200 kcal</span>
-                      </div>
-                    </div>
-                    <div className="text-[10px] text-[var(--primary)] font-bold">
-                      Ratio: 62% Seam A + 38% Seam B
-                    </div>
-                  </div>
-
-                  <div className="border border-border/80 p-2.5 bg-[var(--bg-subtle)] text-[10px] text-fg-muted flex justify-between">
-                    <span>ASTM proximate laboratory assays</span>
-                    <span className="text-emerald-600 font-bold">Validated</span>
-                  </div>
-                </div>
-              )}
-
-              {activeSimTab === "deeponet" && (
-                <div className="space-y-3 py-2 font-mono text-xs">
-                  <div className="h-28 rounded-sm bg-[var(--bg-subtle)] p-3 border border-border flex flex-col justify-between">
-                    <div className="flex justify-between text-[10px] text-fg-subtle">
-                      <span>Catalytic E-Methanol Reactor</span>
-                      <span className="text-[var(--primary)] font-bold">+20.66% Gain</span>
-                    </div>
-                    <div className="space-y-1 text-[10px] text-fg-muted">
-                      <div>• Branch Net: Space velocity &amp; inlet gas ratios</div>
-                      <div>• Trunk Net: 2D radial/axial coords</div>
-                      <div className="text-emerald-600 font-bold">• BoTorch Bayesian sweep converged</div>
-                    </div>
-                    <div className="text-[9px] text-fg-subtle">
-                      Inference: 11.4ms vs 420s CFD
-                    </div>
-                  </div>
-
-                  <div className="border border-border/80 p-2.5 bg-[var(--bg-subtle)] text-[10px] text-fg-muted flex justify-between">
-                    <span>Fixed-bed kinetic surrogate</span>
-                    <span className="text-[var(--primary)] font-bold">Active</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Box Bottom Meta */}
-              <div className="border-t border-border/80 pt-2 flex items-center justify-between text-[11px] font-mono text-fg-subtle">
-                <span>BIT Mesra Chemical Engineering</span>
-                <a
-                  href="https://fnoproject.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
-                >
-                  fnoproject.vercel.app
-                  <ArrowUpRight size={12} />
-                </a>
-              </div>
-
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Editorial Content (Exactly matching Wix layout: red line + title + paragraph + red outline button) */}
-          <div className="lg:col-span-7 space-y-10">
-            
-            {/* Section 1: Recent Roles */}
-            <div className="space-y-3">
-              <div className="w-10 h-1 bg-[var(--primary)]" />
-              <h2 className="text-2xl font-bold tracking-tight text-fg">
-                Recent Roles &amp; Engineering Focus
-              </h2>
-              <p className="text-base text-fg-muted leading-relaxed font-normal pt-1">
-                Chemical Engineering undergraduate at <strong>Birla Institute of Technology, Mesra</strong> and Joint President of the Indian Institute of Chemical Engineers (IIChE) student chapter. My technical focus bridges scientific machine learning (neural operators for PDE boundary problems and catalytic reactors), process simulation, and industrial quality analytics.
-              </p>
-            </div>
-
-            {/* Section 2: Upcoming Projects & Impact */}
-            <div className="space-y-3">
-              <div className="w-10 h-1 bg-[var(--primary)]" />
-              <h2 className="text-2xl font-bold tracking-tight text-fg">
-                Upcoming Projects &amp; Selected Work
-              </h2>
-              <p className="text-base text-fg-muted leading-relaxed font-normal pt-1">
-                Trained Fourier Neural Operator surrogates to evaluate reaction dynamics <strong>100,000× faster</strong> than numerical solvers. Optimized catalytic e-methanol synthesis with DeepONet surrogates and BoTorch to achieve a <strong>+20.66% CO₂ conversion gain</strong>, and formulated linear programming models to minimize coal blend procurement costs while strictly satisfying ASTM quality limits.
-              </p>
-            </div>
-
-            {/* Red Outline Action Buttons (Matching the "Watch Reel" button in the Wix screenshot) */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            {/* Action Buttons */}
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 pt-2">
               <a
                 href="#projects"
-                className="border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white px-8 py-3 text-sm font-semibold tracking-wider uppercase transition-all duration-200 inline-flex items-center gap-2"
+                className="px-6 py-2.5 rounded-full bg-primary text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover shadow-sm hover:shadow transition-all inline-flex items-center gap-2 group"
               >
-                <span>Explore Projects</span>
-                <ArrowRight size={16} />
+                <span>View Selected Work</span>
+                <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
               </a>
 
               <a
-                href="https://fnoproject.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-border hover:border-fg text-fg hover:text-fg px-6 py-3 text-sm font-semibold tracking-wider uppercase transition-all duration-200 inline-flex items-center gap-2"
+                href="#contact"
+                className="px-5 py-2.5 rounded-full border border-border hover:border-border-hover bg-card text-xs sm:text-sm font-semibold tracking-wide text-fg hover:text-primary transition-colors inline-flex items-center gap-2"
               >
-                <span>Live FNO Demo</span>
-                <ExternalLink size={15} />
+                <span>Get in Touch</span>
               </a>
-            </div>
 
-          </div>
+              <div className="flex items-center gap-2 pl-2">
+                <a
+                  href="https://github.com/shekharsameer2308"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-border/80 hover:border-border-hover bg-card flex items-center justify-center text-fg-muted hover:text-fg transition-colors"
+                  title="GitHub Profile"
+                >
+                  <GithubIcon size={16} />
+                </a>
+
+                <a
+                  href="https://linkedin.com/in/sameershekhar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-border/80 hover:border-border-hover bg-card flex items-center justify-center text-fg-muted hover:text-fg transition-colors"
+                  title="LinkedIn Profile"
+                >
+                  <LinkedinIcon size={16} />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Kinetic Wave Preview Box */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-full h-44 sm:h-52 rounded-2xl border border-border/80 bg-card overflow-hidden relative shadow-sm"
+          >
+            <KineticWave />
+            
+            <div className="absolute inset-0 p-5 flex flex-col justify-between pointer-events-none">
+              <div className="flex items-center justify-between text-xs font-mono text-fg-subtle">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Wave Dynamics &amp; Transport Physics
+                </span>
+                <span className="text-primary font-bold">Continuous Modeling</span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/60">
+                <div>
+                  <div className="text-lg sm:text-xl font-extrabold text-fg">100,000×</div>
+                  <div className="text-[11px] font-mono text-fg-subtle">FNO Inference Speedup</div>
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-extrabold text-emerald-600 dark:text-emerald-400">+20.66%</div>
+                  <div className="text-[11px] font-mono text-fg-subtle">CO₂ Conversion Gain</div>
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-extrabold text-fg">Simplex LP</div>
+                  <div className="text-[11px] font-mono text-fg-subtle">Blend Quality Optimizer</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
         </section>
 
-        {/* 3. PROJECTS SECTION (Clean Editorial Presentation + Direct GitHub Fetch) */}
-        <section id="projects" className="space-y-10 border-t border-border/80 pt-16">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-2">
-              <div className="w-10 h-1 bg-[var(--primary)]" />
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-                Projects &amp; GitHub Repositories
+        {/* 3. PROJECTS SECTION */}
+        <section id="projects" className="space-y-8">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/80 pb-4">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
+                Featured Work
               </h2>
-              <p className="text-sm text-fg-muted max-w-2xl">
-                Scientific neural operator surrogates, industrial optimization engines, and live public repositories directly fetched from GitHub.
+              <p className="text-xs sm:text-sm text-fg-muted mt-1">
+                Scientific surrogates, chemical process models, and streaming architectures.
               </p>
             </div>
 
-            {/* GitHub Live Status & View Switcher */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-[var(--bg-subtle)] text-xs font-mono text-fg-muted">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>
-                  GitHub: @shekharsameer2308 {githubRepos.length > 0 && `(${githubRepos.length} Repos)`}
-                </span>
-                <button
-                  onClick={fetchGithub}
-                  disabled={isLoadingGithub}
-                  className="hover:text-[var(--primary)] transition-colors p-0.5"
-                  title="Refetch directly from GitHub"
-                >
-                  <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-[var(--primary)]" : ""} />
-                </button>
-              </div>
-
-              <div className="inline-flex border border-border p-1 bg-[var(--bg-subtle)] text-xs font-mono">
-                <button
-                  onClick={() => setRepoFilter("featured")}
-                  className={`px-3 py-1 font-semibold transition-colors ${
-                    repoFilter === "featured"
-                      ? "bg-[var(--card)] text-[var(--primary)] shadow-sm"
-                      : "text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  Featured (6)
-                </button>
-                <button
-                  onClick={() => setRepoFilter("all")}
-                  className={`px-3 py-1 font-semibold transition-colors ${
-                    repoFilter === "all"
-                      ? "bg-[var(--card)] text-[var(--primary)] shadow-sm"
-                      : "text-fg-muted hover:text-fg"
-                  }`}
-                >
-                  All GitHub ({githubRepos.length || 13})
-                </button>
-              </div>
+            {/* Tabs */}
+            <div className="flex items-center gap-2 p-1 rounded-full border border-border/80 bg-bg-subtle text-xs font-medium">
+              <button
+                onClick={() => setActiveTab("featured")}
+                className={`px-4 py-1.5 rounded-full transition-all ${
+                  activeTab === "featured"
+                    ? "bg-card text-primary font-semibold shadow-sm"
+                    : "text-fg-muted hover:text-fg"
+                }`}
+              >
+                Featured (6)
+              </button>
+              <button
+                onClick={() => setActiveTab("github")}
+                className={`px-4 py-1.5 rounded-full transition-all inline-flex items-center gap-1.5 ${
+                  activeTab === "github"
+                    ? "bg-card text-primary font-semibold shadow-sm"
+                    : "text-fg-muted hover:text-fg"
+                }`}
+              >
+                <span>GitHub Repos ({githubRepos.length || 13})</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              </button>
             </div>
           </div>
 
-          {/* VIEW 1: FEATURED PROJECTS */}
-          {repoFilter === "featured" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {portfolioProjects.map((proj) => {
-                const liveRepo = githubRepos.find(
-                  (r) => r.html_url.toLowerCase() === proj.githubUrl.toLowerCase() ||
-                         proj.githubUrl.toLowerCase().includes(r.name.toLowerCase())
-                );
-                return (
-                  <div
-                    key={proj.title}
-                    className="border border-border/90 bg-[var(--card)] p-7 flex flex-col justify-between space-y-6 hover:border-[var(--primary)] transition-colors group"
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-border/70 pb-3">
-                        <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-[var(--primary)]">
-                          {proj.category}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          {liveRepo && liveRepo.stars > 0 && (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-500 font-bold">
-                              <Star size={11} className="fill-amber-500" />
-                              {liveRepo.stars}
-                            </span>
-                          )}
-                          <span className="text-xs font-mono font-bold text-fg-subtle">
-                            {proj.id}
-                          </span>
-                        </div>
-                      </div>
+          {/* VIEW A: FEATURED PROJECTS */}
+          {activeTab === "featured" && (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              {portfolioProjects.map((proj) => (
+                <motion.div
+                  key={proj.title}
+                  variants={fadeInUp}
+                  className="rounded-2xl border border-border/80 bg-card p-6 flex flex-col justify-between space-y-6 hover:border-border-hover hover:shadow-sm transition-all group"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-mono font-semibold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                        {proj.category}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                        {proj.metric}
+                      </span>
+                    </div>
 
-                      <div>
-                        <h3 className="text-xl font-bold text-fg group-hover:text-[var(--primary)] transition-colors">
-                          {proj.title}
-                        </h3>
-                        <div className="text-xs font-mono text-[var(--primary)] font-bold mt-1">
-                          {proj.metric}
-                        </div>
-                      </div>
-
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-fg group-hover:text-primary transition-colors">
+                        {proj.title}
+                      </h3>
                       <p className="text-sm text-fg-muted leading-relaxed">
                         {proj.description}
                       </p>
                     </div>
+                  </div>
 
-                    <div className="space-y-4 pt-4 border-t border-border/70">
-                      <div className="flex flex-wrap gap-1.5 text-[10px] font-mono text-fg-subtle">
-                        {proj.stack.map((t) => (
-                          <span key={t} className="px-2 py-0.5 bg-[var(--bg-subtle)] border border-border/60">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                  <div className="space-y-4 pt-4 border-t border-border/60">
+                    <div className="flex flex-wrap gap-1.5">
+                      {proj.stack.map((t) => (
+                        <span key={t} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-bg-subtle text-fg-subtle border border-border/40">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
 
-                      <div className="flex items-center justify-between pt-1 text-xs font-semibold">
+                    <div className="flex items-center justify-between pt-1 text-xs font-medium">
+                      <a
+                        href={proj.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-fg hover:text-primary inline-flex items-center gap-1.5 transition-colors"
+                      >
+                        <GithubIcon size={14} />
+                        <span>Source Code</span>
+                      </a>
+
+                      {proj.liveUrl && (
                         <a
-                          href={proj.githubUrl}
+                          href={proj.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-fg hover:text-[var(--primary)] inline-flex items-center gap-1 transition-colors"
+                          className="text-primary hover:underline inline-flex items-center gap-1 font-semibold"
                         >
-                          <GithubIcon size={14} />
-                          <span>Code Repository</span>
+                          <span>Live Application</span>
+                          <ArrowUpRight size={13} />
                         </a>
-
-                        {proj.liveUrl && (
-                          <a
-                            href={proj.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
-                          >
-                            <span>Live App</span>
-                            <ArrowUpRight size={14} />
-                          </a>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </motion.div>
+              ))}
+            </motion.div>
           )}
 
-          {/* VIEW 2: ALL DIRECT GITHUB REPOSITORIES */}
-          {repoFilter === "all" && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* VIEW B: DIRECT GITHUB REPOSITORIES */}
+          {activeTab === "github" && (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
+              <div className="flex items-center justify-between text-xs font-mono text-fg-subtle px-1">
+                <span>Direct Feed from @shekharsameer2308</span>
+                <button
+                  onClick={fetchGithub}
+                  disabled={isLoadingGithub}
+                  className="hover:text-primary inline-flex items-center gap-1"
+                >
+                  <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-primary" : ""} />
+                  <span>Refresh</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {(githubRepos.length > 0 ? githubRepos : portfolioProjects.map(p => ({
-                  id: p.id,
                   name: p.title,
                   description: p.description,
                   html_url: p.githubUrl,
                   homepage: p.liveUrl,
                   stars: 0,
-                  forks: 0,
-                  language: p.stack[0],
-                  topics: []
+                  language: p.stack[0]
                 }))).map((repo: any) => (
-                  <div
+                  <motion.div
                     key={repo.name}
-                    className="border border-border/90 bg-[var(--card)] p-6 flex flex-col justify-between space-y-4 hover:border-[var(--primary)] transition-colors group"
+                    variants={fadeInUp}
+                    className="rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between space-y-4 hover:border-border-hover transition-colors"
                   >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono font-bold text-[var(--primary)] px-2 py-0.5 border border-[var(--primary)]/30 bg-[var(--primary-muted)]">
-                          {repo.language || "Software"}
-                        </span>
-                        <div className="flex items-center gap-3 text-xs font-mono text-fg-subtle">
-                          {repo.stars > 0 && (
-                            <span className="inline-flex items-center gap-1 text-amber-500 font-bold">
-                              <Star size={12} className="fill-amber-500" />
-                              {repo.stars}
-                            </span>
-                          )}
-                          {repo.forks > 0 && (
-                            <span className="inline-flex items-center gap-1">
-                              <GitFork size={12} />
-                              {repo.forks}
-                            </span>
-                          )}
-                        </div>
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-primary font-medium">{repo.language || "Code"}</span>
+                        {repo.stars > 0 && (
+                          <span className="inline-flex items-center gap-1 text-amber-500 font-bold">
+                            <Star size={11} className="fill-amber-500" />
+                            {repo.stars}
+                          </span>
+                        )}
                       </div>
 
-                      <h3 className="text-lg font-bold text-fg group-hover:text-[var(--primary)] transition-colors break-words">
+                      <h3 className="text-base font-bold text-fg break-words">
                         {repo.name}
                       </h3>
 
@@ -692,14 +576,14 @@ export default function WixEditorialPortfolio() {
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-border/70 flex items-center justify-between text-xs font-semibold">
+                    <div className="pt-3 border-t border-border/60 flex items-center justify-between text-xs">
                       <a
                         href={repo.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-fg hover:text-[var(--primary)] inline-flex items-center gap-1.5 transition-colors"
+                        className="text-fg hover:text-primary inline-flex items-center gap-1 transition-colors font-medium"
                       >
-                        <GithubIcon size={14} />
+                        <GithubIcon size={13} />
                         <span>GitHub</span>
                       </a>
 
@@ -708,223 +592,168 @@ export default function WixEditorialPortfolio() {
                           href={repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
+                          className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
                         >
                           <span>Live Site</span>
-                          <ArrowUpRight size={13} />
+                          <ArrowUpRight size={12} />
                         </a>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-
-              <div className="text-center pt-4">
-                <a
-                  href="https://github.com/shekharsameer2308?tab=repositories"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-border px-6 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-fg hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
-                >
-                  <GithubIcon size={15} />
-                  <span>View Full Profile on GitHub (@shekharsameer2308)</span>
-                  <ExternalLink size={13} />
-                </a>
-              </div>
-            </div>
+            </motion.div>
           )}
+
         </section>
 
-        {/* 4. RESUME & EXPERIENCE (Clean Editorial Timeline) */}
-        <section id="experience" className="space-y-12 border-t border-border/80 pt-16">
-          <div className="space-y-2">
-            <div className="w-10 h-1 bg-[var(--primary)]" />
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-              Experience &amp; Academic Training
+        {/* 4. EXPERIENCE & LEADERSHIP */}
+        <section id="experience" className="space-y-8">
+          <div className="border-b border-border/80 pb-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
+              Experience &amp; Leadership
             </h2>
-            <p className="text-sm text-fg-muted max-w-2xl">
-              Industrial quality management, experimental materials characterization, and student leadership at BIT Mesra.
+            <p className="text-xs sm:text-sm text-fg-muted mt-1">
+              Industrial quality analysis, materials characterization, and student society leadership.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            
-            {/* Left: Industrial Internships */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-2 text-sm font-mono font-bold tracking-wider text-[var(--primary)] uppercase border-b border-border pb-2">
-                <Briefcase size={16} />
-                <span>Industrial Experience</span>
-              </div>
-
-              <div className="space-y-8">
-                {experienceItems.map((exp) => (
-                  <div key={exp.company} className="border-l-2 border-[var(--primary)] pl-6 space-y-2">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="text-lg font-bold text-fg">
-                        {exp.role}
-                      </h3>
-                      <span className="text-xs font-mono font-semibold text-fg-subtle whitespace-nowrap">
-                        {exp.period}
-                      </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {experienceData.map((exp, idx) => (
+              <motion.div
+                key={exp.role}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="rounded-2xl border border-border/80 bg-card p-6 space-y-4"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-bold text-fg">{exp.role}</h3>
+                    <div className="text-xs font-mono text-primary font-medium mt-0.5">
+                      {exp.organization}
                     </div>
-
-                    <div className="text-xs font-mono font-bold text-[var(--primary)]">
-                      {exp.company} • {exp.score}
-                    </div>
-
-                    <p className="text-sm text-fg-muted leading-relaxed pt-1">
-                      {exp.details}
-                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <span className="text-[11px] font-mono text-fg-subtle whitespace-nowrap bg-bg-subtle px-2.5 py-1 rounded-full border border-border/40">
+                    {exp.period}
+                  </span>
+                </div>
 
-            {/* Right: Education & Leadership */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-2 text-sm font-mono font-bold tracking-wider text-[var(--primary)] uppercase border-b border-border pb-2">
-                <GraduationCap size={16} />
-                <span>Education &amp; Leadership</span>
-              </div>
-
-              <div className="space-y-8">
-                {educationItems.map((edu) => (
-                  <div key={edu.degree} className="border-l-2 border-border pl-6 space-y-2">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="text-lg font-bold text-fg">
-                        {edu.degree}
-                      </h3>
-                      <span className="text-xs font-mono font-semibold text-fg-subtle whitespace-nowrap">
-                        {edu.period}
-                      </span>
-                    </div>
-
-                    <div className="text-xs font-mono font-bold text-fg-muted">
-                      {edu.institution}
-                    </div>
-
-                    <p className="text-sm text-fg-muted leading-relaxed pt-1">
-                      {edu.details}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+                <ul className="space-y-2 text-xs sm:text-sm text-fg-muted leading-relaxed list-disc list-inside">
+                  {exp.points.map((pt, i) => (
+                    <li key={i}>{pt}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Verified Certifications Section */}
-          <div className="pt-8 border-t border-border/80 space-y-6">
+          {/* Verified Certifications Lightbox */}
+          <div className="pt-6 border-t border-border/60 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <h3 className="text-xl font-bold text-fg">Verified Certifications</h3>
-                <p className="text-xs text-fg-subtle">
-                  Rigorous credentialing across Deep Learning, Algorithmic Problem Solving, and Chemical Engineering.
-                </p>
-              </div>
+              <h3 className="text-lg font-bold text-fg">Verified Credentials</h3>
+              <span className="text-xs font-mono text-fg-subtle">Click to inspect</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {certs.map((c) => (
                 <div
                   key={c.title}
                   onClick={() => setActiveCert({ title: c.title, issuer: c.issuer, image: c.image })}
-                  className="border border-border/80 p-4 bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer transition-colors flex items-center justify-between group"
+                  className="rounded-xl border border-border/80 p-3.5 bg-card hover:border-border-hover cursor-pointer transition-colors flex items-center justify-between group"
                 >
-                  <div className="space-y-1">
-                    <div className="text-xs font-bold text-fg group-hover:text-[var(--primary)] transition-colors">
+                  <div className="space-y-0.5">
+                    <div className="text-xs font-bold text-fg group-hover:text-primary transition-colors">
                       {c.title}
                     </div>
                     <div className="text-[11px] font-mono text-fg-subtle">
                       {c.issuer}
                     </div>
                   </div>
-                  <ChevronRight size={16} className="text-fg-subtle group-hover:text-[var(--primary)] group-hover:translate-x-0.5 transition-all" />
+                  <ChevronRight size={14} className="text-fg-subtle group-hover:text-primary group-hover:translate-x-0.5 transition-transform" />
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 5. CONTACT SECTION */}
-        <section id="contact" className="space-y-8 border-t border-border/80 pt-16">
-          <div className="space-y-2">
-            <div className="w-10 h-1 bg-[var(--primary)]" />
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-              Contact &amp; Inquiries
+        {/* 5. TECHNICAL SKILLS MATRIX */}
+        <section id="skills" className="space-y-8">
+          <div className="border-b border-border/80 pb-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
+              Technical Toolkit
             </h2>
-            <p className="text-sm text-fg-muted max-w-xl">
-              Available for research collaborations, engineering roles, and scientific computing consultations.
+            <p className="text-xs sm:text-sm text-fg-muted mt-1">
+              Core technologies, chemical engineering principles, and distributed architectures.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            
-            {/* Contact Details Card */}
-            <div className="md:col-span-6 border border-border p-8 bg-[var(--card)] space-y-6">
-              <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[var(--primary)] font-bold">
-                  DIRECT EMAIL
-                </span>
-                <div className="text-xl font-bold text-fg mt-1">
-                  {email}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {skillCategories.map((cat, idx) => (
+              <motion.div
+                key={cat.category}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="rounded-2xl border border-border/80 bg-card p-6 space-y-4"
+              >
+                <div className="flex items-center gap-2 text-sm font-bold text-fg">
+                  {idx === 0 && <FlaskConical size={16} className="text-primary" />}
+                  {idx === 1 && <Cpu size={16} className="text-primary" />}
+                  {idx === 2 && <Layers size={16} className="text-primary" />}
+                  <span>{cat.category}</span>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handleCopyEmail}
-                  className="border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white px-6 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
-                >
-                  {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copiedEmail ? "Copied" : "Copy Email"}</span>
-                </button>
+                <div className="flex flex-wrap gap-1.5">
+                  {cat.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="text-xs font-mono px-3 py-1.5 rounded-lg bg-bg-subtle border border-border/60 text-fg-muted"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
 
-                <a
-                  href={`mailto:${email}`}
-                  className="border border-border hover:border-fg text-fg px-6 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
-                >
-                  <Mail size={14} />
-                  <span>Open Mail App</span>
-                </a>
-              </div>
-
-              <div className="pt-4 border-t border-border/80 flex items-center gap-4">
-                <a
-                  href="https://github.com/shekharsameer2308"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 border border-border hover:border-[var(--primary)] text-fg hover:text-[var(--primary)] flex items-center justify-center transition-colors"
-                  title="GitHub"
-                >
-                  <GithubIcon size={18} />
-                </a>
-
-                <a
-                  href="https://linkedin.com/in/sameershekhar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 border border-border hover:border-[var(--primary)] text-fg hover:text-[var(--primary)] flex items-center justify-center transition-colors"
-                  title="LinkedIn"
-                >
-                  <LinkedinIcon size={18} />
-                </a>
-              </div>
+        {/* 6. CONTACT SECTION */}
+        <section id="contact" className="space-y-6">
+          <div className="rounded-3xl border border-border/80 bg-gradient-to-b from-card to-bg-subtle p-8 sm:p-12 text-center space-y-6 shadow-sm">
+            
+            <div className="max-w-md mx-auto space-y-2">
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-fg">
+                Let's build something together.
+              </h2>
+              <p className="text-xs sm:text-sm text-fg-muted">
+                Open for scientific machine learning research, software engineering roles, and process modeling collaborations.
+              </p>
             </div>
 
-            {/* Quick Context Card */}
-            <div className="md:col-span-6 border border-border p-8 bg-[var(--bg-subtle)] space-y-4">
-              <h3 className="text-lg font-bold text-fg">
-                Institution &amp; Department
-              </h3>
-              <p className="text-sm text-fg-muted leading-relaxed">
-                Department of Chemical Engineering<br />
-                Birla Institute of Technology, Mesra<br />
-                Ranchi, Jharkhand, India - 835215
-              </p>
-              <div className="text-xs font-mono text-[var(--primary)] font-bold pt-2">
-                IIChE Student Chapter Executive Office
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={handleCopyEmail}
+                className="px-6 py-2.5 rounded-full bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-primary-hover shadow-sm transition-all inline-flex items-center gap-2"
+              >
+                {copiedEmail ? <Check size={15} /> : <Copy size={15} />}
+                <span>{copiedEmail ? "Email Copied" : "Copy Email"}</span>
+              </button>
+
+              <a
+                href={`mailto:${email}`}
+                className="px-6 py-2.5 rounded-full border border-border bg-card text-xs sm:text-sm font-semibold text-fg hover:text-primary hover:border-border-hover transition-colors inline-flex items-center gap-2"
+              >
+                <Mail size={15} />
+                <span>Open Mail Client</span>
+              </a>
+            </div>
+
+            <div className="text-xs font-mono text-fg-subtle pt-2">
+              {email}
             </div>
 
           </div>
@@ -932,77 +761,60 @@ export default function WixEditorialPortfolio() {
 
       </main>
 
-      {/* 6. BOTTOM FOOTER BAND (Matching the grey footer band in Wix screenshot) */}
-      <footer className="w-full bg-[var(--bg-band)] border-t border-border/70 py-8 px-6 sm:px-12 transition-colors">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-fg-subtle">
-            © 2026 by Sameer Shekhar. Department of Chemical Engineering, BIT Mesra.
-          </p>
-
-          <div className="flex items-center gap-4 text-fg-subtle">
-            <a
-              href="https://github.com/shekharsameer2308"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[var(--primary)] transition-colors"
-              title="GitHub"
-            >
-              <GithubIcon size={16} />
-            </a>
-            <a
-              href="https://linkedin.com/in/sameershekhar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[var(--primary)] transition-colors"
-              title="LinkedIn"
-            >
-              <LinkedinIcon size={16} />
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="hover:text-[var(--primary)] transition-colors"
-              title="Email"
-            >
-              <Mail size={16} />
-            </a>
+      {/* 7. FOOTER */}
+      <footer className="border-t border-border/70 py-8 px-6 text-xs text-fg-subtle">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© 2026 Sameer Shekhar. Department of Chemical Engineering, BIT Mesra.</p>
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/shekharsameer2308" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">GitHub</a>
+            <a href="https://linkedin.com/in/sameershekhar" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">LinkedIn</a>
+            <a href={`mailto:${email}`} className="hover:text-fg transition-colors">Email</a>
           </div>
         </div>
       </footer>
 
       {/* Lightbox Modal for Verified Certificates */}
-      {activeCert && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setActiveCert(null)}
-        >
-          <div
-            className="max-w-2xl w-full bg-[var(--card)] border border-border p-6 space-y-4 relative"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {activeCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setActiveCert(null)}
           >
-            <button
-              onClick={() => setActiveCert(null)}
-              className="absolute top-4 right-4 w-8 h-8 border border-border flex items-center justify-center text-fg hover:text-[var(--primary)] transition-colors"
-              aria-label="Close"
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="max-w-2xl w-full bg-card border border-border rounded-2xl p-6 space-y-4 relative shadow-xl"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X size={16} />
-            </button>
+              <button
+                onClick={() => setActiveCert(null)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full border border-border flex items-center justify-center text-fg hover:text-primary transition-colors"
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
 
-            <div className="space-y-1">
-              <h4 className="text-lg font-bold text-fg">{activeCert.title}</h4>
-              <p className="text-xs font-mono text-fg-subtle">{activeCert.issuer}</p>
-            </div>
+              <div className="space-y-1">
+                <h4 className="text-lg font-bold text-fg">{activeCert.title}</h4>
+                <p className="text-xs font-mono text-fg-subtle">{activeCert.issuer}</p>
+              </div>
 
-            <div className="border border-border/80 overflow-hidden bg-black/10 flex items-center justify-center min-h-[300px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={activeCert.image}
-                alt={activeCert.title}
-                className="max-h-[70vh] w-auto object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      )}
+              <div className="rounded-xl border border-border overflow-hidden bg-black/10 flex items-center justify-center min-h-[300px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={activeCert.image}
+                  alt={activeCert.title}
+                  className="max-h-[70vh] w-auto object-contain"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

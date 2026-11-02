@@ -4,33 +4,35 @@
 
 @layer base {
   :root {
-    --bg: #ffffff;
-    --bg-band: #e5e7eb;
-    --bg-subtle: #f3f4f6;
-    --fg: #111827;
-    --fg-muted: #4b5563;
-    --fg-subtle: #6b7280;
-    --border: #d1d5db;
+    --bg: #fafafa;
+    --bg-subtle: #f4f4f5;
     --card: #ffffff;
-    --card-surface: #f9fafb;
-    --primary: #c0392b; /* Warm terracotta/rust red from Wix reference */
-    --primary-hover: #a93226;
-    --primary-muted: rgba(192, 57, 43, 0.08);
+    --card-elevated: #ffffff;
+    --border: #e4e4e7;
+    --border-hover: #d4d4d8;
+    --fg: #09090b;
+    --fg-muted: #52525b;
+    --fg-subtle: #71717a;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-muted: rgba(37, 99, 235, 0.08);
+    --accent: #0284c7;
   }
 
   .dark {
-    --bg: #0f1012;
-    --bg-band: #18191d;
-    --bg-subtle: #202227;
-    --fg: #f3f4f6;
-    --fg-muted: #9ca3af;
-    --fg-subtle: #6b7280;
-    --border: #2d3139;
-    --card: #18191d;
-    --card-surface: #202227;
-    --primary: #e05646;
-    --primary-hover: #ec7063;
-    --primary-muted: rgba(224, 86, 70, 0.12);
+    --bg: #09090b;
+    --bg-subtle: #121215;
+    --card: #141418;
+    --card-elevated: #1a1a20;
+    --border: #27272a;
+    --border-hover: #3f3f46;
+    --fg: #fafafa;
+    --fg-muted: #a1a1aa;
+    --fg-subtle: #71717a;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-muted: rgba(59, 130, 246, 0.12);
+    --accent: #38bdf8;
   }
 
   html {
@@ -43,7 +45,7 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
@@ -57,10 +59,10 @@
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 4px;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: var(--fg-subtle);
 }
 
 ::selection {
