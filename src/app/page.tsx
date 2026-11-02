@@ -19,7 +19,10 @@ import {
   Layers,
   Database,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Star,
+  GitFork,
+  RefreshCw
 } from "lucide-react";
 import LampToggle from "@/components/LampToggle";
 import { certs } from "@/data/certs";
@@ -182,7 +185,56 @@ export default function WixEditorialPortfolio() {
   const [activeSimTab, setActiveSimTab] = useState<"fno" | "analyzer" | "deeponet">("fno");
   const [diffusionParam, setDiffusionParam] = useState(45);
 
+  // GitHub Live API State
+  const [githubRepos, setGithubRepos] = useState<any[]>([]);
+  const [isLoadingGithub, setIsLoadingGithub] = useState(false);
+  const [repoFilter, setRepoFilter] = useState<"featured" | "all">("featured");
+
   const email = "shekharsameer2308@gmail.com";
+
+  const fetchGithub = async () => {
+    setIsLoadingGithub(true);
+    try {
+      const res = await fetch("/api/github");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.repos && Array.isArray(data.repos)) {
+          setGithubRepos(data.repos);
+          return;
+        }
+      }
+      // Direct client fallback
+      const direct = await fetch("https://api.github.com/users/shekharsameer2308/repos?per_page=100&sort=pushed");
+      if (direct.ok) {
+        const d = await direct.json();
+        if (Array.isArray(d)) {
+          setGithubRepos(
+            d.filter((r: any) => !r.fork && r.name !== "shekharsameer2308").map((r: any) => ({
+              id: r.id,
+              name: r.name,
+              description: r.description,
+              html_url: r.html_url,
+              homepage: r.homepage,
+              stars: r.stargazers_count,
+              forks: r.forks_count,
+              language: r.language,
+              topics: r.topics || [],
+              updated_at: r.updated_at,
+              pushed_at: r.pushed_at,
+            }))
+          );
+        }
+      }
+    } catch (e) {
+      console.warn("GitHub fetch error:", e);
+    } finally {
+      setIsLoadingGithub(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGithub();
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -452,84 +504,235 @@ export default function WixEditorialPortfolio() {
 
         </section>
 
-        {/* 3. PROJECTS SECTION (Clean Editorial Presentation) */}
-        <section id="projects" className="space-y-12 border-t border-border/80 pt-16">
-          <div className="space-y-2">
-            <div className="w-10 h-1 bg-[var(--primary)]" />
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-              Selected Projects &amp; Deployments
-            </h2>
-            <p className="text-sm text-fg-muted max-w-2xl">
-              Production software, scientific neural operator surrogates, and distributed streaming architectures.
-            </p>
+        {/* 3. PROJECTS SECTION (Clean Editorial Presentation + Direct GitHub Fetch) */}
+        <section id="projects" className="space-y-10 border-t border-border/80 pt-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <div className="w-10 h-1 bg-[var(--primary)]" />
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
+                Projects &amp; GitHub Repositories
+              </h2>
+              <p className="text-sm text-fg-muted max-w-2xl">
+                Scientific neural operator surrogates, industrial optimization engines, and live public repositories directly fetched from GitHub.
+              </p>
+            </div>
+
+            {/* GitHub Live Status & View Switcher */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-[var(--bg-subtle)] text-xs font-mono text-fg-muted">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>
+                  GitHub: @shekharsameer2308 {githubRepos.length > 0 && `(${githubRepos.length} Repos)`}
+                </span>
+                <button
+                  onClick={fetchGithub}
+                  disabled={isLoadingGithub}
+                  className="hover:text-[var(--primary)] transition-colors p-0.5"
+                  title="Refetch directly from GitHub"
+                >
+                  <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-[var(--primary)]" : ""} />
+                </button>
+              </div>
+
+              <div className="inline-flex border border-border p-1 bg-[var(--bg-subtle)] text-xs font-mono">
+                <button
+                  onClick={() => setRepoFilter("featured")}
+                  className={`px-3 py-1 font-semibold transition-colors ${
+                    repoFilter === "featured"
+                      ? "bg-[var(--card)] text-[var(--primary)] shadow-sm"
+                      : "text-fg-muted hover:text-fg"
+                  }`}
+                >
+                  Featured (6)
+                </button>
+                <button
+                  onClick={() => setRepoFilter("all")}
+                  className={`px-3 py-1 font-semibold transition-colors ${
+                    repoFilter === "all"
+                      ? "bg-[var(--card)] text-[var(--primary)] shadow-sm"
+                      : "text-fg-muted hover:text-fg"
+                  }`}
+                >
+                  All GitHub ({githubRepos.length || 13})
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioProjects.map((proj) => (
-              <div
-                key={proj.title}
-                className="border border-border/90 bg-[var(--card)] p-7 flex flex-col justify-between space-y-6 hover:border-[var(--primary)] transition-colors group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-border/70 pb-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-[var(--primary)]">
-                      {proj.category}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-fg-subtle">
-                      {proj.id}
-                    </span>
-                  </div>
+          {/* VIEW 1: FEATURED PROJECTS */}
+          {repoFilter === "featured" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {portfolioProjects.map((proj) => {
+                const liveRepo = githubRepos.find(
+                  (r) => r.html_url.toLowerCase() === proj.githubUrl.toLowerCase() ||
+                         proj.githubUrl.toLowerCase().includes(r.name.toLowerCase())
+                );
+                return (
+                  <div
+                    key={proj.title}
+                    className="border border-border/90 bg-[var(--card)] p-7 flex flex-col justify-between space-y-6 hover:border-[var(--primary)] transition-colors group"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between border-b border-border/70 pb-3">
+                        <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-[var(--primary)]">
+                          {proj.category}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          {liveRepo && liveRepo.stars > 0 && (
+                            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-500 font-bold">
+                              <Star size={11} className="fill-amber-500" />
+                              {liveRepo.stars}
+                            </span>
+                          )}
+                          <span className="text-xs font-mono font-bold text-fg-subtle">
+                            {proj.id}
+                          </span>
+                        </div>
+                      </div>
 
-                  <div>
-                    <h3 className="text-xl font-bold text-fg group-hover:text-[var(--primary)] transition-colors">
-                      {proj.title}
-                    </h3>
-                    <div className="text-xs font-mono text-[var(--primary)] font-bold mt-1">
-                      {proj.metric}
+                      <div>
+                        <h3 className="text-xl font-bold text-fg group-hover:text-[var(--primary)] transition-colors">
+                          {proj.title}
+                        </h3>
+                        <div className="text-xs font-mono text-[var(--primary)] font-bold mt-1">
+                          {proj.metric}
+                        </div>
+                      </div>
+
+                      <p className="text-sm text-fg-muted leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-border/70">
+                      <div className="flex flex-wrap gap-1.5 text-[10px] font-mono text-fg-subtle">
+                        {proj.stack.map((t) => (
+                          <span key={t} className="px-2 py-0.5 bg-[var(--bg-subtle)] border border-border/60">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between pt-1 text-xs font-semibold">
+                        <a
+                          href={proj.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-fg hover:text-[var(--primary)] inline-flex items-center gap-1 transition-colors"
+                        >
+                          <GithubIcon size={14} />
+                          <span>Code Repository</span>
+                        </a>
+
+                        {proj.liveUrl && (
+                          <a
+                            href={proj.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
+                          >
+                            <span>Live App</span>
+                            <ArrowUpRight size={14} />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
+                );
+              })}
+            </div>
+          )}
 
-                  <p className="text-sm text-fg-muted leading-relaxed">
-                    {proj.description}
-                  </p>
-                </div>
+          {/* VIEW 2: ALL DIRECT GITHUB REPOSITORIES */}
+          {repoFilter === "all" && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(githubRepos.length > 0 ? githubRepos : portfolioProjects.map(p => ({
+                  id: p.id,
+                  name: p.title,
+                  description: p.description,
+                  html_url: p.githubUrl,
+                  homepage: p.liveUrl,
+                  stars: 0,
+                  forks: 0,
+                  language: p.stack[0],
+                  topics: []
+                }))).map((repo: any) => (
+                  <div
+                    key={repo.name}
+                    className="border border-border/90 bg-[var(--card)] p-6 flex flex-col justify-between space-y-4 hover:border-[var(--primary)] transition-colors group"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono font-bold text-[var(--primary)] px-2 py-0.5 border border-[var(--primary)]/30 bg-[var(--primary-muted)]">
+                          {repo.language || "Software"}
+                        </span>
+                        <div className="flex items-center gap-3 text-xs font-mono text-fg-subtle">
+                          {repo.stars > 0 && (
+                            <span className="inline-flex items-center gap-1 text-amber-500 font-bold">
+                              <Star size={12} className="fill-amber-500" />
+                              {repo.stars}
+                            </span>
+                          )}
+                          {repo.forks > 0 && (
+                            <span className="inline-flex items-center gap-1">
+                              <GitFork size={12} />
+                              {repo.forks}
+                            </span>
+                          )}
+                        </div>
+                      </div>
 
-                <div className="space-y-4 pt-4 border-t border-border/70">
-                  <div className="flex flex-wrap gap-1.5 text-[10px] font-mono text-fg-subtle">
-                    {proj.stack.map((t) => (
-                      <span key={t} className="px-2 py-0.5 bg-[var(--bg-subtle)] border border-border/60">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                      <h3 className="text-lg font-bold text-fg group-hover:text-[var(--primary)] transition-colors break-words">
+                        {repo.name}
+                      </h3>
 
-                  <div className="flex items-center justify-between pt-1 text-xs font-semibold">
-                    <a
-                      href={proj.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-fg hover:text-[var(--primary)] inline-flex items-center gap-1 transition-colors"
-                    >
-                      <GithubIcon size={14} />
-                      <span>Code Repository</span>
-                    </a>
+                      <p className="text-xs text-fg-muted leading-relaxed line-clamp-3">
+                        {repo.description || "Public repository developed by Sameer Shekhar."}
+                      </p>
+                    </div>
 
-                    {proj.liveUrl && (
+                    <div className="pt-3 border-t border-border/70 flex items-center justify-between text-xs font-semibold">
                       <a
-                        href={proj.liveUrl}
+                        href={repo.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
+                        className="text-fg hover:text-[var(--primary)] inline-flex items-center gap-1.5 transition-colors"
                       >
-                        <span>Live App</span>
-                        <ArrowUpRight size={14} />
+                        <GithubIcon size={14} />
+                        <span>GitHub</span>
                       </a>
-                    )}
+
+                      {repo.homepage && (
+                        <a
+                          href={repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--primary)] hover:underline inline-flex items-center gap-1"
+                        >
+                          <span>Live Site</span>
+                          <ArrowUpRight size={13} />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+
+              <div className="text-center pt-4">
+                <a
+                  href="https://github.com/shekharsameer2308?tab=repositories"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-border px-6 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-fg hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                >
+                  <GithubIcon size={15} />
+                  <span>View Full Profile on GitHub (@shekharsameer2308)</span>
+                  <ExternalLink size={13} />
+                </a>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* 4. RESUME & EXPERIENCE (Clean Editorial Timeline) */}
