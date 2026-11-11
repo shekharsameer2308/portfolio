@@ -8,9 +8,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-hand", display: "swap" });
 const patrick = Patrick_Hand({ weight: "400", subsets: ["latin"], variable: "--font-patrick", display: "swap" });
 
-const title = "Sameer Shekhar - Chemical Engineering, ML and Simulation";
+const title = "Sameer Shekhar - Software Developer & Chemical Engineering";
 const description =
-  "Chemical engineering student at BIT Mesra building ML and simulation tools for process industries.";
+  "Software developer and chemical engineering undergraduate at BIT Mesra building distributed data systems, full-stack web applications, and engineering software.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${caveat.variable} ${patrick.variable}`} suppressHydrationWarning>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+    <html lang="en" className={`${inter.variable} ${caveat.variable} ${patrick.variable} dark`} suppressHydrationWarning>
+      <body className="bg-black text-white">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </body>

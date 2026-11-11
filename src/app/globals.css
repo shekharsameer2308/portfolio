@@ -4,31 +4,31 @@
 
 @layer base {
   :root {
-    --bg: #fafafa;
-    --bg-subtle: #f4f4f5;
-    --card: #ffffff;
-    --card-elevated: #ffffff;
-    --border: #e4e4e7;
-    --border-hover: #d4d4d8;
-    --fg: #09090b;
-    --fg-muted: #52525b;
-    --fg-subtle: #71717a;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-muted: rgba(37, 99, 235, 0.08);
-    --accent: #0284c7;
+    --bg: #000000;
+    --bg-subtle: #09090b;
+    --card: #0a0a0c;
+    --card-elevated: #111114;
+    --border: #1c1c21;
+    --border-hover: #2e2e36;
+    --fg: #ededed;
+    --fg-muted: #8e8e99;
+    --fg-subtle: #63636e;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-muted: rgba(59, 130, 246, 0.12);
+    --accent: #38bdf8;
   }
 
   .dark {
-    --bg: #09090b;
-    --bg-subtle: #121215;
-    --card: #141418;
-    --card-elevated: #1a1a20;
-    --border: #27272a;
-    --border-hover: #3f3f46;
-    --fg: #fafafa;
-    --fg-muted: #a1a1aa;
-    --fg-subtle: #71717a;
+    --bg: #000000;
+    --bg-subtle: #09090b;
+    --card: #0a0a0c;
+    --card-elevated: #111114;
+    --border: #1c1c21;
+    --border-hover: #2e2e36;
+    --fg: #ededed;
+    --fg-muted: #8e8e99;
+    --fg-subtle: #63636e;
     --primary: #3b82f6;
     --primary-hover: #60a5fa;
     --primary-muted: rgba(59, 130, 246, 0.12);
@@ -37,6 +37,8 @@
 
   html {
     scroll-behavior: smooth;
+    background-color: #000000;
+    color: #ededed;
   }
 
   body {
@@ -45,7 +47,6 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
@@ -55,17 +56,17 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: #222226;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--fg-subtle);
+  background: #3e3e46;
 }
 
 ::selection {
-  background-color: var(--primary);
+  background-color: #2563eb;
   color: #ffffff;
 }
