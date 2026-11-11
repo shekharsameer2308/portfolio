@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -9,22 +8,14 @@ import {
   Copy,
   Check,
   X,
-  ExternalLink,
   ChevronRight,
   Star,
   GitFork,
   RefreshCw,
-  Code2,
-  Cpu,
-  Layers,
-  FlaskConical,
-  LineChart,
   Briefcase,
-  GraduationCap,
-  Sparkles
+  GraduationCap
 } from "lucide-react";
 import LampToggle from "@/components/LampToggle";
-import KineticWave from "@/components/KineticWave";
 import { certs } from "@/data/certs";
 
 function GithubIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
@@ -70,8 +61,7 @@ export interface ProjectItem {
   id: string;
   title: string;
   category: string;
-  group: "all" | "sciml" | "systems" | "ai" | "fintech";
-  metric: string;
+  group: "all" | "web" | "systems" | "simulation" | "data";
   description: string;
   stack: string[];
   githubUrl: string;
@@ -81,137 +71,125 @@ export interface ProjectItem {
 const portfolioProjects: ProjectItem[] = [
   {
     id: "01",
-    title: "Neural PDE Solver",
-    category: "Scientific ML",
-    group: "sciml",
-    metric: "100,000× faster inference",
+    title: "TrackFin Intelligence Platform",
+    category: "Full-Stack Web",
+    group: "web",
     description:
-      "Fourier Neural Operator (FNO) surrogates trained on Fisher-KPP reaction-diffusion equations, providing orders-of-magnitude faster solution generation than traditional numerical solvers.",
-    stack: ["PyTorch", "React", "FastAPI", "Canvas API"],
-    githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
-    liveUrl: "https://prototype-fno-1-d-rxn-dynamics.vercel.app"
+      "Personal finance tracking application for logging income and expenses, viewing categorized summaries, and tracking spending trends with responsive charts.",
+    stack: ["JavaScript", "React", "Next.js", "Chart.js"],
+    githubUrl: "https://github.com/shekharsameer2308/TrackFin",
+    liveUrl: "https://track-fin-bay.vercel.app"
   },
   {
     id: "02",
-    title: "Catalytic Reactor Model",
-    category: "Process Simulation",
-    group: "sciml",
-    metric: "+20.66% CO₂ conversion gain",
+    title: "NEXUS Distributed Streaming Engine",
+    category: "Distributed Systems",
+    group: "systems",
     description:
-      "DeepONet neural operator surrogate modeling temperature and concentration profiles in a fixed-bed e-methanol reactor, coupled with BoTorch for multi-objective Bayesian optimization.",
-    stack: ["Python", "PyTorch", "BoTorch", "SciML"],
-    githubUrl: "https://github.com/shekharsameer2308/exi1"
+      "Marketplace telemetry simulator running across 11 containerized Docker microservices with Apache Kafka message brokers, PostgreSQL, and real-time Grafana monitoring.",
+    stack: ["Apache Kafka", "Docker", "PostgreSQL", "FastAPI", "Grafana"],
+    githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
+    liveUrl: "https://real-time-data-analysis.vercel.app/"
   },
   {
     id: "03",
     title: "Industrial Coal Quality Analyzer",
-    category: "Optimization & Analytics",
-    group: "systems",
-    metric: "Simplex LP blend optimizer",
+    category: "Data & Optimization",
+    group: "data",
     description:
-      "Predicts Gross Calorific Value via XGBoost, isolates faulty lab assays with Isolation Forest, and optimizes commercial coal blending formulations using simplex linear programming.",
+      "Predictive quality regression model trained on proximate analysis assays with an automated simplex linear programming optimizer for commercial coal blending ratios.",
     stack: ["TypeScript", "Next.js", "FastAPI", "XGBoost", "SciPy"],
     githubUrl: "https://github.com/shekharsameer2308/Analyzer",
     liveUrl: "https://analyzer-ochre.vercel.app"
   },
   {
     id: "04",
-    title: "TrackFin Intelligence Platform",
-    category: "FinTech & Full-Stack",
-    group: "fintech",
-    metric: "Fast personal budgeting",
+    title: "Neural PDE Reaction Dynamics Solver",
+    category: "Numerical Simulation",
+    group: "simulation",
     description:
-      "Clean, modern personal finance platform for logging transactions, automated category breakdown, spending analytics, and cashflow charts.",
-    stack: ["JavaScript", "React", "Next.js", "Chart.js"],
-    githubUrl: "https://github.com/shekharsameer2308/TrackFin",
-    liveUrl: "https://track-fin-bay.vercel.app"
+      "In-browser numerical solver and neural operator evaluation tool for Fisher-KPP non-linear reaction-diffusion partial differential equations.",
+    stack: ["Python", "PyTorch", "React", "FastAPI", "Canvas API"],
+    githubUrl: "https://github.com/shekharsameer2308/Prototype-FNO-1D-RxnDynamics-",
+    liveUrl: "https://prototype-fno-1-d-rxn-dynamics.vercel.app"
   },
   {
     id: "05",
-    title: "Project Prism (Attribution Engine)",
-    category: "Enterprise Data Systems",
-    group: "systems",
-    metric: "$40M spend allocation model",
+    title: "Catalytic Fixed-Bed Reactor Model",
+    category: "Chemical Process Simulation",
+    group: "simulation",
     description:
-      "Omnichannel marketing ROI and attribution engine prototype designed for enterprise retail, featuring Markov chain attribution and multi-touch data pipelines.",
+      "Numerical simulation of a fixed-bed catalytic reactor for carbon dioxide hydrogenation, paired with Bayesian optimization algorithms to maximize methanol yield.",
+    stack: ["Python", "PyTorch", "BoTorch", "NumPy"],
+    githubUrl: "https://github.com/shekharsameer2308/exi1"
+  },
+  {
+    id: "06",
+    title: "Project Prism: Marketing Attribution Engine",
+    category: "Data Systems",
+    group: "data",
+    description:
+      "Attribution modeling engine evaluating omnichannel marketing spend using first-order Markov chains and multi-touch heuristic allocation algorithms.",
     stack: ["Python", "Pandas", "Statsmodels", "SciPy", "SQL"],
     githubUrl: "https://github.com/shekharsameer2308/ProjectPrism"
   },
   {
-    id: "06",
-    title: "Multimodal Attribute Extraction",
-    category: "Multimodal AI & NLP",
-    group: "ai",
-    metric: "93.3% extraction accuracy",
+    id: "07",
+    title: "Packaging Attribute Extraction Pipeline",
+    category: "Data & Automation",
+    group: "data",
     description:
-      "Automated extraction pipeline for packaging images combining Google Gemini vision models with custom Perceptron Named Entity Recognition (NER) and deterministic Pydantic validation.",
-    stack: ["Python", "Google Gemini", "EasyOCR", "Pydantic", "NER"],
+      "Data pipeline for parsing product attributes from packaging images using optical character recognition, named entity recognition, and structured Pydantic schema validation.",
+    stack: ["Python", "EasyOCR", "Pydantic", "FastAPI"],
     githubUrl: "https://github.com/shekharsameer2308/ecom-attribute-extraction"
   },
   {
-    id: "07",
-    title: "NEXUS Streaming Analytics",
-    category: "Distributed Systems",
-    group: "systems",
-    metric: "10–50 events/sec throughput",
-    description:
-      "High-throughput real-time streaming engine simulating marketplace events across 11 containerized Docker services, Apache Kafka event brokers, PostgreSQL, and Grafana telemetry.",
-    stack: ["Kafka", "PostgreSQL", "Docker", "FastAPI", "Grafana"],
-    githubUrl: "https://github.com/shekharsameer2308/Real-Time-Data-Analysis-",
-    liveUrl: "https://real-time-data-analysis.vercel.app/"
-  },
-  {
     id: "08",
-    title: "Scout Market Intelligence",
-    category: "AI & Competitive Intel",
-    group: "ai",
-    metric: "Automated research digests",
+    title: "Scout Market Intelligence Platform",
+    category: "Data & Automation",
+    group: "data",
     description:
-      "AI-powered market intelligence and competitor research platform designed to monitor industry trends, track competitor developments, and synthesize structured research summaries.",
-    stack: ["Python", "FastAPI", "LLM Orchestration", "BeautifulSoup"],
+      "Market research tool automating web crawling, structured content aggregation, and news synthesis across target industry domains.",
+    stack: ["Python", "FastAPI", "BeautifulSoup", "AsyncIO"],
     githubUrl: "https://github.com/shekharsameer2308/Scout"
   },
   {
     id: "09",
-    title: "GPU Fluid Dynamics (CFD)",
-    category: "Fluid Simulation & SciML",
-    group: "sciml",
-    metric: "Taichi GPU-parallel",
+    title: "Incompressible Fluid Dynamics Solver",
+    category: "Fluid Simulation",
+    group: "simulation",
     description:
-      "Incompressible Navier-Stokes solver accelerated on GPU using Taichi Lang, integrated with convolutional neural networks for instantaneous pressure-field surrogate inference.",
-    stack: ["Taichi Lang", "CUDA", "PyTorch", "NumPy"],
+      "2D fluid dynamics simulation solving the incompressible Navier-Stokes equations with GPU acceleration and velocity field visualization.",
+    stack: ["Python", "Taichi Lang", "CUDA", "NumPy"],
     githubUrl: "https://github.com/shekharsameer2308/Flow-simulation-"
   },
   {
     id: "10",
-    title: "ParkWay (Pathway & Analytics)",
-    category: "Data Analytics & Agents",
-    group: "ai",
-    metric: "Summer Analytics '25 Capstone",
+    title: "ParkWay Stream Validation Pipeline",
+    category: "Data Systems",
+    group: "data",
     description:
-      "Agentic AI system architecture and stream processing pipeline for provider data validation and directory management, built for the Consulting & Analytics Club capstone.",
-    stack: ["Python", "Pathway", "Jupyter Notebook", "Scikit-Learn"],
+      "Stream processing architecture for directory record validation, schema conformance checking, and anomaly filtering developed for the Summer Analytics capstone.",
+    stack: ["Python", "Pathway", "Pandas", "Jupyter"],
     githubUrl: "https://github.com/shekharsameer2308/ParkWay"
   },
   {
     id: "11",
-    title: "Provider Directory Validation Agent",
-    category: "Healthcare AI & Automation",
-    group: "ai",
-    metric: "Agentic validation workflow",
+    title: "Provider Directory Validation Workflow",
+    category: "Data Systems",
+    group: "data",
     description:
-      "Agentic AI system designed for healthcare payer directory management and provider credential validation, integrating automated verification and entity resolution.",
-    stack: ["Python", "Jupyter Notebook", "LLMs", "Pandas"],
+      "Healthcare directory validation workflow implementing automated credential reconciliation, format standardization, and data deduplication.",
+    stack: ["Python", "Jupyter Notebook", "Pandas"],
     githubUrl: "https://github.com/shekharsameer2308/eyprototype"
   },
   {
     id: "12",
-    title: "Machine Learning Algorithms Suite",
+    title: "Machine Learning Algorithms Library",
     category: "Applied Machine Learning",
-    group: "ai",
-    metric: "Comprehensive ML benchmarks",
+    group: "data",
     description:
-      "Implementations of core supervised and unsupervised learning algorithms from scratch and with Scikit-Learn, with cross-validation pipelines and evaluation metrics.",
+      "Implementations of core classification, regression, and clustering algorithms from scratch with documentation, unit tests, and validation benchmarks.",
     stack: ["Python", "Scikit-Learn", "Matplotlib", "NumPy"],
     githubUrl: "https://github.com/shekharsameer2308/ML-models-"
   },
@@ -220,20 +198,18 @@ const portfolioProjects: ProjectItem[] = [
     title: "Relational DBMS & Storage Engine",
     category: "Database Systems",
     group: "systems",
-    metric: "ACID schema architecture",
     description:
-      "Implementation of relational database schemas, query optimization, indexing structures, and transactional data integrity mechanisms.",
-    stack: ["SQL", "HTML", "Database Architecture"],
+      "Implementation of relational data structures, B-tree index traversal, query parsing, and ACID transaction safety concepts.",
+    stack: ["SQL", "HTML", "JavaScript"],
     githubUrl: "https://github.com/shekharsameer2308/Database-Management-System-"
   },
   {
     id: "14",
     title: "Python Algorithmic Utilities",
-    category: "Algorithms & Automation",
+    category: "Algorithms",
     group: "systems",
-    metric: "Core DSA routines",
     description:
-      "Curated repository of algorithmic scripts, mathematical utilities, numerical methods, and automated utility routines written in pure Python.",
+      "Utility library implementing classic data structures, sorting algorithms, numerical root-finding routines, and optimization benchmarks.",
     stack: ["Python", "Algorithms", "Data Structures"],
     githubUrl: "https://github.com/shekharsameer2308/python-scripts"
   }
@@ -246,8 +222,8 @@ const experienceData = [
     period: "May 2026 - Jun 2026",
     location: "Ranchi, India",
     points: [
-      "Conducted proximate analysis (moisture, ash, volatile matter, gross calorific value) under ASTM standards across coal seams.",
-      "Audited commercial billing against dispatch specifications and quality penalty frameworks."
+      "Conducted proximate analysis (moisture, ash, volatile matter, gross calorific value) under ASTM laboratory protocols across coal dispatches.",
+      "Audited billing records and delivery schedules against contract quality penalty thresholds."
     ]
   },
   {
@@ -256,8 +232,8 @@ const experienceData = [
     period: "Jun 2025 - Jul 2025",
     location: "Jamshedpur, India",
     points: [
-      "Formulated polymer modification batches and characterized structural morphologies via SEM and FTIR spectroscopy.",
-      "Analyzed thermal degradation behaviors using DSC and TGA curves for industrial steel coatings."
+      "Prepared polymer modification formulations and inspected microstructural morphologies using Scanning Electron Microscopy (SEM) and FTIR spectroscopy.",
+      "Analyzed thermal degradation behaviors using Differential Scanning Calorimetry (DSC) and Thermogravimetric Analysis (TGA)."
     ]
   },
   {
@@ -266,8 +242,8 @@ const experienceData = [
     period: "2023 - Present",
     location: "Mesra, India",
     points: [
-      "Leading department technical initiatives, student workshops, and research lectures in computational chemical engineering.",
-      "Organized technical symposiums bridging process simulation with applied machine learning."
+      "Directing student chapter operations, organizing technical symposiums, coding workshops, and guest lectures from chemical engineering researchers.",
+      "Coordinated academic hackathons and peer learning programs in computational modeling."
     ]
   },
   {
@@ -276,44 +252,29 @@ const experienceData = [
     period: "2023 - 2027",
     location: "Mesra, India",
     points: [
-      "Focus areas: Transport Phenomena, Chemical Reaction Engineering, Process Dynamics, and Scientific Computing.",
-      "Presidential leadership and active research in surrogate neural operator modeling."
+      "Core coursework: Transport Phenomena, Chemical Reaction Engineering, Process Dynamics and Control, Thermodynamics, and Numerical Methods.",
+      "Active research in numerical process simulation and optimization."
     ]
   }
 ];
 
 const skillCategories = [
   {
-    category: "Scientific ML & Modeling",
-    skills: ["Fourier Neural Operators (FNO)", "DeepONet", "Physics-Informed NNs (PINNs)", "PyTorch", "BoTorch Bayesian Opt"]
+    category: "Programming & Web",
+    skills: ["Python", "TypeScript", "JavaScript", "SQL", "React", "Next.js", "FastAPI", "Node.js", "Tailwind CSS", "HTML/CSS"]
   },
   {
-    category: "Process & Industrial Chemistry",
-    skills: ["Transport Phenomena", "Reaction Kinetics", "ASTM Proximate Analysis", "Simplex LP Optimization", "Navier-Stokes CFD"]
+    category: "Systems & Infrastructure",
+    skills: ["Docker", "Apache Kafka", "PostgreSQL", "Git & GitHub", "Linux / Bash", "RESTful APIs", "Grafana", "Vercel"]
   },
   {
-    category: "Systems & Full-Stack",
-    skills: ["Apache Kafka", "Docker", "PostgreSQL", "FastAPI", "Next.js", "TypeScript", "Python"]
+    category: "Engineering & Data",
+    skills: ["NumPy", "Pandas", "Scikit-Learn", "PyTorch", "Process Simulation", "Linear Programming (Simplex)", "ASTM Analysis"]
   }
 ];
 
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-};
-
-const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08
-    }
-  }
-};
-
-export default function ProfessionalPortfolio() {
-  const [selectedGroup, setSelectedGroup] = useState<"all" | "sciml" | "systems" | "ai" | "fintech">("all");
+export default function Portfolio() {
+  const [selectedGroup, setSelectedGroup] = useState<"all" | "web" | "systems" | "simulation" | "data">("all");
   const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [isLoadingGithub, setIsLoadingGithub] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -373,204 +334,124 @@ export default function ProfessionalPortfolio() {
   return (
     <div className="min-h-screen bg-bg text-fg font-sans selection:bg-primary selection:text-white transition-colors duration-200">
       
-      {/* 1. FLOATING PILL NAVBAR */}
-      <header className="sticky top-5 z-50 px-4">
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="max-w-3xl mx-auto rounded-full border border-border/80 bg-card/85 backdrop-blur-md px-5 py-2.5 shadow-sm flex items-center justify-between"
-        >
-          <a href="#" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-xs text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-              SS
-            </div>
-            <span className="font-semibold text-sm tracking-tight text-fg hidden sm:inline">
-              Sameer Shekhar
-            </span>
+      {/* 1. CLEAN TOP NAVBAR */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-bg/90 backdrop-blur-md">
+        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="#" className="font-semibold text-base tracking-tight text-fg hover:text-primary transition-colors">
+            Sameer Shekhar
           </a>
 
-          <nav className="flex items-center gap-1 sm:gap-2 text-xs font-medium text-fg-muted">
-            <a href="#about" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">About</a>
-            <a href="#projects" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Projects</a>
-            <a href="#experience" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Experience</a>
-            <a href="#skills" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Skills</a>
-            <a href="#contact" className="px-3 py-1.5 rounded-full hover:text-fg hover:bg-bg-subtle transition-colors">Contact</a>
-          </nav>
+          <div className="flex items-center gap-6">
+            <nav className="hidden sm:flex items-center gap-6 text-sm text-fg-muted">
+              <a href="#about" className="hover:text-fg transition-colors">About</a>
+              <a href="#projects" className="hover:text-fg transition-colors">Projects</a>
+              <a href="#experience" className="hover:text-fg transition-colors">Experience</a>
+              <a href="#skills" className="hover:text-fg transition-colors">Skills</a>
+              <a href="#contact" className="hover:text-fg transition-colors">Contact</a>
+            </nav>
 
-          <div className="flex items-center gap-2">
-            <LampToggle />
+            <div className="flex items-center gap-2">
+              <LampToggle />
+            </div>
           </div>
-        </motion.div>
+        </div>
       </header>
 
-      {/* 2. MAIN CONTAINER */}
-      <main className="max-w-5xl mx-auto px-6 sm:px-8 py-16 sm:py-24 space-y-28">
+      {/* 2. MAIN CONTENT */}
+      <main className="max-w-4xl mx-auto px-6 py-16 sm:py-20 space-y-20">
 
         {/* HERO SECTION */}
-        <section id="about" className="space-y-10">
-          
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="space-y-6"
-          >
-            {/* Status Indicator */}
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-bg-subtle text-xs font-mono text-fg-muted">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>BIT Mesra Class of 2027 • Chemical Engineering &amp; SciML</span>
-            </motion.div>
+        <section id="about" className="space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">
+              Sameer Shekhar
+            </h1>
+            <p className="text-lg text-fg-muted font-normal">
+              Software Developer &amp; Chemical Engineering Student at BIT Mesra
+            </p>
+          </div>
 
-            {/* Main Headline */}
-            <motion.div variants={fadeInUp} className="space-y-2">
-              <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-fg leading-[1.1]">
-                Engineering software &amp; <br />
-                <span className="bg-gradient-to-r from-primary via-blue-500 to-indigo-500 bg-clip-text text-transparent">
-                  scientific machine learning.
-                </span>
-              </h1>
-            </motion.div>
+          <p className="text-base text-fg-muted leading-relaxed max-w-2xl font-normal">
+            Undergraduate at Birla Institute of Technology, Mesra and Joint President of the Indian Institute of Chemical Engineers (IIChE) student chapter. I build distributed systems, full-stack applications, and engineering process software with Python, TypeScript, and modern data infrastructure.
+          </p>
 
-            {/* Bio Paragraph */}
-            <motion.p variants={fadeInUp} className="text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl font-normal">
-              Undergraduate at <strong>Birla Institute of Technology, Mesra</strong> and Joint President of the Indian Institute of Chemical Engineers (IIChE). I research neural operators (Fourier Neural Operators, DeepONet) for solving transport-reaction differential equations, and build industrial optimization tools for process plants.
-            </motion.p>
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <a
+              href="#projects"
+              className="px-5 py-2.5 rounded-lg bg-fg text-bg hover:opacity-90 text-sm font-medium transition-opacity inline-flex items-center gap-2"
+            >
+              <span>View Projects</span>
+              <ArrowRight size={15} />
+            </a>
 
-            {/* Action Buttons */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#projects"
-                className="px-6 py-2.5 rounded-full bg-primary text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover shadow-sm hover:shadow transition-all inline-flex items-center gap-2 group"
-              >
-                <span>View Selected Work</span>
-                <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
-              </a>
+            <a
+              href="#contact"
+              className="px-4 py-2.5 rounded-lg border border-border hover:border-fg text-sm font-medium text-fg transition-colors inline-flex items-center gap-2"
+            >
+              <span>Contact</span>
+            </a>
 
-              <a
-                href="#contact"
-                className="px-5 py-2.5 rounded-full border border-border hover:border-border-hover bg-card text-xs sm:text-sm font-semibold tracking-wide text-fg hover:text-primary transition-colors inline-flex items-center gap-2"
-              >
-                <span>Get in Touch</span>
-              </a>
+            <a
+              href="https://github.com/shekharsameer2308"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-lg border border-border hover:border-fg text-fg-muted hover:text-fg transition-colors inline-flex items-center justify-center"
+              title="GitHub"
+            >
+              <GithubIcon size={18} />
+            </a>
 
-              <div className="flex items-center gap-2 pl-2">
-                <a
-                  href="https://github.com/shekharsameer2308"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-border/80 hover:border-border-hover bg-card flex items-center justify-center text-fg-muted hover:text-fg transition-colors"
-                  title="GitHub Profile"
-                >
-                  <GithubIcon size={16} />
-                </a>
-
-                <a
-                  href="https://linkedin.com/in/sameershekhar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-border/80 hover:border-border-hover bg-card flex items-center justify-center text-fg-muted hover:text-fg transition-colors"
-                  title="LinkedIn Profile"
-                >
-                  <LinkedinIcon size={16} />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Kinetic Wave Preview Box */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full h-44 sm:h-52 rounded-2xl border border-border/80 bg-card overflow-hidden relative shadow-sm"
-          >
-            <KineticWave />
-            
-            <div className="absolute inset-0 p-5 flex flex-col justify-between pointer-events-none">
-              <div className="flex items-center justify-between text-xs font-mono text-fg-subtle">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Wave Dynamics &amp; Transport Physics
-                </span>
-                <span className="text-primary font-bold">Continuous Modeling</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/60">
-                <div>
-                  <div className="text-lg sm:text-xl font-extrabold text-fg">100,000×</div>
-                  <div className="text-[11px] font-mono text-fg-subtle">FNO Inference Speedup</div>
-                </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-extrabold text-emerald-600 dark:text-emerald-400">+20.66%</div>
-                  <div className="text-[11px] font-mono text-fg-subtle">CO₂ Conversion Gain</div>
-                </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-extrabold text-fg">Simplex LP</div>
-                  <div className="text-[11px] font-mono text-fg-subtle">Blend Quality Optimizer</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
+            <a
+              href="https://linkedin.com/in/sameershekhar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-lg border border-border hover:border-fg text-fg-muted hover:text-fg transition-colors inline-flex items-center justify-center"
+              title="LinkedIn"
+            >
+              <LinkedinIcon size={18} />
+            </a>
+          </div>
         </section>
 
-        {/* 3. PROJECTS SECTION (All 14 Projects from GitHub) */}
-        <section id="projects" className="space-y-8">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/80 pb-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-mono font-bold text-primary uppercase tracking-wider">
-                  Portfolio Catalog
-                </span>
-                <span className="text-xs font-mono text-fg-subtle">•</span>
-                <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  GitHub: @shekharsameer2308
-                </span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
-                All Projects &amp; Software
+        {/* PROJECTS SECTION */}
+        <section id="projects" className="space-y-8 border-t border-border/80 pt-16">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold tracking-tight text-fg">
+                Projects
               </h2>
-              <p className="text-xs sm:text-sm text-fg-muted mt-0.5">
-                Scientific neural operator surrogates, industrial optimization engines, agentic pipelines, and full-stack software.
+              <p className="text-sm text-fg-muted">
+                Software, distributed systems, and engineering tools built with TypeScript, Python, and SQL.
               </p>
             </div>
 
-            {/* Live Refresh Status */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={fetchGithub}
-                disabled={isLoadingGithub}
-                className="px-3 py-1.5 rounded-full border border-border bg-card hover:border-border-hover text-xs font-mono text-fg-muted hover:text-fg transition-colors inline-flex items-center gap-1.5"
-                title="Refresh from GitHub API"
-              >
-                <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-primary" : ""} />
-                <span>{isLoadingGithub ? "Syncing..." : "Sync GitHub"}</span>
-              </button>
-            </div>
+            <button
+              onClick={fetchGithub}
+              disabled={isLoadingGithub}
+              className="px-3 py-1.5 rounded-md border border-border bg-card text-xs font-mono text-fg-muted hover:text-fg transition-colors inline-flex items-center gap-1.5 self-start sm:self-auto"
+              title="Sync with GitHub"
+            >
+              <RefreshCw size={12} className={isLoadingGithub ? "animate-spin text-primary" : ""} />
+              <span>{isLoadingGithub ? "Syncing..." : "Sync GitHub"}</span>
+            </button>
           </div>
 
           {/* Category Filter Pills */}
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
             {[
-              { id: "all", label: `All Projects (${portfolioProjects.length})` },
-              { id: "sciml", label: `Scientific ML & CFD (${portfolioProjects.filter(p => p.group === "sciml").length})` },
-              { id: "systems", label: `Optimization & Systems (${portfolioProjects.filter(p => p.group === "systems").length})` },
-              { id: "ai", label: `AI & Intelligence (${portfolioProjects.filter(p => p.group === "ai").length})` },
-              { id: "fintech", label: `FinTech & Full-Stack (${portfolioProjects.filter(p => p.group === "fintech").length})` }
+              { id: "all", label: `All (${portfolioProjects.length})` },
+              { id: "web", label: `Full-Stack & Web (${portfolioProjects.filter(p => p.group === "web").length})` },
+              { id: "systems", label: `Distributed & Systems (${portfolioProjects.filter(p => p.group === "systems").length})` },
+              { id: "simulation", label: `Simulation & Physics (${portfolioProjects.filter(p => p.group === "simulation").length})` },
+              { id: "data", label: `Data & Automation (${portfolioProjects.filter(p => p.group === "data").length})` }
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setSelectedGroup(tab.id as any)}
-                className={`px-3.5 py-1.5 rounded-full border transition-all ${
+                className={`px-3 py-1.5 rounded-lg border transition-colors ${
                   selectedGroup === tab.id
-                    ? "border-primary bg-primary text-white font-semibold shadow-sm"
-                    : "border-border/80 bg-card hover:border-border-hover text-fg-muted hover:text-fg"
+                    ? "border-fg bg-fg text-bg font-semibold"
+                    : "border-border/80 bg-card hover:border-fg/40 text-fg-muted hover:text-fg"
                 }`}
               >
                 {tab.label}
@@ -578,14 +459,8 @@ export default function ProfessionalPortfolio() {
             ))}
           </div>
 
-          {/* ALL PROJECTS GRID */}
-          <motion.div
-            layout
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {portfolioProjects
               .filter((proj) => selectedGroup === "all" || proj.group === selectedGroup)
               .map((proj) => {
@@ -594,45 +469,37 @@ export default function ProfessionalPortfolio() {
                          proj.githubUrl.toLowerCase().includes(r.name.toLowerCase())
                 );
                 return (
-                  <motion.div
-                    layout
+                  <div
                     key={proj.title}
-                    variants={fadeInUp}
-                    className="rounded-2xl border border-border/80 bg-card p-6 flex flex-col justify-between space-y-5 hover:border-border-hover hover:shadow-sm transition-all group"
+                    className="rounded-xl border border-border/80 bg-card p-5 flex flex-col justify-between space-y-4 hover:border-fg/30 transition-colors"
                   >
-                    <div className="space-y-3.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono font-semibold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-mono text-fg-subtle">
                           {proj.category}
                         </span>
 
-                        <div className="flex items-center gap-2">
-                          {liveRepo && liveRepo.stars > 0 && (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-500 font-bold">
-                              <Star size={11} className="fill-amber-500" />
-                              {liveRepo.stars}
-                            </span>
-                          )}
-                          <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                            {proj.metric}
+                        {liveRepo && liveRepo.stars > 0 && (
+                          <span className="inline-flex items-center gap-1 font-mono text-amber-500 font-medium">
+                            <Star size={11} className="fill-amber-500" />
+                            {liveRepo.stars}
                           </span>
-                        </div>
+                        )}
                       </div>
 
-                      <div className="space-y-1.5">
-                        <h3 className="text-lg font-bold text-fg group-hover:text-primary transition-colors">
-                          {proj.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-fg-muted leading-relaxed line-clamp-3">
-                          {proj.description}
-                        </p>
-                      </div>
+                      <h3 className="text-base font-semibold text-fg">
+                        {proj.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-fg-muted leading-relaxed line-clamp-3">
+                        {proj.description}
+                      </p>
                     </div>
 
-                    <div className="space-y-3.5 pt-3.5 border-t border-border/60">
+                    <div className="space-y-3 pt-3 border-t border-border/60">
                       <div className="flex flex-wrap gap-1.5">
                         {proj.stack.map((t) => (
-                          <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-bg-subtle text-fg-subtle border border-border/40">
+                          <span key={t} className="text-[11px] font-mono px-2 py-0.5 rounded bg-bg-subtle text-fg-subtle border border-border/40">
                             {t}
                           </span>
                         ))}
@@ -643,10 +510,10 @@ export default function ProfessionalPortfolio() {
                           href={proj.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-fg hover:text-primary inline-flex items-center gap-1.5 transition-colors"
+                          className="text-fg-muted hover:text-fg inline-flex items-center gap-1.5 transition-colors"
                         >
                           <GithubIcon size={14} />
-                          <span>Code Repository</span>
+                          <span>Repository</span>
                         </a>
 
                         {proj.liveUrl && (
@@ -654,7 +521,7 @@ export default function ProfessionalPortfolio() {
                             href={proj.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-primary hover:underline inline-flex items-center gap-1 font-semibold"
+                            className="text-fg hover:underline inline-flex items-center gap-1 font-semibold"
                           >
                             <span>Live App</span>
                             <ArrowUpRight size={13} />
@@ -662,60 +529,55 @@ export default function ProfessionalPortfolio() {
                         )}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
-          </motion.div>
-
+          </div>
         </section>
 
-        {/* 4. EXPERIENCE & LEADERSHIP */}
-        <section id="experience" className="space-y-8">
-          <div className="border-b border-border/80 pb-4">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
+        {/* EXPERIENCE SECTION */}
+        <section id="experience" className="space-y-8 border-t border-border/80 pt-16">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-bold tracking-tight text-fg">
               Experience &amp; Leadership
             </h2>
-            <p className="text-xs sm:text-sm text-fg-muted mt-1">
-              Industrial quality analysis, materials characterization, and student society leadership.
+            <p className="text-sm text-fg-muted">
+              Industrial quality management, materials characterization, and student society leadership.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {experienceData.map((exp, idx) => (
-              <motion.div
+          <div className="space-y-6">
+            {experienceData.map((exp) => (
+              <div
                 key={exp.role}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="rounded-2xl border border-border/80 bg-card p-6 space-y-4"
+                className="rounded-xl border border-border/80 bg-card p-6 space-y-3"
               >
-                <div className="flex items-start justify-between gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <div>
-                    <h3 className="text-lg font-bold text-fg">{exp.role}</h3>
-                    <div className="text-xs font-mono text-primary font-medium mt-0.5">
-                      {exp.organization}
+                    <h3 className="text-base font-semibold text-fg">{exp.role}</h3>
+                    <div className="text-sm text-fg-muted font-normal mt-0.5">
+                      {exp.organization} • {exp.location}
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono text-fg-subtle whitespace-nowrap bg-bg-subtle px-2.5 py-1 rounded-full border border-border/40">
+                  <span className="text-xs font-mono text-fg-subtle">
                     {exp.period}
                   </span>
                 </div>
 
-                <ul className="space-y-2 text-xs sm:text-sm text-fg-muted leading-relaxed list-disc list-inside">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-fg-muted leading-relaxed list-disc list-inside pt-1">
                   {exp.points.map((pt, i) => (
                     <li key={i}>{pt}</li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          {/* Verified Certifications Lightbox */}
-          <div className="pt-6 border-t border-border/60 space-y-4">
+          {/* Verified Credentials */}
+          <div className="pt-4 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-fg">Verified Credentials</h3>
-              <span className="text-xs font-mono text-fg-subtle">Click to inspect</span>
+              <h3 className="text-base font-semibold text-fg">Certifications &amp; Training</h3>
+              <span className="text-xs font-mono text-fg-subtle">Click to view credential</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -723,83 +585,75 @@ export default function ProfessionalPortfolio() {
                 <div
                   key={c.title}
                   onClick={() => setActiveCert({ title: c.title, issuer: c.issuer, image: c.image })}
-                  className="rounded-xl border border-border/80 p-3.5 bg-card hover:border-border-hover cursor-pointer transition-colors flex items-center justify-between group"
+                  className="rounded-lg border border-border/80 p-3 bg-card hover:border-fg/30 cursor-pointer transition-colors flex items-center justify-between group"
                 >
                   <div className="space-y-0.5">
-                    <div className="text-xs font-bold text-fg group-hover:text-primary transition-colors">
+                    <div className="text-xs font-medium text-fg group-hover:text-primary transition-colors">
                       {c.title}
                     </div>
                     <div className="text-[11px] font-mono text-fg-subtle">
                       {c.issuer}
                     </div>
                   </div>
-                  <ChevronRight size={14} className="text-fg-subtle group-hover:text-primary group-hover:translate-x-0.5 transition-transform" />
+                  <ChevronRight size={14} className="text-fg-subtle group-hover:translate-x-0.5 transition-transform" />
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 5. TECHNICAL SKILLS MATRIX */}
-        <section id="skills" className="space-y-8">
-          <div className="border-b border-border/80 pb-4">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
-              Technical Toolkit
+        {/* SKILLS SECTION */}
+        <section id="skills" className="space-y-6 border-t border-border/80 pt-16">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-bold tracking-tight text-fg">
+              Technical Skills
             </h2>
-            <p className="text-xs sm:text-sm text-fg-muted mt-1">
-              Core technologies, chemical engineering principles, and distributed architectures.
+            <p className="text-sm text-fg-muted">
+              Languages, libraries, developer tools, and engineering computation.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skillCategories.map((cat, idx) => (
-              <motion.div
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {skillCategories.map((cat) => (
+              <div
                 key={cat.category}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="rounded-2xl border border-border/80 bg-card p-6 space-y-4"
+                className="rounded-xl border border-border/80 bg-card p-5 space-y-3"
               >
-                <div className="flex items-center gap-2 text-sm font-bold text-fg">
-                  {idx === 0 && <FlaskConical size={16} className="text-primary" />}
-                  {idx === 1 && <Cpu size={16} className="text-primary" />}
-                  {idx === 2 && <Layers size={16} className="text-primary" />}
-                  <span>{cat.category}</span>
-                </div>
+                <h3 className="text-sm font-semibold text-fg">
+                  {cat.category}
+                </h3>
 
                 <div className="flex flex-wrap gap-1.5">
                   {cat.skills.map((s) => (
                     <span
                       key={s}
-                      className="text-xs font-mono px-3 py-1.5 rounded-lg bg-bg-subtle border border-border/60 text-fg-muted"
+                      className="text-xs font-mono px-2.5 py-1 rounded bg-bg-subtle border border-border/60 text-fg-muted"
                     >
                       {s}
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* 6. CONTACT SECTION */}
-        <section id="contact" className="space-y-6">
-          <div className="rounded-3xl border border-border/80 bg-gradient-to-b from-card to-bg-subtle p-8 sm:p-12 text-center space-y-6 shadow-sm">
-            
-            <div className="max-w-md mx-auto space-y-2">
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-fg">
-                Let's build something together.
+        {/* CONTACT SECTION */}
+        <section id="contact" className="space-y-6 border-t border-border/80 pt-16">
+          <div className="rounded-2xl border border-border/80 bg-card p-8 sm:p-10 space-y-4">
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold tracking-tight text-fg">
+                Get in Touch
               </h2>
-              <p className="text-xs sm:text-sm text-fg-muted">
-                Open for scientific machine learning research, software engineering roles, and process modeling collaborations.
+              <p className="text-sm text-fg-muted">
+                Feel free to reach out for software engineering roles, research inquiries, or collaborations.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={handleCopyEmail}
-                className="px-6 py-2.5 rounded-full bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-primary-hover shadow-sm transition-all inline-flex items-center gap-2"
+                className="px-5 py-2.5 rounded-lg bg-fg text-bg hover:opacity-90 text-sm font-medium transition-opacity inline-flex items-center gap-2"
               >
                 {copiedEmail ? <Check size={15} /> : <Copy size={15} />}
                 <span>{copiedEmail ? "Email Copied" : "Copy Email"}</span>
@@ -807,27 +661,26 @@ export default function ProfessionalPortfolio() {
 
               <a
                 href={`mailto:${email}`}
-                className="px-6 py-2.5 rounded-full border border-border bg-card text-xs sm:text-sm font-semibold text-fg hover:text-primary hover:border-border-hover transition-colors inline-flex items-center gap-2"
+                className="px-4 py-2.5 rounded-lg border border-border hover:border-fg text-sm font-medium text-fg transition-colors inline-flex items-center gap-2"
               >
                 <Mail size={15} />
                 <span>Open Mail Client</span>
               </a>
             </div>
 
-            <div className="text-xs font-mono text-fg-subtle pt-2">
+            <div className="text-xs font-mono text-fg-subtle pt-1">
               {email}
             </div>
-
           </div>
         </section>
 
       </main>
 
-      {/* 7. FOOTER */}
+      {/* FOOTER */}
       <footer className="border-t border-border/70 py-8 px-6 text-xs text-fg-subtle">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 Sameer Shekhar. Department of Chemical Engineering, BIT Mesra.</p>
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© 2026 Sameer Shekhar. Birla Institute of Technology, Mesra.</p>
+          <div className="flex items-center gap-5">
             <a href="https://github.com/shekharsameer2308" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">GitHub</a>
             <a href="https://linkedin.com/in/sameershekhar" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">LinkedIn</a>
             <a href={`mailto:${email}`} className="hover:text-fg transition-colors">Email</a>
@@ -836,47 +689,39 @@ export default function ProfessionalPortfolio() {
       </footer>
 
       {/* Lightbox Modal for Verified Certificates */}
-      <AnimatePresence>
-        {activeCert && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => setActiveCert(null)}
+      {activeCert && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setActiveCert(null)}
+        >
+          <div
+            className="max-w-2xl w-full bg-card border border-border rounded-xl p-6 space-y-4 relative shadow-xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="max-w-2xl w-full bg-card border border-border rounded-2xl p-6 space-y-4 relative shadow-xl"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              onClick={() => setActiveCert(null)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-border flex items-center justify-center text-fg hover:text-primary transition-colors"
+              aria-label="Close"
             >
-              <button
-                onClick={() => setActiveCert(null)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full border border-border flex items-center justify-center text-fg hover:text-primary transition-colors"
-                aria-label="Close"
-              >
-                <X size={16} />
-              </button>
+              <X size={16} />
+            </button>
 
-              <div className="space-y-1">
-                <h4 className="text-lg font-bold text-fg">{activeCert.title}</h4>
-                <p className="text-xs font-mono text-fg-subtle">{activeCert.issuer}</p>
-              </div>
+            <div className="space-y-0.5">
+              <h4 className="text-base font-semibold text-fg">{activeCert.title}</h4>
+              <p className="text-xs font-mono text-fg-subtle">{activeCert.issuer}</p>
+            </div>
 
-              <div className="rounded-xl border border-border overflow-hidden bg-black/10 flex items-center justify-center min-h-[300px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={activeCert.image}
-                  alt={activeCert.title}
-                  className="max-h-[70vh] w-auto object-contain"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="rounded-lg border border-border overflow-hidden bg-black/10 flex items-center justify-center min-h-[300px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activeCert.image}
+                alt={activeCert.title}
+                className="max-h-[70vh] w-auto object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
